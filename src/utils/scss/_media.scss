@@ -1,0 +1,34 @@
+@mixin se {
+  @media only screen and (max-width: 360px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin ipad {
+  @media only screen and (max-width: 1023px) and (-webkit-min-device-pixel-ratio: 2) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin ipad-pro {
+  @media only screen and (max-width: 1112px) and (-webkit-min-device-pixel-ratio: 2) {
+    @content;
+  }
+}
+@mixin small-laptop {
+  @media only screen and (max-width: 1112px) {
+    @content;
+  }
+}
