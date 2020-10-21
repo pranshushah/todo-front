@@ -3,5 +3,6 @@ export interface userInfo {
   name: string;
   email: string;
   imageURL: string;
-  twitterId: string;
+  twitterId?: string;
+  id: string;
 }
