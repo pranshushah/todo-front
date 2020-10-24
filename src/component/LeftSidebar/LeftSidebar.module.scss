@@ -1,0 +1,76 @@
+@import '../../utils/scss/variables';
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/fontSize';
+.container {
+  width: 300px;
+  height: 100vh;
+  background-color: $whiteColor;
+}
+
+.itemContainer {
+  padding-top: getSpace(10) * 1px;
+  list-style: none;
+}
+
+.active {
+  background-color: darken($color: $whiteColor, $amount: 10);
+}
+
+.item {
+  padding-left: getSpace(3) * 1px;
+  font-size: getFontSize(3) * 1px;
+  padding-bottom: getSpace(0.5) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  text-decoration: none;
+  color: $secondaryColor;
+  display: block;
+}
+
+.sun::before {
+  width: 22px;
+  height: 26px;
+  display: inline-block;
+  margin: 0 getSpace(1) * 1px;
+  content: '';
+  background-image: url('../../utils/svg/sun.svg');
+  background-repeat: no-repeat;
+  background-position: 2px 5px;
+  background-size: 18px 26px;
+}
+
+.star::before {
+  width: 22px;
+  height: 26px;
+  display: inline-block;
+  margin: 0 getSpace(1) * 1px;
+  content: '';
+  background-image: url('../../utils/svg/star.svg');
+  background-repeat: no-repeat;
+  background-position: 2px 6px;
+  background-size: 18px 26px;
+}
+
+.calendar::before {
+  width: 22px;
+  height: 26px;
+  display: inline-block;
+  margin: 0 getSpace(1) * 1px;
+  content: '';
+  background-image: url('../../utils/svg/calendar.svg');
+  background-repeat: no-repeat;
+  background-position: 2px 5px;
+  background-size: 18px 26px;
+}
+
+.home::before {
+  width: 22px;
+  height: 26px;
+  display: inline-block;
+  margin: 0 getSpace(1) * 1px;
+  content: '';
+  background-image: url('../../utils/svg/home.svg');
+  background-repeat: no-repeat;
+  background-position: 2px 5px;
+  background-size: 18px 26px;
+}
