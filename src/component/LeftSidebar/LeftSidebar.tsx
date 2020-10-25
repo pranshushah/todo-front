@@ -7,38 +7,54 @@ function LeftSidebar() {
       <ul className={Styles.itemContainer}>
         <li>
           <NavLink
-            className={[Styles.item, Styles.sun].join(' ')}
+            className={Styles.item}
             to='/myday'
             activeClassName={Styles.active}
             exact>
-            My Day
+            <i
+              aria-hidden='true'
+              className={['fa', 'fa-sun-o', Styles.icon].join(' ')}
+            />
+            <span className={Styles.text}>My Day</span>
           </NavLink>
         </li>
         <li>
           <NavLink
-            className={[Styles.item, Styles.star].join(' ')}
+            className={Styles.item}
             to='/important'
             activeClassName={Styles.active}
             exact>
-            Important
+            <i
+              className={['fa', 'fa-star-o', Styles.icon].join(' ')}
+              aria-hidden='true'
+            />
+            <span className={Styles.text}>Important</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to='/planned'
-            className={[Styles.item, Styles.calendar].join(' ')}
+            className={Styles.item}
             activeClassName={Styles.active}
             exact>
-            Planned
+            <i
+              className={['fa', 'fa-calendar', Styles.icon].join(' ')}
+              aria-hidden='true'
+            />
+            <span className={Styles.text}>Planned</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to='/tasks'
             exact
-            className={[Styles.item, Styles.home].join(' ')}
+            className={Styles.item}
             activeClassName={Styles.active}>
-            Tasks
+            <i
+              className={['fa', 'fa-home', Styles.icon].join(' ')}
+              aria-hidden='true'
+            />
+            <span className={Styles.text}>Tasks</span>
           </NavLink>
         </li>
       </ul>

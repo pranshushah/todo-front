@@ -17,15 +17,12 @@ function TaskItem({
   onTodoStatusChange,
   onTodoImpStatusChange,
 }: taskItemProps) {
-  console.log(todo.id + '=====>' + todo.important);
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       onTodoStatusChange({ todoId: todo.id, done: true });
     }
   }
-  function impStatusChangeHandler(
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) {
+  function impStatusChangeHandler() {
     onTodoImpStatusChange({ todoId: todo.id, important: !todo.important });
   }
   return (
