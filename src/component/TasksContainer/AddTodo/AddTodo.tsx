@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 import Styles from './AddTodo.module.scss';
 import axios from 'axios';
 import { todoBody, todoType } from '../../../utils/types/userInfo';
-
-type AddTodoProps = {
-  onAddTodo: (todo: todoType) => void;
-};
-
-function AddTodo({ onAddTodo }: AddTodoProps) {
+import { useSetRecoilState } from 'recoil';
+import { normalTasksState } from '../../../atoms/NormalTaskAtom';
+function AddTodo() {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
+  const setTodoList = useSetRecoilState(normalTasksState);
 
   function inputFocusHandler() {
     setTextFocus(true);
@@ -31,8 +29,15 @@ function AddTodo({ onAddTodo }: AddTodoProps) {
       const res = await axios.post<todoBody>('/api/todo/new', {
         todoTitle,
       });
-      onAddTodo({ ...res.data, createdAt: new Date(res.data.createdAt) });
+      addTodoToList({ ...res.data, createdAt: new Date(res.data.createdAt) });
     }
+  }
+  function addTodoToList(todo: todoType) {
+    setTodoList((todoList) => {
+      const newTodoList = [...todoList];
+      newTodoList.splice(0, 0, todo);
+      return newTodoList;
+    });
   }
 
   function enterHandler(e: React.KeyboardEvent<HTMLInputElement>) {

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Home from './component/Home/Home';
 import axios from 'axios';
 import Loading from './component/Loading/Loading';
-import { userInfo } from './utils/types/userInfo';
+import { userInfo, todoBody, todoType } from './utils/types/userInfo';
 import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
+import { normalTasksState } from './atoms/NormalTaskAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import TaskContainer from './component/TasksContainer/TaskContainer';
@@ -20,16 +21,39 @@ enum status {
 
 function App() {
   const setUserDetails = useSetRecoilState<null | userInfo>(loginDetailsState);
+  const setNormalTasks = useSetRecoilState(normalTasksState);
   const loggedIn = useRecoilValue(loginState);
   const [pageStatus, setPageStatus] = useState<status>(status.LOADING);
-  useEffect(() => {
-    async function getCurrentUser() {
-      const res = await axios.get(`/api/current_user`);
-      setUserDetails(res.data || null);
-      setPageStatus(status.SUCCESS);
-    }
-    getCurrentUser();
-  }, [setUserDetails]);
+  useEffect(
+    () => {
+      async function getCurrentUser() {
+        const res = await axios.get(`/api/current_user`);
+        setUserDetails(res.data || null);
+        setPageStatus(status.SUCCESS);
+      }
+      getCurrentUser();
+    }, // eslint-disable-next-line
+    [],
+  );
+
+  useEffect(
+    () => {
+      async function getTodos() {
+        const res = await axios.get<todoBody[]>('/api/todo/getalltask');
+        if (res.status === 200) {
+          const newTodoList: todoType[] = res.data.map((todo) => {
+            return { ...todo, createdAt: new Date(todo.createdAt) };
+          });
+          const sortedTodoList = newTodoList.sort((a, b) => {
+            return b.createdAt.getTime() - a.createdAt.getTime();
+          });
+          setNormalTasks(sortedTodoList);
+        }
+      }
+      getTodos();
+    }, // eslint-disable-next-line
+    [],
+  );
   let routes = (
     <Switch>
       <Route exact component={Home} path={'/'} />

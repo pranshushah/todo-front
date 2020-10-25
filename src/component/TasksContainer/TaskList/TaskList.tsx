@@ -1,31 +1,13 @@
 import React from 'react';
-import {
-  todoType,
-  editDoneStatus,
-  editImpStatus,
-} from '../../../utils/types/userInfo';
 import TaskItem from './TaskItem/TaskItem';
+import { useRecoilValue } from 'recoil';
+import { inCompleteNormalTasks } from '../../../selector/inCompleteNormalTasks';
 
-type TodoListProps = {
-  todoList: todoType[];
-  onTodoDoneStatusChange: (newStauts: editDoneStatus) => Promise<void>;
-  onTodoImpStatusChange: (newStauts: editImpStatus) => Promise<void>;
-};
+function TodoList() {
+  const todoList = useRecoilValue(inCompleteNormalTasks);
 
-function TodoList({
-  todoList,
-  onTodoDoneStatusChange,
-  onTodoImpStatusChange,
-}: TodoListProps) {
   const taskList = todoList.map((todo, index) => {
-    return (
-      <TaskItem
-        todo={todo}
-        key={index}
-        onTodoStatusChange={onTodoDoneStatusChange}
-        onTodoImpStatusChange={onTodoImpStatusChange}
-      />
-    );
+    return <TaskItem todo={todo} key={index} />;
   });
   return <div>{taskList}</div>;
 }
