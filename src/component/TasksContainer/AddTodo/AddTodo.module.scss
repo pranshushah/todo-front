@@ -1,15 +1,15 @@
-@import '../../utils/scss/spaces';
-@import '../../utils/scss/variables';
-@import '../../utils/scss/fontSize';
-@import '../../utils/scss/lineHeight';
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/lineHeight';
 
 .container {
-  padding: getSpace(1) * 1px getSpace(2) * 1px;
+  padding: getSpace(1.5) * 1px getSpace(2) * 1px;
   padding-right: getSpace(4) * 1px;
   display: flex;
   align-items: center;
   width: 100%;
-  box-shadow: 0 17px 0 -16px #e5e5e5;
+  box-shadow: 0 17px 0 -16px $whiteColor;
 }
 
 .containerFocused {
@@ -22,10 +22,6 @@
 .plus {
   width: 25px;
   height: 20px;
-}
-
-.input:focus + .plus {
-  background-image: url('../../utils/svg/calendar.svg');
 }
 
 .input {

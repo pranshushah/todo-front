@@ -1,0 +1,42 @@
+@import '../../../utils/scss/variables';
+.inputCheckBox {
+  display: none;
+}
+
+.checkBox {
+  display: block;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: $whiteColor;
+  &::before {
+    content: '\2714';
+    border: 1px solid $primaryColor;
+    border-radius: 60%;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 7px;
+    padding-left: 2px;
+    padding-bottom: 3px;
+    vertical-align: bottom;
+    color: transparent;
+    font-size: 13px;
+  }
+  .inputCheckBox:checked + &:before {
+    background-color: $primaryColor;
+    color: #fff;
+    transition: 0.2s;
+  }
+  .inputCheckBox:checked + &:hover:before {
+    color: #fff;
+  }
+  .inputCheckBox + &:active:before {
+    transform: scale(0);
+    color: #fff;
+  }
+  .inputCheckBox + &:hover:before {
+    color: $secondaryColor;
+    transition: 0.2s;
+  }
+}
