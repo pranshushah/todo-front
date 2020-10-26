@@ -45,6 +45,9 @@ function LeftSidebar() {
               aria-hidden='true'>
               <span className={Styles.text}>Planned</span>
             </i>
+            <span className={Styles.notification}>
+              {inCompleteTasks.length > 0 ? `${inCompleteTasks.length}` : ''}
+            </span>
           </NavLink>
         </li>
         <li>

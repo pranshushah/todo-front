@@ -2,14 +2,15 @@ import plus from '../../../utils/svg/plus.svg';
 import circle from '../../../utils/svg/circle.svg';
 import React, { useState } from 'react';
 import Styles from './AddTodo.module.scss';
-import axios from 'axios';
-import { todoBody, todoType } from '../../../utils/types/userInfo';
-import { useSetRecoilState } from 'recoil';
-import { normalTasksState } from '../../../atoms/NormalTaskAtom';
-function AddTodo() {
+
+type AddTodoProps = {
+  onAddTodo: (title: string) => Promise<void>;
+  title: string;
+};
+
+function AddTodo({ onAddTodo, title }: AddTodoProps) {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
-  const setTodoList = useSetRecoilState(normalTasksState);
 
   function inputFocusHandler() {
     setTextFocus(true);
@@ -23,28 +24,15 @@ function AddTodo() {
     setInputText(e.target.value);
   }
 
-  async function addTodoHandler() {
-    const todoTitle = inputText.trim();
-    if (todoTitle) {
-      const res = await axios.post<todoBody>('/api/todo/new', {
-        todoTitle,
-      });
-      addTodoToList({ ...res.data, createdAt: new Date(res.data.createdAt) });
-    }
-  }
-  function addTodoToList(todo: todoType) {
-    setTodoList((todoList) => {
-      const newTodoList = [...todoList];
-      newTodoList.splice(0, 0, todo);
-      return newTodoList;
-    });
-  }
-
   function enterHandler(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       addTodoHandler();
       setInputText('');
     }
+  }
+
+  function addTodoHandler() {
+    onAddTodo(inputText.trim());
   }
 
   return (
@@ -63,7 +51,7 @@ function AddTodo() {
       </div>
       <input
         type='text'
-        placeholder='Add a Task'
+        placeholder={title}
         className={Styles.input}
         onFocus={inputFocusHandler}
         onBlur={inputBlurHandler}
@@ -72,7 +60,9 @@ function AddTodo() {
         onKeyPress={enterHandler}
       />
       {inputText.length > 0 ? (
-        <div className={Styles.addButton}>Add</div>
+        <div className={Styles.addButton} onClick={addTodoHandler}>
+          Add
+        </div>
       ) : null}
     </div>
   );

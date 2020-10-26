@@ -1,9 +1,9 @@
 import React from 'react';
-
+import Styles from './PlannedContainer.module.scss';
 function PlannedContainer() {
   return (
-    <div>
-      <h1>Planned</h1>
+    <div className={Styles.container}>
+      <h1 className={Styles.headingHeader}>Planned</h1>
     </div>
   );
 }

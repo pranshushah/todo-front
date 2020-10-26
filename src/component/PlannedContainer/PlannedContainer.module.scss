@@ -13,17 +13,3 @@
   color: $primaryColor;
   font-weight: 400;
 }
-
-.bg {
-  margin: 0 16px;
-  flex: 1 1;
-  background: linear-gradient(
-    180deg,
-    white,
-    white 48px,
-    #e5e5e5 48px,
-    #e5e5e5 48px
-  );
-  background-size: 100% 49px;
-  box-shadow: inset 0 1px 0 0 #e5e5e5;
-}
