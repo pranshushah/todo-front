@@ -1,0 +1,45 @@
+@import '../../../../utils/scss/spaces';
+@import '../../../../utils/scss/variables';
+@import '../../../../utils/scss/lineHeight';
+@import '../../../../utils/scss/fontSize';
+
+.container {
+  padding: getSpace(1) * 1px getSpace(2) * 1px;
+  padding-right: getSpace(4) * 1px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 17px 0 -16px $whiteColor;
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.text {
+  color: $secondaryColor;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  font-size: getFontSize(3) * 1px;
+  padding: 0 getSpace(1) * 1px;
+  width: 100%;
+}
+
+.doneText {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.imp {
+  height: 24px;
+  width: 24px;
+  color: $secondaryColor;
+  &:hover {
+    color: $primaryColor;
+  }
+}
+
+.impFilled {
+  height: 24px;
+  width: 24px;
+  color: $primaryColor;
+}

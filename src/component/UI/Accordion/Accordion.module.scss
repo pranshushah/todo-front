@@ -44,7 +44,7 @@
 
 /* Style the accordion content panel. Note: hidden by default */
 .accordionContent {
-  overflow: scroll;
+  overflow: hidden;
   transition: max-height 0.2s ease;
   max-height: 0;
 }

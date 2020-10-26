@@ -7,14 +7,22 @@ import {
   plannedTodoType,
   plannedTodoBodyType,
 } from '../../utils/types/userInfo';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { planbedTasksState } from '../../atoms/plannedTasksState';
+import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import TodoList from './TodoList/TododList';
+
 function PlannedContainer() {
   const setTodoList = useSetRecoilState(planbedTasksState);
-  const todoList = useRecoilValue(planbedTasksState);
+  const setNormalTodoList = useSetRecoilState(normalTasksState);
 
   function addTodoToList(todo: plannedTodoType) {
     setTodoList((todoList) => {
+      const newTodoList = [...todoList];
+      newTodoList.splice(0, 0, todo);
+      return newTodoList;
+    });
+    setNormalTodoList((todoList) => {
       const newTodoList = [...todoList];
       newTodoList.splice(0, 0, todo);
       return newTodoList;
@@ -33,11 +41,11 @@ function PlannedContainer() {
       dueDate: new Date(res.data.dueDate),
     });
   }
-  console.log(todoList);
   return (
     <div className={Styles.container}>
       <Header title='Planned' />
       <AddTodo onAddTodo={addTodoHandler} placeholder='Add a task due today' />
+      <TodoList />
     </div>
   );
 }
