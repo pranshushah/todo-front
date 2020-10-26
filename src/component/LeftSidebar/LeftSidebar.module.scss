@@ -30,10 +30,10 @@
   padding: getSpace(1) * 1px 0;
   padding-left: getSpace(3) * 1px;
   font-size: getFontSize(3) * 1px;
-  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   text-decoration: none;
   color: $secondaryColor;
-  display: block;
+  display: flex;
+  justify-content: space-between;
   @include mobile() {
     padding-left: 32px;
   }
@@ -44,6 +44,17 @@
 }
 
 .text {
+  padding-left: 8px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  @include mobile() {
+    display: none;
+  }
+}
+
+.notification {
+  margin-right: getSpace(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  color: $tertiaryColor;
   @include mobile() {
     display: none;
   }

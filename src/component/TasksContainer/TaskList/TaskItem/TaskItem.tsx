@@ -68,7 +68,7 @@ function TaskItem({ todo }: taskItemProps) {
   }
   return (
     <div className={Styles.container}>
-      <Checkbox onChange={checkBoxChangeHandler} />
+      <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
       <div className={Styles.text}>{todo.todoTitle}</div>
       <i
         onClick={impStatusChangeHandler}

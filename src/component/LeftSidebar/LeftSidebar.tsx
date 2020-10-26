@@ -1,7 +1,10 @@
 import React from 'react';
 import Styles from './LeftSidebar.module.scss';
 import { NavLink } from 'react-router-dom';
+import { inCompleteNormalTasks } from '../../selector/inCompleteNormalTasks';
+import { useRecoilValue } from 'recoil';
 function LeftSidebar() {
+  const inCompleteTasks = useRecoilValue(inCompleteNormalTasks);
   return (
     <div className={Styles.container}>
       <ul className={Styles.itemContainer}>
@@ -13,9 +16,9 @@ function LeftSidebar() {
             exact>
             <i
               aria-hidden='true'
-              className={['fa', 'fa-sun-o', Styles.icon].join(' ')}
-            />
-            <span className={Styles.text}>My Day</span>
+              className={['fa', 'fa-sun-o', Styles.icon].join(' ')}>
+              <span className={Styles.text}>My Day</span>
+            </i>
           </NavLink>
         </li>
         <li>
@@ -26,9 +29,9 @@ function LeftSidebar() {
             exact>
             <i
               className={['fa', 'fa-star-o', Styles.icon].join(' ')}
-              aria-hidden='true'
-            />
-            <span className={Styles.text}>Important</span>
+              aria-hidden='true'>
+              <span className={Styles.text}>Important</span>
+            </i>
           </NavLink>
         </li>
         <li>
@@ -39,9 +42,9 @@ function LeftSidebar() {
             exact>
             <i
               className={['fa', 'fa-calendar', Styles.icon].join(' ')}
-              aria-hidden='true'
-            />
-            <span className={Styles.text}>Planned</span>
+              aria-hidden='true'>
+              <span className={Styles.text}>Planned</span>
+            </i>
           </NavLink>
         </li>
         <li>
@@ -52,9 +55,12 @@ function LeftSidebar() {
             activeClassName={Styles.active}>
             <i
               className={['fa', 'fa-home', Styles.icon].join(' ')}
-              aria-hidden='true'
-            />
-            <span className={Styles.text}>Tasks</span>
+              aria-hidden='true'>
+              <span className={Styles.text}>Tasks</span>
+            </i>
+            <span className={Styles.notification}>
+              {inCompleteTasks.length > 0 ? `${inCompleteTasks.length}` : ''}
+            </span>
           </NavLink>
         </li>
       </ul>
