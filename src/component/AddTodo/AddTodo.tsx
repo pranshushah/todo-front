@@ -1,14 +1,14 @@
-import plus from '../../../utils/svg/plus.svg';
-import circle from '../../../utils/svg/circle.svg';
+import plus from '../../utils/svg/plus.svg';
+import circle from '../../utils/svg/circle.svg';
 import React, { useState } from 'react';
 import Styles from './AddTodo.module.scss';
 
 type AddTodoProps = {
   onAddTodo: (title: string) => Promise<void>;
-  title: string;
+  placeholder: string;
 };
 
-function AddTodo({ onAddTodo, title }: AddTodoProps) {
+function AddTodo({ onAddTodo, placeholder }: AddTodoProps) {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
 
@@ -51,7 +51,7 @@ function AddTodo({ onAddTodo, title }: AddTodoProps) {
       </div>
       <input
         type='text'
-        placeholder={title}
+        placeholder={placeholder}
         className={Styles.input}
         onFocus={inputFocusHandler}
         onBlur={inputBlurHandler}

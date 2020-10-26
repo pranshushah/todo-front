@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Home from './component/Home/Home';
 import axios from 'axios';
 import Loading from './component/Loading/Loading';
-import { userInfo, todoBody, todoType } from './utils/types/userInfo';
+import {
+  userInfo,
+  todoBody,
+  todoType,
+  plannedTodoBodyType,
+  plannedTodoType,
+} from './utils/types/userInfo';
 import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { normalTasksState } from './atoms/NormalTaskAtom';
+import { planbedTasksState } from './atoms/plannedTasksState';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import TaskContainer from './component/TasksContainer/TaskContainer';
@@ -22,6 +29,7 @@ enum status {
 function App() {
   const setUserDetails = useSetRecoilState<null | userInfo>(loginDetailsState);
   const setNormalTasks = useSetRecoilState(normalTasksState);
+  const setPlannedTasks = useSetRecoilState(planbedTasksState);
   const loggedIn = useRecoilValue(loginState);
   const [pageStatus, setPageStatus] = useState<status>(status.LOADING);
   useEffect(
@@ -48,6 +56,30 @@ function App() {
             return b.createdAt.getTime() - a.createdAt.getTime();
           });
           setNormalTasks(sortedTodoList);
+        }
+      }
+      getTodos();
+    }, // eslint-disable-next-line
+    [],
+  );
+  useEffect(
+    () => {
+      async function getTodos() {
+        const res = await axios.get<plannedTodoBodyType[]>(
+          '/api/todo/getalltaskwithduedate',
+        );
+        if (res.status === 200) {
+          const newTodoList: plannedTodoType[] = res.data.map((todo) => {
+            return {
+              ...todo,
+              createdAt: new Date(todo.createdAt),
+              dueDate: new Date(todo.createdAt),
+            };
+          });
+          const sortedTodoList = newTodoList.sort((a, b) => {
+            return b.createdAt.getTime() - a.createdAt.getTime();
+          });
+          setPlannedTasks(sortedTodoList);
         }
       }
       getTodos();

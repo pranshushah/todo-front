@@ -33,6 +33,33 @@ export interface todoType {
   createdAt: Date;
   important: boolean;
   updatedAt: string;
+  dueDate?: Date;
+  steps: Array<stepType>;
+}
+
+export interface plannedTodoType {
+  id: string;
+  userId: string;
+  todoTitle: string;
+  normalTask: string;
+  done: boolean;
+  createdAt: Date;
+  important: boolean;
+  updatedAt: string;
+  dueDate: Date;
+  steps: Array<stepType>;
+}
+
+export interface plannedTodoBodyType {
+  id: string;
+  userId: string;
+  todoTitle: string;
+  normalTask: string;
+  done: boolean;
+  createdAt: string;
+  important: boolean;
+  updatedAt: string;
+  dueDate: string;
   steps: Array<stepType>;
 }
 

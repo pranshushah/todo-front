@@ -1,6 +1,7 @@
 import React from 'react';
-import AddTodo from './AddTodo/AddTodo';
+import AddTodo from '../AddTodo/AddTodo';
 import TodoList from './TaskList/TaskList';
+import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
 import { todoBody, todoType } from '../../utils/types/userInfo';
 import CompletedTaskList from './CompletedTaskList/CompletedTaskList';
@@ -27,8 +28,8 @@ function TaskContainer() {
   }
   return (
     <div className={Styles.container}>
-      <h1 className={Styles.headingHeader}>Tasks</h1>
-      <AddTodo onAddTodo={addTodoHandler} title='Add a Task' />
+      <Header title='Tasks' />
+      <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
       <TodoList />
       <CompletedTaskList />
       <div className={Styles.bg} />

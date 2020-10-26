@@ -2,9 +2,11 @@ import React from 'react';
 import Styles from './LeftSidebar.module.scss';
 import { NavLink } from 'react-router-dom';
 import { inCompleteNormalTasks } from '../../selector/inCompleteNormalTasks';
+import { inCompletePlannedTasks } from '../../selector/inCompletePlannedTasks';
 import { useRecoilValue } from 'recoil';
 function LeftSidebar() {
-  const inCompleteTasks = useRecoilValue(inCompleteNormalTasks);
+  const inCompleteNormalTasksList = useRecoilValue(inCompleteNormalTasks);
+  const inCompletePlannedTasksList = useRecoilValue(inCompletePlannedTasks);
   return (
     <div className={Styles.container}>
       <ul className={Styles.itemContainer}>
@@ -46,7 +48,9 @@ function LeftSidebar() {
               <span className={Styles.text}>Planned</span>
             </i>
             <span className={Styles.notification}>
-              {inCompleteTasks.length > 0 ? `${inCompleteTasks.length}` : ''}
+              {inCompletePlannedTasksList.length > 0
+                ? `${inCompletePlannedTasksList.length}`
+                : ''}
             </span>
           </NavLink>
         </li>
@@ -62,7 +66,9 @@ function LeftSidebar() {
               <span className={Styles.text}>Tasks</span>
             </i>
             <span className={Styles.notification}>
-              {inCompleteTasks.length > 0 ? `${inCompleteTasks.length}` : ''}
+              {inCompleteNormalTasksList.length > 0
+                ? `${inCompleteNormalTasksList.length}`
+                : ''}
             </span>
           </NavLink>
         </li>

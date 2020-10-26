@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { normalTasksState } from '../../../../atoms/NormalTaskAtom';
-import { useSetRecoilState } from 'recoil';
+import { useSetUpdateNormalTasks } from '../../../../utils/TaskListUpdater/updateNormalTasks';
+import { useSetUpdatePlannedTasks } from '../../../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
 import {
   todoType,
   todoBody,
@@ -15,24 +15,25 @@ type taskItemProps = {
 };
 
 function CompletedTaskItem({ todo }: taskItemProps) {
-  const setTodoList = useSetRecoilState(normalTasksState);
+  const updateNormaTasks = useSetUpdateNormalTasks();
+  const updatePlannedTasks = useSetUpdatePlannedTasks();
+
+  function updateAllTasks(newTodo: todoType) {
+    updateNormaTasks(newTodo);
+    if (newTodo.dueDate) {
+      newTodo = { ...newTodo, dueDate: new Date(newTodo.dueDate) };
+      // already checked for undefined
+      //@ts-ignore
+      updatePlannedTasks(newTodo);
+    }
+  }
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
     if (res.status === 200) {
-      const newTodo: todoType = {
+      updateAllTasks({
         ...res.data,
         createdAt: new Date(res.data.createdAt),
-      };
-      setTodoList((todoList) => {
-        const newTodoList = [...todoList];
-        const replaceIndex = newTodoList.findIndex(
-          (todo) => todo.id === newTodo.id,
-        );
-        if (replaceIndex !== -1) {
-          newTodoList[replaceIndex] = newTodo;
-        }
-        return newTodoList;
       });
     }
   }
@@ -43,19 +44,9 @@ function CompletedTaskItem({ todo }: taskItemProps) {
       newStauts,
     );
     if (res.status === 200) {
-      const newTodo: todoType = {
+      updateAllTasks({
         ...res.data,
         createdAt: new Date(res.data.createdAt),
-      };
-      setTodoList((todoList) => {
-        const newTodoList = [...todoList];
-        const replaceIndex = newTodoList.findIndex(
-          (todo) => todo.id === newTodo.id,
-        );
-        if (replaceIndex !== -1) {
-          newTodoList[replaceIndex] = newTodo;
-        }
-        return newTodoList;
       });
     }
   }
