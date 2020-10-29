@@ -1,12 +1,12 @@
 import { useSetRecoilState } from 'recoil';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { op, todoType } from '../types/userInfo';
+import { todoType, op } from '../types/userInfo';
+import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 
-export function useSetUpdateNormalTasks() {
-  const setNormalTodoList = useSetRecoilState(normalTasksState);
+export function useSetImpTasks() {
+  const setImpTasksState = useSetRecoilState(ImpTasksState);
   function updater(newTodo: todoType, operation: op) {
     if (operation === op.UPDATE) {
-      setNormalTodoList((todoList) => {
+      setImpTasksState((todoList) => {
         const newTodoList = [...todoList];
         const replaceIndex = newTodoList.findIndex(
           (todo) => todo.id === newTodo.id,
@@ -17,13 +17,13 @@ export function useSetUpdateNormalTasks() {
         return newTodoList;
       });
     } else if (operation === op.ADD) {
-      setNormalTodoList((todoList) => {
+      setImpTasksState((todoList) => {
         const newTodoList = [...todoList];
         newTodoList.splice(0, 0, newTodo);
         return newTodoList;
       });
     } else {
-      setNormalTodoList((todoList) => {
+      setImpTasksState((todoList) => {
         const newTodoList = [...todoList];
         const deleteIndex = newTodoList.findIndex(
           (todo) => todo.id === newTodo.id,

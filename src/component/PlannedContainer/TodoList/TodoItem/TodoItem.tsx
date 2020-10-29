@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { useSetUpdateNormalTasks } from '../../../../utils/TaskListUpdater/updateNormalTasks';
 import { useSetUpdatePlannedTasks } from '../../../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
+import { useSetImpTasks } from '../../../../utils/TaskListUpdater/useSetImpTasks';
 import {
+  op,
   plannedTodoType,
   plannedTodoBodyType,
   editDoneStatus,
@@ -17,9 +19,19 @@ type TodoItemProps = {
 function TodoITem({ todo }: TodoItemProps) {
   const updateNormaTasks = useSetUpdateNormalTasks();
   const updatePlannedTasks = useSetUpdatePlannedTasks();
+  const updateImpTasks = useSetImpTasks();
   function updateAllTasks(newTodo: plannedTodoType) {
-    updateNormaTasks(newTodo);
-    updatePlannedTasks(newTodo);
+    updateNormaTasks(newTodo, op.UPDATE);
+    updatePlannedTasks(newTodo, op.UPDATE);
+    if (!todo.important && newTodo.important) {
+      updateImpTasks(newTodo, op.ADD);
+    }
+    if (todo.important && !newTodo.important) {
+      updateImpTasks(newTodo, op.Del);
+    }
+    if (todo.important && newTodo.important) {
+      updateImpTasks(newTodo, op.UPDATE);
+    }
   }
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {

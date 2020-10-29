@@ -13,6 +13,7 @@ import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { normalTasksState } from './atoms/NormalTaskAtom';
 import { planbedTasksState } from './atoms/plannedTasksState';
+import { ImpTasksState } from './atoms/ImportantTaskAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import TaskContainer from './component/TasksContainer/TaskContainer';
@@ -30,6 +31,7 @@ function App() {
   const setUserDetails = useSetRecoilState<null | userInfo>(loginDetailsState);
   const setNormalTasks = useSetRecoilState(normalTasksState);
   const setPlannedTasks = useSetRecoilState(planbedTasksState);
+  const setImpTasks = useSetRecoilState(ImpTasksState);
   const loggedIn = useRecoilValue(loginState);
   const [pageStatus, setPageStatus] = useState<status>(status.LOADING);
   useEffect(
@@ -43,14 +45,26 @@ function App() {
     }, // eslint-disable-next-line
     [],
   );
-
+  //getting all normal tasks
   useEffect(
     () => {
       async function getTodos() {
         const res = await axios.get<todoBody[]>('/api/todo/getalltask');
         if (res.status === 200) {
           const newTodoList: todoType[] = res.data.map((todo) => {
-            return { ...todo, createdAt: new Date(todo.createdAt) };
+            if (todo.dueDate) {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: new Date(todo.dueDate),
+              };
+            } else {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: undefined,
+              };
+            }
           });
           const sortedTodoList = newTodoList.sort((a, b) => {
             return b.createdAt.getTime() - a.createdAt.getTime();
@@ -62,6 +76,7 @@ function App() {
     }, // eslint-disable-next-line
     [],
   );
+  //getting planned tasks
   useEffect(
     () => {
       async function getTodos() {
@@ -86,6 +101,39 @@ function App() {
     }, // eslint-disable-next-line
     [],
   );
+
+  //getting imp tasks
+  useEffect(
+    () => {
+      async function getTodos() {
+        const res = await axios.get<todoBody[]>('/api/todo/getallimptask');
+        if (res.status === 200) {
+          const newTodoList: todoType[] = res.data.map((todo) => {
+            if (todo.dueDate) {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: new Date(todo.dueDate),
+              };
+            } else {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: undefined,
+              };
+            }
+          });
+          const sortedTodoList = newTodoList.sort((a, b) => {
+            return b.createdAt.getTime() - a.createdAt.getTime();
+          });
+          setImpTasks(sortedTodoList);
+        }
+      }
+      getTodos();
+    }, // eslint-disable-next-line
+    [],
+  );
+
   let routes = (
     <Switch>
       <Route exact component={Home} path={'/'} />

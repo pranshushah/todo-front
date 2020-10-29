@@ -1,3 +1,8 @@
+export enum op {
+  UPDATE = 'update',
+  ADD = 'add',
+  Del = 'delete',
+}
 export interface userInfo {
   googleId?: string;
   name: string;
@@ -21,6 +26,7 @@ export interface todoBody {
   createdAt: string;
   updatedAt: string;
   important: boolean;
+  dueDate?: string;
   steps: Array<stepType>;
 }
 
