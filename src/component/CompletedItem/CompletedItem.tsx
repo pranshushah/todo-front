@@ -1,17 +1,21 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetUpdateNormalTasks } from '../../../../utils/TaskListUpdater/updateNormalTasks';
-import { useSetUpdatePlannedTasks } from '../../../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
-import { useSetImpTasks } from '../../../../utils/TaskListUpdater/useSetImpTasks';
+import { useSetUpdateNormalTasks } from '../../utils/TaskListUpdater/updateNormalTasks';
+import { useSetUpdatePlannedTasks } from '../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
+import { useSetImpTasks } from '../../utils/TaskListUpdater/useSetImpTasks';
 import {
   todoType,
   todoBody,
   editDoneStatus,
   editImpStatus,
   op,
-} from '../../../../utils/types/userInfo';
+} from '../../utils/types/userInfo';
 import Styles from './CompletedItem.module.scss';
-import Checkbox from '../../../UI/CheckBox/CheckBox';
+import Checkbox from '../UI/CheckBox/CheckBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
+import { useSetMydayTasks } from '../../utils/TaskListUpdater/useSetMydayTasks';
 type taskItemProps = {
   todo: todoType;
 };
@@ -20,6 +24,7 @@ function CompletedTaskItem({ todo }: taskItemProps) {
   const updateNormaTasks = useSetUpdateNormalTasks();
   const updatePlannedTasks = useSetUpdatePlannedTasks();
   const updateImpTasks = useSetImpTasks();
+  const updateMyDayTasks = useSetMydayTasks();
   function updateAllTasks(newTodo: todoType) {
     updateNormaTasks(newTodo, op.UPDATE);
     if (newTodo.dueDate) {
@@ -36,6 +41,11 @@ function CompletedTaskItem({ todo }: taskItemProps) {
     }
     if (todo.important && newTodo.important) {
       updateImpTasks(newTodo, op.UPDATE);
+    }
+    if (todo.myDay) {
+      // already checked for undefined
+      //@ts-ignore
+      updateMyDayTasks(newTodo, op.UPDATE);
     }
   }
 
@@ -91,14 +101,19 @@ function CompletedTaskItem({ todo }: taskItemProps) {
     <div className={Styles.container}>
       <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
       <div className={Styles.text}>{todo.todoTitle}</div>
-      <i
-        onClick={impStatusChangeHandler}
-        className={
-          todo.important
-            ? ['fa', 'fa-star', Styles.impFilled].join(' ')
-            : ['fa', 'fa-star-o', Styles.imp].join(' ')
-        }
-      />
+      {todo.important ? (
+        <FontAwesomeIcon
+          icon={SolidStar}
+          className={Styles.impFilled}
+          onClick={impStatusChangeHandler}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faStar}
+          className={Styles.imp}
+          onClick={impStatusChangeHandler}
+        />
+      )}
     </div>
   );
 }

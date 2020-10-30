@@ -4,11 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { inCompleteNormalTasks } from '../../selector/inCompleteNormalTasks';
 import { inCompletePlannedTasks } from '../../selector/inCompletePlannedTasks';
 import { inCompleteImpTasks } from '../../selector/inCompleteImpTasks';
+import { inCompleteMyDayTasks } from '../../selector/InCompleteMydayTasks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
+
 import { useRecoilValue } from 'recoil';
 function LeftSidebar() {
   const inCompleteNormalTasksList = useRecoilValue(inCompleteNormalTasks);
   const inCompletePlannedTasksList = useRecoilValue(inCompletePlannedTasks);
   const inCompleteImpTasksList = useRecoilValue(inCompleteImpTasks);
+  const inCompleteMyDayTasksList = useRecoilValue(inCompleteMyDayTasks);
   return (
     <div className={Styles.container}>
       <ul className={Styles.itemContainer}>
@@ -18,11 +24,15 @@ function LeftSidebar() {
             to='/myday'
             activeClassName={Styles.active}
             exact>
-            <i
-              aria-hidden='true'
-              className={['fa', 'fa-sun-o', Styles.icon].join(' ')}>
+            <div>
+              <FontAwesomeIcon icon={faSun} className={Styles.icon} />
               <span className={Styles.text}>My Day</span>
-            </i>
+            </div>
+            <span className={Styles.notification}>
+              {inCompleteMyDayTasksList.length > 0
+                ? `${inCompleteMyDayTasksList.length}`
+                : ''}
+            </span>
           </NavLink>
         </li>
         <li>
@@ -31,11 +41,10 @@ function LeftSidebar() {
             to='/important'
             activeClassName={Styles.active}
             exact>
-            <i
-              className={['fa', 'fa-star-o', Styles.icon].join(' ')}
-              aria-hidden='true'>
+            <div>
+              <FontAwesomeIcon icon={faStar} className={Styles.icon} />
               <span className={Styles.text}>Important</span>
-            </i>
+            </div>
             <span className={Styles.notification}>
               {inCompleteImpTasksList.length > 0
                 ? `${inCompleteImpTasksList.length}`
@@ -49,11 +58,10 @@ function LeftSidebar() {
             className={Styles.item}
             activeClassName={Styles.active}
             exact>
-            <i
-              className={['fa', 'fa-calendar', Styles.icon].join(' ')}
-              aria-hidden='true'>
+            <div>
+              <FontAwesomeIcon icon={faCalendar} className={Styles.icon} />
               <span className={Styles.text}>Planned</span>
-            </i>
+            </div>
             <span className={Styles.notification}>
               {inCompletePlannedTasksList.length > 0
                 ? `${inCompletePlannedTasksList.length}`
@@ -67,11 +75,10 @@ function LeftSidebar() {
             exact
             className={Styles.item}
             activeClassName={Styles.active}>
-            <i
-              className={['fa', 'fa-home', Styles.icon].join(' ')}
-              aria-hidden='true'>
+            <div>
+              <FontAwesomeIcon icon={faHome} className={Styles.icon} />
               <span className={Styles.text}>Tasks</span>
-            </i>
+            </div>
             <span className={Styles.notification}>
               {inCompleteNormalTasksList.length > 0
                 ? `${inCompleteNormalTasksList.length}`

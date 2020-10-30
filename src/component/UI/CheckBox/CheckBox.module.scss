@@ -12,16 +12,16 @@
   &::before {
     content: '\2714';
     border: 1px solid $primaryColor;
-    border-radius: 60%;
+    border-radius: 50%;
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 18px;
+    height: 18px;
     margin-right: 7px;
     padding-left: 2px;
-    padding-bottom: 3px;
+    padding-bottom: 14px;
     vertical-align: bottom;
     color: transparent;
-    font-size: 13px;
+    font-size: 14px;
   }
   .inputCheckBox:checked + &:before {
     background-color: $primaryColor;

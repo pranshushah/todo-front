@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Styles from './Accordion.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 type AccordionProps = {
   title: string;
@@ -27,13 +29,9 @@ function Accordion(props: AccordionProps) {
         }
         onClick={toggleAccordion}>
         <span className={Styles.icon}>
-          <i
-            className={
-              active
-                ? ['fa', 'fa-chevron-right', Styles.rotate].join(' ')
-                : 'fa fa-chevron-right'
-            }
-            aria-hidden='true'
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className={active ? Styles.rotate : 'none'}
           />
         </span>
         <p className={Styles.accordionTitle}>{props.title}</p>

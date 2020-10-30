@@ -1,7 +1,7 @@
-@import '../../../../utils/scss/spaces';
-@import '../../../../utils/scss/variables';
-@import '../../../../utils/scss/lineHeight';
-@import '../../../../utils/scss/fontSize';
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/variables';
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/fontSize';
 
 .container {
   padding: getSpace(1) * 1px getSpace(2) * 1px;

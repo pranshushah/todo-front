@@ -15,6 +15,7 @@ function Important() {
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<todoBody>('/api/todo/new', {
       todoTitle,
+      important: true,
     });
     addTodoToList({
       ...res.data,

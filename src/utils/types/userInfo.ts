@@ -27,6 +27,7 @@ export interface todoBody {
   updatedAt: string;
   important: boolean;
   dueDate?: string;
+  myDay?: boolean;
   steps: Array<stepType>;
 }
 
@@ -40,6 +41,7 @@ export interface todoType {
   important: boolean;
   updatedAt: string;
   dueDate?: Date;
+  myDay?: boolean;
   steps: Array<stepType>;
 }
 
@@ -53,6 +55,7 @@ export interface plannedTodoType {
   important: boolean;
   updatedAt: string;
   dueDate: Date;
+  myDay?: boolean;
   steps: Array<stepType>;
 }
 
@@ -66,6 +69,35 @@ export interface plannedTodoBodyType {
   important: boolean;
   updatedAt: string;
   dueDate: string;
+  myDay?: boolean;
+  steps: Array<stepType>;
+}
+
+export interface MydayTodoBodyType {
+  id: string;
+  userId: string;
+  todoTitle: string;
+  normalTask: string;
+  done: boolean;
+  createdAt: string;
+  important: boolean;
+  updatedAt: string;
+  dueDate?: string;
+  myDay: boolean;
+  steps: Array<stepType>;
+}
+
+export interface myDayTodoType {
+  id: string;
+  userId: string;
+  todoTitle: string;
+  normalTask: string;
+  done: boolean;
+  createdAt: Date;
+  important: boolean;
+  updatedAt: string;
+  dueDate?: Date;
+  myDay: boolean;
   steps: Array<stepType>;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskItem from './TaskItem/TaskItem';
+import TaskItem from '../../TaskItem/TaskItem';
 import { useRecoilValue } from 'recoil';
 import { inCompleteNormalTasks } from '../../../selector/inCompleteNormalTasks';
 

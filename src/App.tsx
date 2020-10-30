@@ -8,11 +8,14 @@ import {
   todoType,
   plannedTodoBodyType,
   plannedTodoType,
+  myDayTodoType,
+  MydayTodoBodyType,
 } from './utils/types/userInfo';
 import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { normalTasksState } from './atoms/NormalTaskAtom';
 import { planbedTasksState } from './atoms/plannedTasksState';
+import { myDayState } from './atoms/MyDayTaskAtom';
 import { ImpTasksState } from './atoms/ImportantTaskAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -26,12 +29,12 @@ enum status {
   LOADING = 'loading',
   FAIL = 'fail',
 }
-
 function App() {
   const setUserDetails = useSetRecoilState<null | userInfo>(loginDetailsState);
   const setNormalTasks = useSetRecoilState(normalTasksState);
   const setPlannedTasks = useSetRecoilState(planbedTasksState);
   const setImpTasks = useSetRecoilState(ImpTasksState);
+  const setMydayTasks = useSetRecoilState(myDayState);
   const loggedIn = useRecoilValue(loginState);
   const [pageStatus, setPageStatus] = useState<status>(status.LOADING);
   useEffect(
@@ -127,6 +130,40 @@ function App() {
             return b.createdAt.getTime() - a.createdAt.getTime();
           });
           setImpTasks(sortedTodoList);
+        }
+      }
+      getTodos();
+    }, // eslint-disable-next-line
+    [],
+  );
+
+  //getting imp tasks
+  useEffect(
+    () => {
+      async function getTodos() {
+        const res = await axios.get<MydayTodoBodyType[]>(
+          '/api/todo/getallmyday',
+        );
+        if (res.status === 200) {
+          const newTodoList: myDayTodoType[] = res.data.map((todo) => {
+            if (todo.dueDate) {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: new Date(todo.dueDate),
+              };
+            } else {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: undefined,
+              };
+            }
+          });
+          const sortedTodoList = newTodoList.sort((a, b) => {
+            return b.createdAt.getTime() - a.createdAt.getTime();
+          });
+          setMydayTasks(sortedTodoList);
         }
       }
       getTodos();

@@ -2,7 +2,7 @@ import React from 'react';
 import {} from '../../../utils/types/userInfo';
 import { completeNormalTasks } from '../../../selector/completedNormalTasks';
 import { useRecoilValue } from 'recoil';
-import CompletedTaskItem from './CompletedItem/CompletedItem';
+import CompletedTaskItem from '../../CompletedItem/CompletedItem';
 import Accordion from '../../UI/Accordion/Accordion';
 
 export default function CompletedTask() {
