@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { myDayState } from '../atoms/MyDayTaskAtom';
-import { myDayTodoType } from '../utils/types/userInfo';
+import { myDayTodoType } from '../utils/types';
 export const inCompleteMyDayTasks = selector<myDayTodoType[]>({
   key: 'inCompleteMyDayTasks',
   get: ({ get }) => {

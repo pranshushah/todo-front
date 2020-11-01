@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetUpdateNormalTasks } from '../../utils/TaskListUpdater/updateNormalTasks';
-import { useSetUpdatePlannedTasks } from '../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
-import { useSetImpTasks } from '../../utils/TaskListUpdater/useSetImpTasks';
-import { useSetMydayTasks } from '../../utils/TaskListUpdater/useSetMydayTasks';
+import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
+import { myDayState } from '../../atoms/MyDayTaskAtom';
+import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import { planbedTasksState } from '../../atoms/plannedTasksState';
 import {
   todoType,
   todoBody,
@@ -12,7 +13,7 @@ import {
   op,
   editDoneStatus,
   editImpStatus,
-} from '../../utils/types/userInfo';
+} from '../../utils/types';
 import Styles from './TaskItem.module.scss';
 import Checkbox from '../UI/CheckBox/CheckBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,10 +25,10 @@ type taskItemProps = {
 };
 
 function TaskItem({ todo }: taskItemProps) {
-  const updateNormaTasks = useSetUpdateNormalTasks();
-  const updatePlannedTasks = useSetUpdatePlannedTasks();
-  const updateImpTasks = useSetImpTasks();
-  const updateMydayTasks = useSetMydayTasks();
+  const updateNormaTasks = useSetTasks(normalTasksState);
+  const updatePlannedTasks = useSetTasks(planbedTasksState);
+  const updateImpTasks = useSetTasks(ImpTasksState);
+  const updateMydayTasks = useSetTasks(myDayState);
   function updateAllTasks(newTodo: todoType | myDayTodoType | plannedTodoType) {
     updateNormaTasks(newTodo, op.UPDATE);
     if (newTodo.dueDate) {

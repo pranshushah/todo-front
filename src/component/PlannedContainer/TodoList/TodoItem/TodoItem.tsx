@@ -1,15 +1,17 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetUpdateNormalTasks } from '../../../../utils/TaskListUpdater/updateNormalTasks';
-import { useSetUpdatePlannedTasks } from '../../../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
-import { useSetImpTasks } from '../../../../utils/TaskListUpdater/useSetImpTasks';
+import { useSetTasks } from '../../../../utils/TaskListUpdater/useSetTask';
+import { ImpTasksState } from '../../../../atoms/ImportantTaskAtom';
+import { myDayState } from '../../../../atoms/MyDayTaskAtom';
+import { normalTasksState } from '../../../../atoms/NormalTaskAtom';
+import { planbedTasksState } from '../../../../atoms/plannedTasksState';
 import {
   op,
   plannedTodoType,
   plannedTodoBodyType,
   editDoneStatus,
   editImpStatus,
-} from '../../../../utils/types/userInfo';
+} from '../../../../utils/types';
 import Styles from './TodoItem.module.scss';
 import Checkbox from '../../../UI/CheckBox/CheckBox';
 type TodoItemProps = {
@@ -17,9 +19,10 @@ type TodoItemProps = {
 };
 
 function TodoITem({ todo }: TodoItemProps) {
-  const updateNormaTasks = useSetUpdateNormalTasks();
-  const updatePlannedTasks = useSetUpdatePlannedTasks();
-  const updateImpTasks = useSetImpTasks();
+  const updateNormaTasks = useSetTasks(normalTasksState);
+  const updatePlannedTasks = useSetTasks(planbedTasksState);
+  const updateImpTasks = useSetTasks(ImpTasksState);
+  const updateMyDayTasks = useSetTasks(myDayState);
   function updateAllTasks(newTodo: plannedTodoType) {
     updateNormaTasks(newTodo, op.UPDATE);
     updatePlannedTasks(newTodo, op.UPDATE);
@@ -31,6 +34,11 @@ function TodoITem({ todo }: TodoItemProps) {
     }
     if (todo.important && newTodo.important) {
       updateImpTasks(newTodo, op.UPDATE);
+    }
+    if (todo.myDay) {
+      // already checked for undefined
+      //@ts-ignore
+      updateMyDayTasks(newTodo, op.UPDATE);
     }
   }
 

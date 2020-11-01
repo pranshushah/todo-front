@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { planbedTasksState } from '../atoms/plannedTasksState';
-import { plannedTodoType } from '../utils/types/userInfo';
+import { plannedTodoType } from '../utils/types';
 export const inCompletePlannedTasks = selector<plannedTodoType[]>({
   key: 'inCompletePlannedTasks',
   get: ({ get }) => {

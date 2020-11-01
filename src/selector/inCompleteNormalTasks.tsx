@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { normalTasksState } from '../atoms/NormalTaskAtom';
-import { todoType } from '../utils/types/userInfo';
+import { todoType } from '../utils/types';
 export const inCompleteNormalTasks = selector<todoType[]>({
   key: 'inCompleteNormalTasks',
   get: ({ get }) => {

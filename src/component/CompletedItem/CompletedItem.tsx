@@ -1,30 +1,31 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetUpdateNormalTasks } from '../../utils/TaskListUpdater/updateNormalTasks';
-import { useSetUpdatePlannedTasks } from '../../utils/TaskListUpdater/useSetUpdatePlannedTasks';
-import { useSetImpTasks } from '../../utils/TaskListUpdater/useSetImpTasks';
+import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
+import { myDayState } from '../../atoms/MyDayTaskAtom';
+import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import { planbedTasksState } from '../../atoms/plannedTasksState';
 import {
   todoType,
   todoBody,
   editDoneStatus,
   editImpStatus,
   op,
-} from '../../utils/types/userInfo';
+} from '../../utils/types';
 import Styles from './CompletedItem.module.scss';
 import Checkbox from '../UI/CheckBox/CheckBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
-import { useSetMydayTasks } from '../../utils/TaskListUpdater/useSetMydayTasks';
 type taskItemProps = {
   todo: todoType;
 };
 
 function CompletedTaskItem({ todo }: taskItemProps) {
-  const updateNormaTasks = useSetUpdateNormalTasks();
-  const updatePlannedTasks = useSetUpdatePlannedTasks();
-  const updateImpTasks = useSetImpTasks();
-  const updateMyDayTasks = useSetMydayTasks();
+  const updateNormaTasks = useSetTasks(normalTasksState);
+  const updatePlannedTasks = useSetTasks(planbedTasksState);
+  const updateImpTasks = useSetTasks(ImpTasksState);
+  const updateMyDayTasks = useSetTasks(myDayState);
   function updateAllTasks(newTodo: todoType) {
     updateNormaTasks(newTodo, op.UPDATE);
     if (newTodo.dueDate) {

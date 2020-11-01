@@ -3,15 +3,15 @@ import Styles from './MyDayContainer.module.scss';
 import Header from '../UI/Header/Header';
 import axios from 'axios';
 import AddTodo from '../AddTodo/AddTodo';
-import { MydayTodoBodyType, op } from '../../utils/types/userInfo';
+import { MydayTodoBodyType, op } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
-import { useSetUpdateNormalTasks } from '../../utils/TaskListUpdater/updateNormalTasks';
-import { useSetMydayTasks } from '../../utils/TaskListUpdater/useSetMydayTasks';
 import CompletedList from './CompletedList/CompletedTask';
-
+import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { myDayState } from '../../atoms/MyDayTaskAtom';
 function MydayContainer() {
-  const setNormalTodoList = useSetUpdateNormalTasks();
-  const setMydayTodoList = useSetMydayTasks();
+  const setNormalTodoList = useSetTasks(normalTasksState);
+  const setMydayTodoList = useSetTasks(myDayState);
 
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<MydayTodoBodyType>('/api/todo/new', {

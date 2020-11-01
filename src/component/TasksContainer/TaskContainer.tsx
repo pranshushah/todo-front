@@ -3,13 +3,13 @@ import AddTodo from '../AddTodo/AddTodo';
 import TodoList from './TaskList/TaskList';
 import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
-import { todoBody, op } from '../../utils/types/userInfo';
+import { todoBody, op } from '../../utils/types';
 import CompletedTaskList from './CompletedTaskList/CompletedTaskList';
 import axios from 'axios';
-import { useSetUpdateNormalTasks } from '../../utils/TaskListUpdater/updateNormalTasks';
-
+import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
 function TaskContainer() {
-  const setTodoList = useSetUpdateNormalTasks();
+  const setTodoList = useSetTasks(normalTasksState);
 
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<todoBody>('/api/todo/new', {

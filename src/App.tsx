@@ -10,7 +10,7 @@ import {
   plannedTodoType,
   myDayTodoType,
   MydayTodoBodyType,
-} from './utils/types/userInfo';
+} from './utils/types';
 import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { normalTasksState } from './atoms/NormalTaskAtom';

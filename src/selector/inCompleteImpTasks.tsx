@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { ImpTasksState } from '../atoms/ImportantTaskAtom';
-import { todoType } from '../utils/types/userInfo';
+import { todoType } from '../utils/types';
 export const inCompleteImpTasks = selector<todoType[]>({
   key: 'inCompleteImpTasks',
   get: ({ get }) => {

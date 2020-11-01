@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { planbedTasksState } from '../atoms/plannedTasksState';
-import { plannedTodoType } from '../utils/types/userInfo';
+import { plannedTodoType } from '../utils/types';
 import { isTomorrow } from 'date-fns';
 
 export const tomorrowDuesTasks = selector<plannedTodoType[]>({

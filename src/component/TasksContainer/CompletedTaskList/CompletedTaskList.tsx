@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from '../../../utils/types/userInfo';
+import {} from '../../../utils/types';
 import { completeNormalTasks } from '../../../selector/completedNormalTasks';
 import { useRecoilValue } from 'recoil';
 import CompletedTaskItem from '../../CompletedItem/CompletedItem';

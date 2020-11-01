@@ -3,43 +3,28 @@ import Styles from './PlannedContainer.module.scss';
 import Header from '../UI/Header/Header';
 import axios from 'axios';
 import AddTodo from '../AddTodo/AddTodo';
-import {
-  plannedTodoType,
-  plannedTodoBodyType,
-} from '../../utils/types/userInfo';
-import { useSetRecoilState } from 'recoil';
-import { planbedTasksState } from '../../atoms/plannedTasksState';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
+import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { op, plannedTodoBodyType } from '../../utils/types';
+import { planbedTasksState } from '../../atoms/plannedTasksState';
 import TodoList from './TodoList/TododList';
 
 function PlannedContainer() {
-  const setTodoList = useSetRecoilState(planbedTasksState);
-  const setNormalTodoList = useSetRecoilState(normalTasksState);
-
-  function addTodoToList(todo: plannedTodoType) {
-    setTodoList((todoList) => {
-      const newTodoList = [...todoList];
-      newTodoList.splice(0, 0, todo);
-      return newTodoList;
-    });
-    setNormalTodoList((todoList) => {
-      const newTodoList = [...todoList];
-      newTodoList.splice(0, 0, todo);
-      return newTodoList;
-    });
-  }
+  const setTodoList = useSetTasks(planbedTasksState);
+  const setNormalTodoList = useSetTasks(normalTasksState);
 
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<plannedTodoBodyType>('/api/todo/new', {
       todoTitle,
       dueDate: new Date(),
     });
-    console.log(res.data);
-    addTodoToList({
+    const newData = {
       ...res.data,
       createdAt: new Date(res.data.createdAt),
       dueDate: new Date(res.data.dueDate),
-    });
+    };
+    setTodoList(newData, op.ADD);
+    setNormalTodoList(newData, op.ADD);
   }
   return (
     <div className={Styles.container}>
