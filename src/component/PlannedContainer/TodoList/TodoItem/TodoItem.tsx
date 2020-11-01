@@ -5,6 +5,10 @@ import { ImpTasksState } from '../../../../atoms/ImportantTaskAtom';
 import { myDayState } from '../../../../atoms/MyDayTaskAtom';
 import { normalTasksState } from '../../../../atoms/NormalTaskAtom';
 import { planbedTasksState } from '../../../../atoms/plannedTasksState';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
+
 import {
   op,
   plannedTodoType,
@@ -84,14 +88,19 @@ function TodoITem({ todo }: TodoItemProps) {
         }>
         {todo.todoTitle}
       </div>
-      <i
-        onClick={impStatusChangeHandler}
-        className={
-          todo.important
-            ? ['fa', 'fa-star', Styles.impFilled].join(' ')
-            : ['fa', 'fa-star-o', Styles.imp].join(' ')
-        }
-      />
+      {todo.important ? (
+        <FontAwesomeIcon
+          icon={SolidStar}
+          className={Styles.impFilled}
+          onClick={impStatusChangeHandler}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faStar}
+          className={Styles.imp}
+          onClick={impStatusChangeHandler}
+        />
+      )}
     </div>
   );
 }
