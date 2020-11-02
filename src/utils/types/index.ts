@@ -110,3 +110,8 @@ export type editImpStatus = {
   todoId: string;
   important: boolean;
 };
+
+export enum todoFrom {
+  MYDAY = 'MY DAY',
+  PLANNED = 'PLANNED',
+}

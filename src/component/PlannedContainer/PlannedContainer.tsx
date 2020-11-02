@@ -8,7 +8,7 @@ import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
 import { op, plannedTodoBodyType } from '../../utils/types';
 import { planbedTasksState } from '../../atoms/plannedTasksState';
 import TodoList from './TodoList/TododList';
-
+import { endOfToday } from 'date-fns';
 function PlannedContainer() {
   const setTodoList = useSetTasks(planbedTasksState);
   const setNormalTodoList = useSetTasks(normalTasksState);
@@ -16,7 +16,7 @@ function PlannedContainer() {
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<plannedTodoBodyType>('/api/todo/new', {
       todoTitle,
-      dueDate: new Date(),
+      dueDate: endOfToday(),
     });
     const newData = {
       ...res.data,

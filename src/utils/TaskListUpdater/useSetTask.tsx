@@ -9,12 +9,12 @@ export function useSetTasks<
   function updater(newTodo: t, operation: op) {
     if (operation === op.UPDATE) {
       setTodoList((todoList) => {
-        const newTodoList = produce(todoList, (draft) => {
+        const newTodoList = produce(todoList, (draft: t[]) => {
           const replaceIndex = draft.findIndex(
             (todo) => todo.id === newTodo.id,
           );
           if (replaceIndex !== -1) {
-            newTodoList[replaceIndex] = newTodo;
+            draft[replaceIndex] = newTodo;
           }
         });
         return newTodoList;

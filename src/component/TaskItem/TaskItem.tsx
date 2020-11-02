@@ -13,18 +13,20 @@ import {
   op,
   editDoneStatus,
   editImpStatus,
+  todoFrom,
 } from '../../utils/types';
 import Styles from './TaskItem.module.scss';
 import Checkbox from '../UI/CheckBox/CheckBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
-
+import { faStar as SolidStar, faSun } from '@fortawesome/free-solid-svg-icons';
+import Daydisplay from '../Daydisplay/Daydisplay';
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
+  from?: todoFrom;
 };
 
-function TaskItem({ todo }: taskItemProps) {
+function TaskItem({ todo, from }: taskItemProps) {
   const updateNormaTasks = useSetTasks(normalTasksState);
   const updatePlannedTasks = useSetTasks(planbedTasksState);
   const updateImpTasks = useSetTasks(ImpTasksState);
@@ -104,7 +106,22 @@ function TaskItem({ todo }: taskItemProps) {
   return (
     <div className={Styles.container}>
       <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-      <div className={Styles.text}>{todo.todoTitle}</div>
+      <div className={Styles.textContainer}>
+        <div className={Styles.text}>{todo.todoTitle}</div>
+        {todo.myDay && from !== todoFrom.MYDAY ? (
+          <span className={Styles.myday}>
+            <FontAwesomeIcon icon={faSun} style={{ paddingRight: '5px' }} />
+            My Day
+          </span>
+        ) : (
+          ''
+        )}
+        {todo.dueDate && from !== todoFrom.PLANNED ? (
+          <Daydisplay date={todo.dueDate} completed={todo.done} />
+        ) : (
+          ''
+        )}
+      </div>
       {todo.important ? (
         <FontAwesomeIcon
           icon={SolidStar}

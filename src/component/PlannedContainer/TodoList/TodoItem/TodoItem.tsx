@@ -6,9 +6,8 @@ import { myDayState } from '../../../../atoms/MyDayTaskAtom';
 import { normalTasksState } from '../../../../atoms/NormalTaskAtom';
 import { planbedTasksState } from '../../../../atoms/plannedTasksState';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar, faSun } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
-
 import {
   op,
   plannedTodoType,
@@ -82,11 +81,21 @@ function TodoITem({ todo }: TodoItemProps) {
   return (
     <div className={Styles.container}>
       <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-      <div
-        className={
-          todo.done ? [Styles.text, Styles.doneText].join(' ') : Styles.text
-        }>
-        {todo.todoTitle}
+      <div className={Styles.textContainer}>
+        <div
+          className={
+            todo.done ? [Styles.text, Styles.doneText].join(' ') : Styles.text
+          }>
+          {todo.todoTitle}
+        </div>
+        {todo.myDay ? (
+          <span className={Styles.myday}>
+            <FontAwesomeIcon icon={faSun} style={{ paddingRight: '5px' }} />
+            My Day
+          </span>
+        ) : (
+          ''
+        )}
       </div>
       {todo.important ? (
         <FontAwesomeIcon
