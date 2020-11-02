@@ -11,6 +11,7 @@ import {
   myDayTodoType,
   MydayTodoBodyType,
 } from './utils/types';
+import produce from 'immer';
 import { loginState } from './selector/loginStatus';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { normalTasksState } from './atoms/NormalTaskAtom';
@@ -54,25 +55,27 @@ function App() {
       async function getTodos() {
         const res = await axios.get<todoBody[]>('/api/todo/getalltask');
         if (res.status === 200) {
-          const newTodoList: todoType[] = res.data.map((todo) => {
-            if (todo.dueDate) {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: new Date(todo.dueDate),
-              };
-            } else {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: undefined,
-              };
-            }
+          const newTodoList: todoType[] = produce(res.data, (draft) => {
+            const todoList: todoType[] = draft.map((todo) => {
+              if (todo.dueDate) {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: new Date(todo.dueDate),
+                };
+              } else {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: undefined,
+                };
+              }
+            });
+            return todoList.sort((a, b) => {
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            });
           });
-          const sortedTodoList = newTodoList.sort((a, b) => {
-            return b.createdAt.getTime() - a.createdAt.getTime();
-          });
-          setNormalTasks(sortedTodoList);
+          setNormalTasks(newTodoList);
         }
       }
       getTodos();
@@ -87,17 +90,19 @@ function App() {
           '/api/todo/getalltaskwithduedate',
         );
         if (res.status === 200) {
-          const newTodoList: plannedTodoType[] = res.data.map((todo) => {
-            return {
-              ...todo,
-              createdAt: new Date(todo.createdAt),
-              dueDate: new Date(todo.createdAt),
-            };
+          const newTodoList: plannedTodoType[] = produce(res.data, (draft) => {
+            const todoList = draft.map((todo) => {
+              return {
+                ...todo,
+                createdAt: new Date(todo.createdAt),
+                dueDate: new Date(todo.createdAt),
+              };
+            });
+            return todoList.sort((a, b) => {
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            });
           });
-          const sortedTodoList = newTodoList.sort((a, b) => {
-            return b.createdAt.getTime() - a.createdAt.getTime();
-          });
-          setPlannedTasks(sortedTodoList);
+          setPlannedTasks(newTodoList);
         }
       }
       getTodos();
@@ -111,25 +116,27 @@ function App() {
       async function getTodos() {
         const res = await axios.get<todoBody[]>('/api/todo/getallimptask');
         if (res.status === 200) {
-          const newTodoList: todoType[] = res.data.map((todo) => {
-            if (todo.dueDate) {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: new Date(todo.dueDate),
-              };
-            } else {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: undefined,
-              };
-            }
+          const newTodoList: todoType[] = produce(res.data, (draft) => {
+            const todoList: todoType[] = draft.map((todo) => {
+              if (todo.dueDate) {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: new Date(todo.dueDate),
+                };
+              } else {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: undefined,
+                };
+              }
+            });
+            return todoList.sort((a, b) => {
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            });
           });
-          const sortedTodoList = newTodoList.sort((a, b) => {
-            return b.createdAt.getTime() - a.createdAt.getTime();
-          });
-          setImpTasks(sortedTodoList);
+          setImpTasks(newTodoList);
         }
       }
       getTodos();
@@ -145,25 +152,27 @@ function App() {
           '/api/todo/getallmyday',
         );
         if (res.status === 200) {
-          const newTodoList: myDayTodoType[] = res.data.map((todo) => {
-            if (todo.dueDate) {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: new Date(todo.dueDate),
-              };
-            } else {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: undefined,
-              };
-            }
+          const newTodoList: myDayTodoType[] = produce(res.data, (draft) => {
+            const todoList: myDayTodoType[] = draft.map((todo) => {
+              if (todo.dueDate) {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: new Date(todo.dueDate),
+                };
+              } else {
+                return {
+                  ...todo,
+                  createdAt: new Date(todo.createdAt),
+                  dueDate: undefined,
+                };
+              }
+            });
+            return todoList.sort((a, b) => {
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            });
           });
-          const sortedTodoList = newTodoList.sort((a, b) => {
-            return b.createdAt.getTime() - a.createdAt.getTime();
-          });
-          setMydayTasks(sortedTodoList);
+          setMydayTasks(newTodoList);
         }
       }
       getTodos();
@@ -180,11 +189,21 @@ function App() {
   if (loggedIn) {
     routes = (
       <Switch>
-        <Route exact component={TaskContainer} path={'/tasks'} />
-        <Route exact component={MydayContainer} path={'/myday'} />
-        <Route exact component={PlannedContainer} path={'/planned'} />
-        <Route exact component={Important} path={'/important'} />
-        <Redirect to={'/tasks'} />
+        <Route path={'/tasks'}>
+          <TaskContainer />
+        </Route>
+        <Route path={'/myday'}>
+          <MydayContainer />
+        </Route>
+        <Route path={'/planned'}>
+          <PlannedContainer />
+        </Route>
+        <Route path={'/important'}>
+          <Important />
+        </Route>
+        <Route path='*'>
+          <TaskContainer />
+        </Route>
       </Switch>
     );
   }
