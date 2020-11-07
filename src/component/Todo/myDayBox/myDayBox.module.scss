@@ -1,0 +1,43 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.activeText {
+  color: $tertiaryColor;
+}
+
+.mydayContainer {
+  padding: getSpace(1.5) * 1px;
+  margin: getSpace(1) * 1px;
+  border: 2px solid #eaeaea;
+  background-color: white;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  color: lighten($color: $secondaryColor, $amount: 20);
+  &:hover {
+    background-color: darken($color: white, $amount: 10);
+  }
+}
+
+.mydayTextContainer {
+  font-size: 14px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  margin-left: 8px;
+  cursor: default;
+}
+
+.mydayText {
+  margin-left: 8px;
+}
+
+.closeButton {
+  background: none;
+  color: $tertiaryColor;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 8px;
+  outline: none;
+}

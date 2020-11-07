@@ -2,22 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Home from './component/Home/Home';
 import axios from 'axios';
 import Loading from './component/Loading/Loading';
-import {
-  userInfo,
-  todoBody,
-  todoType,
-  plannedTodoBodyType,
-  plannedTodoType,
-  myDayTodoType,
-  MydayTodoBodyType,
-} from './utils/types';
+import { userInfo } from './utils/types';
 import produce from 'immer';
 import { loginState } from './selector/loginStatus';
+import { useSetTaskOnLoad } from './utils/TaskListUpdater/useSetTaskOnload';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
-import { normalTasksState } from './atoms/NormalTaskAtom';
-import { planbedTasksState } from './atoms/plannedTasksState';
-import { myDayState } from './atoms/MyDayTaskAtom';
-import { ImpTasksState } from './atoms/ImportantTaskAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import TaskContainer from './component/TasksContainer/TaskContainer';
@@ -32,12 +21,9 @@ enum status {
 }
 function App() {
   const setUserDetails = useSetRecoilState<null | userInfo>(loginDetailsState);
-  const setNormalTasks = useSetRecoilState(normalTasksState);
-  const setPlannedTasks = useSetRecoilState(planbedTasksState);
-  const setImpTasks = useSetRecoilState(ImpTasksState);
-  const setMydayTasks = useSetRecoilState(myDayState);
   const loggedIn = useRecoilValue(loginState);
   const [pageStatus, setPageStatus] = useState<status>(status.LOADING);
+  useSetTaskOnLoad();
   useEffect(
     () => {
       async function getCurrentUser() {
@@ -49,137 +35,6 @@ function App() {
     }, // eslint-disable-next-line
     [],
   );
-  //getting all normal tasks
-  useEffect(
-    () => {
-      async function getTodos() {
-        const res = await axios.get<todoBody[]>('/api/todo/getalltask');
-        if (res.status === 200) {
-          const newTodoList: todoType[] = produce(res.data, (draft) => {
-            const todoList: todoType[] = draft.map((todo) => {
-              if (todo.dueDate) {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: new Date(todo.dueDate),
-                };
-              } else {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: undefined,
-                };
-              }
-            });
-            return todoList.sort((a, b) => {
-              return b.createdAt.getTime() - a.createdAt.getTime();
-            });
-          });
-          setNormalTasks(newTodoList);
-        }
-      }
-      getTodos();
-    }, // eslint-disable-next-line
-    [],
-  );
-  //getting planned tasks
-  useEffect(
-    () => {
-      async function getTodos() {
-        const res = await axios.get<plannedTodoBodyType[]>(
-          '/api/todo/getalltaskwithduedate',
-        );
-        if (res.status === 200) {
-          const newTodoList: plannedTodoType[] = produce(res.data, (draft) => {
-            const todoList = draft.map((todo) => {
-              return {
-                ...todo,
-                createdAt: new Date(todo.createdAt),
-                dueDate: new Date(todo.createdAt),
-              };
-            });
-            return todoList.sort((a, b) => {
-              return b.createdAt.getTime() - a.createdAt.getTime();
-            });
-          });
-          setPlannedTasks(newTodoList);
-        }
-      }
-      getTodos();
-    }, // eslint-disable-next-line
-    [],
-  );
-
-  //getting imp tasks
-  useEffect(
-    () => {
-      async function getTodos() {
-        const res = await axios.get<todoBody[]>('/api/todo/getallimptask');
-        if (res.status === 200) {
-          const newTodoList: todoType[] = produce(res.data, (draft) => {
-            const todoList: todoType[] = draft.map((todo) => {
-              if (todo.dueDate) {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: new Date(todo.dueDate),
-                };
-              } else {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: undefined,
-                };
-              }
-            });
-            return todoList.sort((a, b) => {
-              return b.createdAt.getTime() - a.createdAt.getTime();
-            });
-          });
-          setImpTasks(newTodoList);
-        }
-      }
-      getTodos();
-    }, // eslint-disable-next-line
-    [],
-  );
-
-  //getting imp tasks
-  useEffect(
-    () => {
-      async function getTodos() {
-        const res = await axios.get<MydayTodoBodyType[]>(
-          '/api/todo/getallmyday',
-        );
-        if (res.status === 200) {
-          const newTodoList: myDayTodoType[] = produce(res.data, (draft) => {
-            const todoList: myDayTodoType[] = draft.map((todo) => {
-              if (todo.dueDate) {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: new Date(todo.dueDate),
-                };
-              } else {
-                return {
-                  ...todo,
-                  createdAt: new Date(todo.createdAt),
-                  dueDate: undefined,
-                };
-              }
-            });
-            return todoList.sort((a, b) => {
-              return b.createdAt.getTime() - a.createdAt.getTime();
-            });
-          });
-          setMydayTasks(newTodoList);
-        }
-      }
-      getTodos();
-    }, // eslint-disable-next-line
-    [],
-  );
-
   let routes = (
     <Switch>
       <Route exact component={Home} path={'/'} />
@@ -201,9 +56,7 @@ function App() {
         <Route path={'/important'}>
           <Important />
         </Route>
-        <Route path='*'>
-          <TaskContainer />
-        </Route>
+        <Redirect to='/tasks' />
       </Switch>
     );
   }

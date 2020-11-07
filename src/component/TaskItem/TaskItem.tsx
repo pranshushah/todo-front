@@ -1,16 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
-import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
-import { myDayState } from '../../atoms/MyDayTaskAtom';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { planbedTasksState } from '../../atoms/plannedTasksState';
+import { useSetAllTask } from '../../utils/TaskListUpdater/useSetAllTask';
 import {
   todoType,
   todoBody,
   myDayTodoType,
   plannedTodoType,
-  op,
   editDoneStatus,
   editImpStatus,
   todoFrom,
@@ -21,51 +16,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar, faSun } from '@fortawesome/free-solid-svg-icons';
 import Daydisplay from '../Daydisplay/Daydisplay';
+import { useSetRecoilState } from 'recoil';
+import { selectedTodo } from '../../atoms/selectedTodoAtom';
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
   from?: todoFrom;
 };
 
 function TaskItem({ todo, from }: taskItemProps) {
-  const updateNormaTasks = useSetTasks(normalTasksState);
-  const updatePlannedTasks = useSetTasks(planbedTasksState);
-  const updateImpTasks = useSetTasks(ImpTasksState);
-  const updateMydayTasks = useSetTasks(myDayState);
-  function updateAllTasks(newTodo: todoType | myDayTodoType | plannedTodoType) {
-    updateNormaTasks(newTodo, op.UPDATE);
-    if (newTodo.dueDate) {
-      newTodo = { ...newTodo, dueDate: new Date(newTodo.dueDate) };
-      // already checked for undefined
-      //@ts-ignore
-      updatePlannedTasks(newTodo, op.UPDATE);
-    }
-    if (!todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.ADD);
-    }
-    if (todo.important && !newTodo.important) {
-      updateImpTasks(newTodo, op.Del);
-    }
-    if (todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.UPDATE);
-    }
-    if (todo.myDay) {
-      // already checked for undefined
-      //@ts-ignore
-      updateMydayTasks(newTodo, op.UPDATE);
-    }
-  }
+  const setSelctedTodo = useSetRecoilState(selectedTodo);
+  const updateAllTasks = useSetAllTask();
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
     if (res.status === 200) {
       if (res.data.dueDate) {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: new Date(res.data.dueDate),
         });
       } else {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: undefined,
@@ -81,13 +53,13 @@ function TaskItem({ todo, from }: taskItemProps) {
     );
     if (res.status === 200) {
       if (res.data.dueDate) {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: new Date(res.data.dueDate),
         });
       } else {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: undefined,
@@ -95,32 +67,48 @@ function TaskItem({ todo, from }: taskItemProps) {
       }
     }
   }
+
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       todoDoneStatusChangeHandler({ todoId: todo.id, done: true });
     }
   }
+
   function impStatusChangeHandler() {
     todoImpStatusChangeHandler({ todoId: todo.id, important: !todo.important });
+  }
+  function taskSelectedHandler() {
+    setSelctedTodo(todo);
   }
   return (
     <div className={Styles.container}>
       <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-      <div className={Styles.textContainer}>
-        <div className={Styles.text}>{todo.todoTitle}</div>
-        {todo.myDay && from !== todoFrom.MYDAY ? (
-          <span className={Styles.myday}>
-            <FontAwesomeIcon icon={faSun} style={{ paddingRight: '5px' }} />
-            My Day
-          </span>
-        ) : (
-          ''
-        )}
-        {todo.dueDate && from !== todoFrom.PLANNED ? (
-          <Daydisplay date={todo.dueDate} completed={todo.done} />
-        ) : (
-          ''
-        )}
+      <div className={Styles.textContainer} onClick={taskSelectedHandler}>
+        <div
+          className={Styles.text}
+          style={
+            (todo.myDay && from !== todoFrom.MYDAY) ||
+            (todo.dueDate && from !== todoFrom.PLANNED)
+              ? { lineHeight: '18px' }
+              : undefined
+          }>
+          {todo.todoTitle}
+        </div>
+        <div>
+          {todo.myDay && from !== todoFrom.MYDAY ? (
+            <span className={Styles.myday}>
+              <FontAwesomeIcon icon={faSun} style={{ paddingRight: '5px' }} />
+              My Day
+            </span>
+          ) : (
+            ''
+          )}
+          {todo.dueDate && from !== todoFrom.PLANNED ? (
+            <Daydisplay date={todo.dueDate} completed={todo.done} />
+          ) : (
+            ''
+          )}
+        </div>
       </div>
       {todo.important ? (
         <FontAwesomeIcon

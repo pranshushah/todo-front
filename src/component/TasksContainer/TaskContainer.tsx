@@ -8,7 +8,11 @@ import CompletedTaskList from './CompletedTaskList/CompletedTaskList';
 import axios from 'axios';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import Todo from '../Todo/Todo';
+import { selctedTodo } from '../../selector/selectedTodoStatus';
+import { useRecoilValue } from 'recoil';
 function TaskContainer() {
+  const todoStatus = useRecoilValue(selctedTodo);
   const setTodoList = useSetTasks(normalTasksState);
 
   async function addTodoHandler(todoTitle: string) {
@@ -25,13 +29,15 @@ function TaskContainer() {
     );
   }
   return (
-    <div className={Styles.container}>
-      <Header title='Tasks' />
-      <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
-      <TodoList />
-      <CompletedTaskList />
-      <div className={Styles.bg} />
-    </div>
+    <>
+      <div className={Styles.container}>
+        <Header title='Tasks' />
+        <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
+        <TodoList />
+        <CompletedTaskList />
+      </div>
+      {todoStatus ? <Todo /> : null}
+    </>
   );
 }
 

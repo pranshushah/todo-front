@@ -1,12 +1,15 @@
 import React from 'react';
 import Styles from './TodoContainer.module.scss';
+import MyDayBox from './myDayBox/myDayBox';
+import TodoBox from './TodoBox/TodoBox';
 
-function TaskContainer() {
+function Todo() {
   return (
     <div className={Styles.container}>
-      <h1>Hello</h1>
+      <TodoBox />
+      <MyDayBox />
     </div>
   );
 }
 
-export default TaskContainer;
+export default Todo;

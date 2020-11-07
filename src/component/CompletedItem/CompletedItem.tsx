@@ -1,18 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
-import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
-import { myDayState } from '../../atoms/MyDayTaskAtom';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { planbedTasksState } from '../../atoms/plannedTasksState';
 import {
   todoType,
   todoBody,
   editDoneStatus,
   editImpStatus,
-  op,
   todoFrom,
 } from '../../utils/types';
+import { useSetAllTask } from '../../utils/TaskListUpdater/useSetAllTask';
 import Styles from './CompletedItem.module.scss';
 import Checkbox from '../UI/CheckBox/CheckBox';
 import Daydisplay from '../Daydisplay/Daydisplay';
@@ -25,45 +20,18 @@ type taskItemProps = {
 };
 
 function CompletedTaskItem({ from, todo }: taskItemProps) {
-  const updateNormaTasks = useSetTasks(normalTasksState);
-  const updatePlannedTasks = useSetTasks(planbedTasksState);
-  const updateImpTasks = useSetTasks(ImpTasksState);
-  const updateMyDayTasks = useSetTasks(myDayState);
-  function updateAllTasks(newTodo: todoType) {
-    updateNormaTasks(newTodo, op.UPDATE);
-    if (newTodo.dueDate) {
-      newTodo = { ...newTodo, dueDate: new Date(newTodo.dueDate) };
-      // already checked for undefined
-      //@ts-ignore
-      updatePlannedTasks(newTodo, op.UPDATE);
-    }
-    if (!todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.ADD);
-    }
-    if (todo.important && !newTodo.important) {
-      updateImpTasks(newTodo, op.Del);
-    }
-    if (todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.UPDATE);
-    }
-    if (todo.myDay) {
-      // already checked for undefined
-      //@ts-ignore
-      updateMyDayTasks(newTodo, op.UPDATE);
-    }
-  }
-
+  const updateAllTasks = useSetAllTask();
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
     if (res.status === 200) {
       if (res.data.dueDate) {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: new Date(res.data.dueDate),
         });
       } else {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: undefined,
@@ -79,13 +47,13 @@ function CompletedTaskItem({ from, todo }: taskItemProps) {
     );
     if (res.status === 200) {
       if (res.data.dueDate) {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: new Date(res.data.dueDate),
         });
       } else {
-        updateAllTasks({
+        updateAllTasks(todo, {
           ...res.data,
           createdAt: new Date(res.data.createdAt),
           dueDate: undefined,

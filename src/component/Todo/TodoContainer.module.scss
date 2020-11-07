@@ -1,8 +1,10 @@
 @import '../../utils/scss/spaces';
 @import '../../utils/scss/fontSize';
 @import '../../utils/scss/variables';
+@import '../../utils/scss/lineHeight';
 
 .container {
   padding: getSpace(2) * 1px getSpace(2) * 1px;
-  width: 100%;
+  min-width: 350px;
+  background-color: $whiteColor;
 }

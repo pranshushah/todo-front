@@ -1,15 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetTasks } from '../../../../utils/TaskListUpdater/useSetTask';
-import { ImpTasksState } from '../../../../atoms/ImportantTaskAtom';
-import { myDayState } from '../../../../atoms/MyDayTaskAtom';
-import { normalTasksState } from '../../../../atoms/NormalTaskAtom';
-import { planbedTasksState } from '../../../../atoms/plannedTasksState';
+import { useSetAllTask } from '../../../../utils/TaskListUpdater/useSetAllTask';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faSun } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
 import {
-  op,
   plannedTodoType,
   plannedTodoBodyType,
   editDoneStatus,
@@ -22,36 +17,14 @@ type TodoItemProps = {
 };
 
 function TodoITem({ todo }: TodoItemProps) {
-  const updateNormaTasks = useSetTasks(normalTasksState);
-  const updatePlannedTasks = useSetTasks(planbedTasksState);
-  const updateImpTasks = useSetTasks(ImpTasksState);
-  const updateMyDayTasks = useSetTasks(myDayState);
-  function updateAllTasks(newTodo: plannedTodoType) {
-    updateNormaTasks(newTodo, op.UPDATE);
-    updatePlannedTasks(newTodo, op.UPDATE);
-    if (!todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.ADD);
-    }
-    if (todo.important && !newTodo.important) {
-      updateImpTasks(newTodo, op.Del);
-    }
-    if (todo.important && newTodo.important) {
-      updateImpTasks(newTodo, op.UPDATE);
-    }
-    if (todo.myDay) {
-      // already checked for undefined
-      //@ts-ignore
-      updateMyDayTasks(newTodo, op.UPDATE);
-    }
-  }
-
+  const updateAllTasks = useSetAllTask();
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     const res = await axios.patch<plannedTodoBodyType>(
       '/api/todo/edit/done',
       newStauts,
     );
     if (res.status === 200) {
-      updateAllTasks({
+      updateAllTasks(todo, {
         ...res.data,
         createdAt: new Date(res.data.createdAt),
         dueDate: new Date(res.data.dueDate),
@@ -65,7 +38,7 @@ function TodoITem({ todo }: TodoItemProps) {
       newStauts,
     );
     if (res.status === 200) {
-      updateAllTasks({
+      updateAllTasks(todo, {
         ...res.data,
         createdAt: new Date(res.data.createdAt),
         dueDate: new Date(res.data.dueDate),
