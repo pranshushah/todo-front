@@ -3,9 +3,10 @@
 @import '../../utils/scss/spaces';
 @import '../../utils/scss/lineHeight';
 .container {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
 }
 
 .logo {

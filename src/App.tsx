@@ -3,7 +3,6 @@ import Home from './component/Home/Home';
 import axios from 'axios';
 import Loading from './component/Loading/Loading';
 import { userInfo } from './utils/types';
-import produce from 'immer';
 import { loginState } from './selector/loginStatus';
 import { useSetTaskOnLoad } from './utils/TaskListUpdater/useSetTaskOnload';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
@@ -65,7 +64,7 @@ function App() {
     <Loading />
   ) : (
     <div className='app'>
-      <LeftSidebar />
+      {loggedIn ? <LeftSidebar /> : null}
       {routes}
     </div>
   );
