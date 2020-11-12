@@ -14,7 +14,7 @@ import {
 } from '../../../utils/types';
 import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
 import Checkbox from '../../UI/CheckBox/CheckBox';
-
+import AddStep from '../AddStep/AddStep';
 function TodoBox() {
   const [todo, setTodo] = useRecoilState(selectedTodo);
   const updateAllTask = useSetAllTask();
@@ -111,6 +111,9 @@ function TodoBox() {
         });
       }
     }
+    if (!todoInputValue?.trim()) {
+      setTodoInputValue(todo?.todoTitle);
+    }
   }
 
   function doneOnEnter(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -139,30 +142,35 @@ function TodoBox() {
     setTodoInputValue(e.target.value);
   }
 
+  console.log(todo);
+
   return todo ? (
     <div className={Styles.container}>
-      <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-      <input
-        className={Styles.input}
-        value={todoInputValue}
-        onChange={todoTitleInputChangeHandler}
-        onBlur={updateNewTodoTitle}
-        ref={inputRef}
-        onKeyUp={doneOnEnter}
-      />
-      {todo.important ? (
-        <FontAwesomeIcon
-          icon={SolidStar}
-          className={Styles.impFilled}
-          onClick={impStatusChangeHandler}
+      <div className={Styles.textContainer}>
+        <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+        <input
+          className={Styles.input}
+          value={todoInputValue}
+          onChange={todoTitleInputChangeHandler}
+          onBlur={updateNewTodoTitle}
+          ref={inputRef}
+          onKeyUp={doneOnEnter}
         />
-      ) : (
-        <FontAwesomeIcon
-          icon={faStar}
-          className={Styles.imp}
-          onClick={impStatusChangeHandler}
-        />
-      )}
+        {todo.important ? (
+          <FontAwesomeIcon
+            icon={SolidStar}
+            className={Styles.impFilled}
+            onClick={impStatusChangeHandler}
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={faStar}
+            className={Styles.imp}
+            onClick={impStatusChangeHandler}
+          />
+        )}
+      </div>
+      <AddStep />
     </div>
   ) : null;
 }

@@ -15,7 +15,10 @@ function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);
   const setTodoList = useSetTasks(normalTasksState);
 
-  async function addTodoHandler(todoTitle: string) {
+  async function addTodoHandler(
+    todoTitle: string,
+    todoId: string | null = null,
+  ) {
     const res = await axios.post<todoBody>('/api/todo/new', {
       todoTitle,
     });

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Styles from './AddTodo.module.scss';
 
 type AddTodoProps = {
-  onAddTodo: (title: string) => Promise<void>;
+  onAddTodo: (title: string, todoId?: null | string) => Promise<void>;
   placeholder: string;
 };
 
@@ -33,6 +33,7 @@ function AddTodo({ onAddTodo, placeholder }: AddTodoProps) {
 
   function addTodoHandler() {
     onAddTodo(inputText.trim());
+    setInputText('');
   }
 
   return (

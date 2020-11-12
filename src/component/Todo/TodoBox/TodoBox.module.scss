@@ -9,6 +9,9 @@
   border: 2px solid #eaeaea;
   background-color: white;
   border-radius: 3px;
+}
+
+.textContainer {
   display: flex;
   align-items: center;
 }
@@ -21,9 +24,10 @@
   border-radius: 0;
   color: $secondaryColor;
   font-weight: 600;
-  font-size: getFontSize(2) * 1px;
+  font-size: getFontSize(3) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
-  width: 100%;
+  flex-grow: 1;
+  min-width: 0; // for weird firefox error in flexbox.
   margin-right: getSpace(1) * 1px;
   &:focus {
     outline: 1px solid $secondaryColor;

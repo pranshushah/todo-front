@@ -5,7 +5,6 @@ export const inCompleteMyDayTasks = selector<myDayTodoType[]>({
   key: 'inCompleteMyDayTasks',
   get: ({ get }) => {
     const tasks = get(myDayState);
-    console.log(tasks);
     const inCompleteTasks = tasks.filter((task) => {
       return task.done === false;
     });
