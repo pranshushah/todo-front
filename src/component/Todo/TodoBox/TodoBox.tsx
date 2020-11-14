@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Styles from './TodoBox.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
@@ -21,6 +21,17 @@ function TodoBox() {
   const updateAllTask = useSetAllTask();
   const [todoInputValue, setTodoInputValue] = useState(todo?.todoTitle);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const todoId = todo?.id;
+
+  //whenever new todo is selected change the todoInputValue;
+  useEffect(
+    () => {
+      setTodoInputValue(todo?.todoTitle);
+    },
+    //doing this because does not whant to run on evert title change
+    // eslint-disable-next-line
+    [todoId],
+  );
 
   async function todoImpStatusChangeHandler(newStauts: editImpStatus) {
     if (todo) {
