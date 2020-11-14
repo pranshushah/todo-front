@@ -106,6 +106,13 @@ export type editDoneStatus = {
   done: boolean;
 };
 
+export type editStepDoneStatus = {
+  todoId: string;
+  projectId?: string;
+  done: boolean;
+  stepId: string;
+};
+
 export type editImpStatus = {
   todoId: string;
   important: boolean;

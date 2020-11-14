@@ -18,6 +18,7 @@ import { faStar as SolidStar, faSun } from '@fortawesome/free-solid-svg-icons';
 import Daydisplay from '../Daydisplay/Daydisplay';
 import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import StepDetails from '../StepDetails/StepDetails';
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
   from?: todoFrom;
@@ -103,6 +104,7 @@ function TaskItem({ todo, from }: taskItemProps) {
           ) : (
             ''
           )}
+          <StepDetails steps={todo.steps} />
           {todo.dueDate && from !== todoFrom.PLANNED ? (
             <Daydisplay date={todo.dueDate} completed={todo.done} />
           ) : (

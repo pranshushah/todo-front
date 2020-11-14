@@ -15,6 +15,7 @@ import {
 import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
 import Checkbox from '../../UI/CheckBox/CheckBox';
 import AddStep from '../AddStep/AddStep';
+import StepItem from '../StepItem/StepItem';
 function TodoBox() {
   const [todo, setTodo] = useRecoilState(selectedTodo);
   const updateAllTask = useSetAllTask();
@@ -118,14 +119,13 @@ function TodoBox() {
 
   function doneOnEnter(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      updateNewTodoTitle();
       inputRef.current?.blur();
     }
   }
 
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     if (todo) {
-      todoDoneStatusChangeHandler({ todoId: todo.id, done: !todo.done });
+      todoDoneStatusChangeHandler({ todoId: todo.id, done: e.target.checked });
     }
   }
 
@@ -142,7 +142,9 @@ function TodoBox() {
     setTodoInputValue(e.target.value);
   }
 
-  console.log(todo);
+  const steps = todo?.steps.map((step, index) => (
+    <StepItem step={step} key={index} />
+  ));
 
   return todo ? (
     <div className={Styles.container}>
@@ -170,6 +172,7 @@ function TodoBox() {
           />
         )}
       </div>
+      {steps}
       <AddStep />
     </div>
   ) : null;

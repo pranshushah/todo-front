@@ -12,6 +12,7 @@
 }
 
 .textContainer {
+  margin-bottom: getSpace(1) * 1px;
   display: flex;
   align-items: center;
 }
@@ -21,7 +22,6 @@
   padding: 0 getSpace(1) * 1px;
   padding-left: 2px;
   background: none;
-  border-radius: 0;
   color: $secondaryColor;
   font-weight: 600;
   font-size: getFontSize(3) * 1px;

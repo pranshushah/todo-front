@@ -7,6 +7,7 @@ import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import axios from 'axios';
 import { MydayTodoBodyType } from '../../../utils/types';
 import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
+import CloseButton from '../CloseButton/CloseButton';
 
 function MyDayBox() {
   const [todo, setTodo] = useRecoilState(selectedTodo);
@@ -82,9 +83,9 @@ function MyDayBox() {
         </span>
       </div>
       {todo?.myDay ? (
-        <button className={Styles.closeButton} onClick={removeMyDayHandler}>
-          &times;
-        </button>
+        <div className={Styles.buttonContainer}>
+          <CloseButton onClick={removeMyDayHandler} />
+        </div>
       ) : null}
     </div>
   );

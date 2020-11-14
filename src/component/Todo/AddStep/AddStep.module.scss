@@ -5,7 +5,7 @@
 
 .container {
   padding: getSpace(0.5) * 1px;
-  margin-top: getSpace(1.5) * 1px;
+  margin-top: getSpace(1) * 1px;
   display: flex;
   align-items: center;
   width: 100%;
@@ -37,7 +37,7 @@
 }
 
 .addButton {
-  padding: 2px getSpace(1) * 1px;
   color: $primaryColor;
+  font-size: getFontSize(2) * 1px;
   cursor: pointer;
 }

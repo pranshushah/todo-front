@@ -1,7 +1,11 @@
 import React from 'react';
 import Styles from './CheckBox.module.scss';
 
-function CheckBox(props: React.InputHTMLAttributes<HTMLInputElement>) {
+interface checkboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  small?: boolean;
+}
+
+function CheckBox({ small, ...props }: checkboxProps) {
   const id = Math.random().toString();
   return (
     <div>
@@ -11,7 +15,10 @@ function CheckBox(props: React.InputHTMLAttributes<HTMLInputElement>) {
         {...props}
         className={Styles.inputCheckBox}
       />
-      <label htmlFor={id} className={Styles.checkBox} />
+      <label
+        htmlFor={id}
+        className={small ? Styles.smallCheckBox : Styles.checkBox}
+      />
     </div>
   );
 }

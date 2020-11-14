@@ -1,0 +1,46 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 2px;
+  padding: getSpace(0.5) * 1px 0;
+  box-shadow: 0 1px 0 0 $whiteColor;
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.inputDoneText {
+  border: none;
+  opacity: 0.8;
+  width: 100%;
+  text-decoration: line-through;
+  padding: 0 getSpace(1) * 1px;
+  padding-left: getSpace(1) * 1px;
+  background: none;
+  color: $secondaryColor;
+  font-size: getFontSize(2) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  min-width: 0; // for weird firefox error in flexbox.
+}
+
+.inputText {
+  border: none;
+  width: 100%;
+  padding: 0 getSpace(1) * 1px;
+  padding-left: getSpace(1) * 1px;
+  background: none;
+  color: $secondaryColor;
+  font-size: getFontSize(2) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  min-width: 0; // for weird firefox error in flexbox.
+}
+
+.buttonContainer {
+  margin-right: 11px;
+}

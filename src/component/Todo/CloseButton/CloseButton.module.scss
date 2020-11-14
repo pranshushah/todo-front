@@ -1,0 +1,11 @@
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/spaces';
+
+.closeButton {
+  background: none;
+  color: $tertiaryColor;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  outline: none;
+}
