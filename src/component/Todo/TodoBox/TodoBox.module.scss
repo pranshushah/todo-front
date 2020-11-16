@@ -9,6 +9,7 @@
   border: 2px solid #eaeaea;
   background-color: white;
   border-radius: 3px;
+  color: $secondaryColor;
 }
 
 .textContainer {
@@ -22,7 +23,6 @@
   padding: 0 getSpace(1) * 1px;
   padding-left: 2px;
   background: none;
-  color: $secondaryColor;
   font-weight: 600;
   font-size: getFontSize(3) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
@@ -40,7 +40,6 @@
 .imp {
   height: 24px;
   width: 24px;
-  color: $secondaryColor;
   margin-right: getSpace(1) * 1px;
   &:hover {
     color: $primaryColor;

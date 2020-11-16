@@ -3,23 +3,23 @@ import Styles from './TodoBox.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import axios from 'axios';
+import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
 import {
   todoBody,
   editImpStatus,
   editDoneStatus,
   editTitleStatus,
 } from '../../../utils/types';
-import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
 import Checkbox from '../../UI/CheckBox/CheckBox';
 import AddStep from '../AddStep/AddStep';
 import StepItem from '../StepItem/StepItem';
 function TodoBox() {
-  const [todo, setTodo] = useRecoilState(selectedTodo);
-  const updateAllTask = useSetAllTask();
+  const todo = useRecoilValue(selectedTodo);
   const [todoInputValue, setTodoInputValue] = useState(todo?.todoTitle);
+  const updateTaskFromDetails = useSetTaskFromTaskDetails();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const todoId = todo?.id;
 
@@ -40,23 +40,7 @@ function TodoBox() {
         newStauts,
       );
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }
@@ -65,23 +49,7 @@ function TodoBox() {
     if (todo) {
       const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }
@@ -93,23 +61,7 @@ function TodoBox() {
         newStatus,
       );
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTask(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }

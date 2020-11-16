@@ -10,6 +10,7 @@
   align-items: center;
   cursor: pointer;
   width: 100%;
+  color: $secondaryColor;
   box-shadow: 0 17px 0 -16px $whiteColor;
   &:hover {
     background-color: $whiteColor;
@@ -24,14 +25,12 @@
 
 .myday {
   font-size: 13px;
-  color: $secondaryColor;
   line-height: 12px;
   padding: 0 getSpace(1) * 1px;
   opacity: 0.8;
 }
 
 .text {
-  color: $secondaryColor;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   font-size: getFontSize(3) * 1px;
   padding: 0 getSpace(1) * 1px;
@@ -40,7 +39,6 @@
 .imp {
   height: 24px;
   width: 24px;
-  color: $secondaryColor;
   &:hover {
     color: $primaryColor;
   }

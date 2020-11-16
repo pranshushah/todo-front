@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import CheckBox from '../../UI/CheckBox/CheckBox';
 import { stepType, todoBody, editStepDoneStatus } from '../../../utils/types';
-import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import Styles from './StepItem.module.scss';
 import CloseButton from '../CloseButton/CloseButton';
+import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
 
 type stepProps = {
   step: stepType;
@@ -20,8 +20,8 @@ type editStepTitle = {
 };
 
 function StepItem({ step }: stepProps) {
-  const [todo, setTodo] = useRecoilState(selectedTodo);
-  const updateAllTasks = useSetAllTask();
+  const todo = useRecoilValue(selectedTodo);
+  const updateTaskFromDetails = useSetTaskFromTaskDetails();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [stepInput, setStepInput] = useState(step.taskTitle);
 
@@ -29,23 +29,7 @@ function StepItem({ step }: stepProps) {
     if (todo) {
       const res = await axios.patch<todoBody>('/api/edit/step/done', newStauts);
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }
@@ -67,23 +51,7 @@ function StepItem({ step }: stepProps) {
         stepId: step.id,
       });
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }
@@ -99,23 +67,7 @@ function StepItem({ step }: stepProps) {
         newStatus,
       );
       if (res.status === 200) {
-        if (res.data.dueDate) {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: new Date(res.data.dueDate),
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        } else {
-          const newTodo = {
-            ...res.data,
-            createdAt: new Date(res.data.createdAt),
-            dueDate: undefined,
-          };
-          updateAllTasks(todo, newTodo);
-          setTodo(newTodo);
-        }
+        updateTaskFromDetails(todo, res.data);
       }
     }
   }

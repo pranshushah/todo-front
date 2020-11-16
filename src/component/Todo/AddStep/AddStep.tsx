@@ -3,16 +3,17 @@ import circle from '../../../utils/svg/circle.svg';
 import React, { useState } from 'react';
 import Styles from './AddStep.module.scss';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
-import { useRecoilState } from 'recoil';
-import { useSetAllTask } from '../../../utils/TaskListUpdater/useSetAllTask';
+import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import { todoBody } from '../../../utils/types';
+import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
 
 function AddTodo() {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
-  const [todo, setTodo] = useRecoilState(selectedTodo);
-  const updateAllTask = useSetAllTask();
+  const todo = useRecoilValue(selectedTodo);
+  const updateTaskFromDetails = useSetTaskFromTaskDetails();
+
   function inputFocusHandler() {
     setTextFocus(true);
   }
@@ -37,31 +38,8 @@ function AddTodo() {
       todoId: todo?.id,
       stepTitle: inputText.trim(),
     });
-    console.log(res.data);
     if (res.status === 200 && todo) {
-      if (res.data.dueDate) {
-        updateAllTask(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: new Date(res.data.dueDate),
-        });
-        setTodo({
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: new Date(res.data.dueDate),
-        });
-      } else {
-        updateAllTask(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: undefined,
-        });
-        setTodo({
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: undefined,
-        });
-      }
+      updateTaskFromDetails(todo, res.data);
     }
   }
 

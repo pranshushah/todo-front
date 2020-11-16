@@ -23,7 +23,6 @@
   padding: 0 getSpace(1) * 1px;
   padding-left: getSpace(1) * 1px;
   background: none;
-  color: $secondaryColor;
   font-size: getFontSize(2) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   min-width: 0; // for weird firefox error in flexbox.
@@ -35,7 +34,6 @@
   padding: 0 getSpace(1) * 1px;
   padding-left: getSpace(1) * 1px;
   background: none;
-  color: $secondaryColor;
   font-size: getFontSize(2) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   min-width: 0; // for weird firefox error in flexbox.
