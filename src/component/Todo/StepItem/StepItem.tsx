@@ -98,15 +98,16 @@ function StepItem({ step }: stepProps) {
 
   return (
     <div className={Styles.container}>
-      <Tooltip
-        render={step.done ? 'Mark as not completed' : 'Mark as completed'}>
-        <CheckBox
-          checked={step.done}
-          onChange={checkBoxChangeHandler}
-          small={true}
-        />
-      </Tooltip>
-
+      <div className={Styles.checkboxContainer}>
+        <Tooltip
+          render={step.done ? 'Mark as not completed' : 'Mark as completed'}>
+          <CheckBox
+            checked={step.done}
+            onChange={checkBoxChangeHandler}
+            small={true}
+          />
+        </Tooltip>
+      </div>
       <input
         type='text'
         ref={inputRef}

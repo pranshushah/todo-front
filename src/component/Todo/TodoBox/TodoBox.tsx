@@ -113,10 +113,12 @@ function TodoBox() {
   return todo ? (
     <div className={Styles.container}>
       <div className={Styles.textContainer}>
-        <Tooltip
-          render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
-          <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-        </Tooltip>
+        <div className={Styles.checkboxContainer}>
+          <Tooltip
+            render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+            <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+          </Tooltip>
+        </div>
         <input
           className={Styles.input}
           value={todoInputValue}

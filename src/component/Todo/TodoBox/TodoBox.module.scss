@@ -11,6 +11,11 @@
   color: $secondaryColor;
 }
 
+.checkboxContainer {
+  padding: 8px;
+  padding-right: 15px;
+}
+
 .textContainer {
   margin-bottom: getSpace(1) * 1px;
   display: flex;

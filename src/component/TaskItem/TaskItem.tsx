@@ -71,9 +71,7 @@ function TaskItem({ todo, from }: taskItemProps) {
   }
 
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      todoDoneStatusChangeHandler({ todoId: todo.id, done: e.target.checked });
-    }
+    todoDoneStatusChangeHandler({ todoId: todo.id, done: e.target.checked });
   }
 
   function impStatusChangeHandler() {
@@ -84,10 +82,12 @@ function TaskItem({ todo, from }: taskItemProps) {
   }
   return (
     <div className={Styles.container}>
-      <Tooltip
-        render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
-        <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
-      </Tooltip>
+      <div className={Styles.checkboxContainer}>
+        <Tooltip
+          render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+          <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+        </Tooltip>
+      </div>
       <div className={Styles.textContainer} onClick={taskSelectedHandler}>
         <div
           className={Styles.text}
