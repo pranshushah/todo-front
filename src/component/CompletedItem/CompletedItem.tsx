@@ -14,6 +14,7 @@ import Daydisplay from '../Daydisplay/Daydisplay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar, faSun } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '../UI/Tooltip/Tooltip';
 type taskItemProps = {
   todo: todoType;
   from?: todoFrom;
@@ -71,7 +72,10 @@ function CompletedTaskItem({ from, todo }: taskItemProps) {
   }
   return (
     <div className={Styles.container}>
-      <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+      <Tooltip
+        render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+        <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+      </Tooltip>
       <div className={Styles.textContainer}>
         <div className={Styles.text}>{todo.todoTitle}</div>
         {todo.myDay && from !== todoFrom.MYDAY ? (

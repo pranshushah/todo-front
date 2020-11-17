@@ -1,5 +1,5 @@
 @import '../../../utils/scss/variables';
-@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/lineHeight';
 
 .closeButton {
   background: none;
@@ -7,6 +7,7 @@
   border: none;
   cursor: pointer;
   font-size: 20px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   outline: none;
 }
 

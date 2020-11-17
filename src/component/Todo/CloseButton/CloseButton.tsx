@@ -7,7 +7,7 @@ type closeButtonProps = {
   bigger?: boolean;
 };
 
-function CloseButton({ onClick, bigger = true }: closeButtonProps) {
+function CloseButton({ onClick, bigger = false }: closeButtonProps) {
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}

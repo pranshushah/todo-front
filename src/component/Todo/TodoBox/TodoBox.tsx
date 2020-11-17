@@ -16,6 +16,7 @@ import {
 import Checkbox from '../../UI/CheckBox/CheckBox';
 import AddStep from '../AddStep/AddStep';
 import StepItem from '../StepItem/StepItem';
+import Tooltip from '../../UI/Tooltip/Tooltip';
 function TodoBox() {
   const todo = useRecoilValue(selectedTodo);
   const [todoInputValue, setTodoInputValue] = useState(todo?.todoTitle);
@@ -112,7 +113,10 @@ function TodoBox() {
   return todo ? (
     <div className={Styles.container}>
       <div className={Styles.textContainer}>
-        <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+        <Tooltip
+          render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+          <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+        </Tooltip>
         <input
           className={Styles.input}
           value={todoInputValue}

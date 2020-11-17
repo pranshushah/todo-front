@@ -19,6 +19,7 @@ import Daydisplay from '../Daydisplay/Daydisplay';
 import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import StepDetails from '../StepDetails/StepDetails';
+import Tooltip from '../UI/Tooltip/Tooltip';
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
   from?: todoFrom;
@@ -71,7 +72,7 @@ function TaskItem({ todo, from }: taskItemProps) {
 
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
-      todoDoneStatusChangeHandler({ todoId: todo.id, done: true });
+      todoDoneStatusChangeHandler({ todoId: todo.id, done: e.target.checked });
     }
   }
 
@@ -83,7 +84,10 @@ function TaskItem({ todo, from }: taskItemProps) {
   }
   return (
     <div className={Styles.container}>
-      <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+      <Tooltip
+        render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+        <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
+      </Tooltip>
       <div className={Styles.textContainer} onClick={taskSelectedHandler}>
         <div
           className={Styles.text}

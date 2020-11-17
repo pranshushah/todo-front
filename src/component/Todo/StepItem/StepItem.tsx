@@ -7,6 +7,7 @@ import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import Styles from './StepItem.module.scss';
 import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
+import Tooltip from '../../UI/Tooltip/Tooltip';
 
 type stepProps = {
   step: stepType;
@@ -97,11 +98,15 @@ function StepItem({ step }: stepProps) {
 
   return (
     <div className={Styles.container}>
-      <CheckBox
-        checked={step.done}
-        onChange={checkBoxChangeHandler}
-        small={true}
-      />
+      <Tooltip
+        render={step.done ? 'Mark as not completed' : 'Mark as completed'}>
+        <CheckBox
+          checked={step.done}
+          onChange={checkBoxChangeHandler}
+          small={true}
+        />
+      </Tooltip>
+
       <input
         type='text'
         ref={inputRef}
