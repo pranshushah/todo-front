@@ -14,6 +14,7 @@ import {
 import axios from 'axios';
 import produce from 'immer';
 import { useEffect } from 'react';
+import { endOfDay } from 'date-fns';
 
 export function useSetTaskOnLoad() {
   const setNormalTasks = useSetRecoilState(normalTasksState);
@@ -45,7 +46,7 @@ export function useSetTaskOnLoad() {
                     return {
                       ...todo,
                       createdAt: new Date(todo.createdAt),
-                      dueDate: new Date(todo.dueDate),
+                      dueDate: endOfDay(new Date(todo.dueDate)),
                     };
                   } else {
                     return {
@@ -70,7 +71,7 @@ export function useSetTaskOnLoad() {
                   return {
                     ...todo,
                     createdAt: new Date(todo.createdAt),
-                    dueDate: new Date(todo.createdAt),
+                    dueDate: endOfDay(new Date(todo.dueDate)),
                   };
                 });
                 return todoList.sort((a, b) => {
@@ -89,7 +90,7 @@ export function useSetTaskOnLoad() {
                     return {
                       ...todo,
                       createdAt: new Date(todo.createdAt),
-                      dueDate: new Date(todo.dueDate),
+                      dueDate: endOfDay(new Date(todo.dueDate)),
                     };
                   } else {
                     return {
@@ -115,7 +116,7 @@ export function useSetTaskOnLoad() {
                     return {
                       ...todo,
                       createdAt: new Date(todo.createdAt),
-                      dueDate: new Date(todo.dueDate),
+                      dueDate: endOfDay(new Date(todo.dueDate)),
                     };
                   } else {
                     return {

@@ -80,6 +80,8 @@ function TaskItem({ todo, from }: taskItemProps) {
   function taskSelectedHandler() {
     setSelctedTodo(todo);
   }
+  console.log(todo.todoTitle);
+  console.log(todo.dueDate);
   return (
     <div className={Styles.container}>
       <div className={Styles.checkboxContainer}>

@@ -2,6 +2,7 @@ import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import { useSetAllTask } from './useSetAllTask';
 import { todoBody, todoType } from '../types';
+import { endOfDay } from 'date-fns';
 
 export function useSetTaskFromTaskDetails() {
   const setTodo = useSetRecoilState(selectedTodo);
@@ -12,7 +13,7 @@ export function useSetTaskFromTaskDetails() {
       const newTodo = {
         ...todobody,
         createdAt: new Date(todobody.createdAt),
-        dueDate: new Date(todobody.dueDate),
+        dueDate: endOfDay(new Date(todobody.dueDate)),
       };
       updateAllTasks(todo, newTodo);
       setTodo(newTodo);
