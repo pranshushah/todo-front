@@ -17,11 +17,11 @@
     width: 18px;
     height: 18px;
     margin-right: 7px;
-    padding-left: 2px;
+    padding-left: 3px;
     padding-bottom: 14px;
     vertical-align: bottom;
     color: transparent;
-    font-size: 14px;
+    font-size: 12px;
   }
   .inputCheckBox:checked + &:before {
     background-color: $primaryColor;
@@ -59,7 +59,7 @@
     padding-left: 2px;
     vertical-align: bottom;
     color: transparent;
-    font-size: 10px;
+    font-size: 9px;
   }
   .inputCheckBox:checked + &:before {
     background-color: $primaryColor;

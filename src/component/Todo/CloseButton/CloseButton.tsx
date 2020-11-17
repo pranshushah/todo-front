@@ -1,15 +1,20 @@
 import React from 'react';
 import Styles from './CloseButton.module.scss';
+import { motion } from 'framer-motion';
 
 type closeButtonProps = {
-  onClick: () => Promise<void>;
+  onClick: (() => Promise<void>) | (() => void);
+  bigger?: boolean;
 };
 
-function CloseButton({ onClick }: closeButtonProps) {
+function CloseButton({ onClick, bigger = true }: closeButtonProps) {
   return (
-    <button className={Styles.closeButton} onClick={onClick}>
+    <motion.button
+      whileTap={{ scale: 0.9 }}
+      className={bigger ? Styles.bigButton : Styles.closeButton}
+      onClick={onClick}>
       &times;
-    </button>
+    </motion.button>
   );
 }
 

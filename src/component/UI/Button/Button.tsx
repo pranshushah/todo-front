@@ -1,33 +1,25 @@
 import React from 'react';
 import Styles from './Button.module.scss';
-import { motion } from 'framer-motion';
-/**
- * @typedef{ import('react').HTMLProps<HTMLButtonElement>} buttonProps 
- * @typedef{import('react').Ref<HTMLButtonElement>}  buttonRefType
-/**
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-/**
- * @param {{
- * primary:boolean,
- * dimension:("small"|"medium"|"large"|"huge"),
- * } & buttonProps} props
- * @param {buttonRefType} ref
- */
+interface buttonProps extends HTMLMotionProps<'button'> {
+  primary?: boolean;
+  secondary?: boolean;
+  danger?: boolean;
+  dimension?: 'small' | 'medium' | 'large' | 'huge';
+}
 
-function Button(
-  {
-    children,
-    primary,
-    secondary,
-    darkPrimary,
-    danger,
-    dimension = 'medium',
-    inverted,
-    ...props
-  },
-  ref,
-) {
-  const classes = [Styles.button, Styles.primary];
+function Button({
+  dimension,
+  primary,
+  secondary,
+  danger,
+  children,
+  ...props
+}: buttonProps) {
+  const classes = danger
+    ? [Styles.button, Styles.danger]
+    : [Styles.button, Styles.primary];
 
   switch (dimension) {
     case 'huge': {
