@@ -90,7 +90,7 @@ function TaskItem({ todo, from }: taskItemProps) {
       </div>
       <div className={Styles.textContainer} onClick={taskSelectedHandler}>
         <div
-          className={Styles.text}
+          className={todo.done ? Styles.doneText : Styles.text}
           style={
             (todo.myDay && from !== todoFrom.MYDAY) ||
             (todo.dueDate && from !== todoFrom.PLANNED)

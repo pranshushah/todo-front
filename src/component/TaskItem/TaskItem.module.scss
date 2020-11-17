@@ -40,6 +40,14 @@
   padding: 0 getSpace(1) * 1px;
 }
 
+.doneText {
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  font-size: getFontSize(3) * 1px;
+  padding: 0 getSpace(1) * 1px;
+  opacity: 0.8;
+  text-decoration: line-through;
+}
+
 .imp {
   height: 24px;
   width: 24px;
