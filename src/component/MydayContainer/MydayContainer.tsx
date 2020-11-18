@@ -9,9 +9,14 @@ import CompletedList from './CompletedList/CompletedTask';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
+import { useRecoilValue } from 'recoil';
+import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import Todo from '../Todo/Todo';
+
 function MydayContainer() {
   const setNormalTodoList = useSetTasks(normalTasksState);
   const setMydayTodoList = useSetTasks(myDayState);
+  const todoStatus = useRecoilValue(selectedTodo);
 
   async function addTodoHandler(todoTitle: string) {
     const res = await axios.post<MydayTodoBodyType>('/api/todo/new', {
@@ -28,12 +33,15 @@ function MydayContainer() {
   }
 
   return (
-    <div className={Styles.container}>
-      <Header title='My Day' />
-      <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Myday Task' />
-      <TodoList />
-      <CompletedList />
-    </div>
+    <>
+      <div className={Styles.container}>
+        <Header title='My Day' />
+        <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Myday Task' />
+        <TodoList />
+        <CompletedList />
+      </div>
+      {todoStatus ? <Todo /> : null}
+    </>
   );
 }
 

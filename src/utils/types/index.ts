@@ -45,60 +45,20 @@ export interface todoType {
   steps: Array<stepType>;
 }
 
-export interface plannedTodoType {
-  id: string;
-  userId: string;
-  todoTitle: string;
-  normalTask: string;
-  done: boolean;
-  createdAt: Date;
-  important: boolean;
-  updatedAt: string;
+export interface plannedTodoType extends todoType {
   dueDate: Date;
-  myDay?: boolean;
-  steps: Array<stepType>;
 }
 
-export interface plannedTodoBodyType {
-  id: string;
-  userId: string;
-  todoTitle: string;
-  normalTask: string;
-  done: boolean;
-  createdAt: string;
-  important: boolean;
-  updatedAt: string;
+export interface plannedTodoBodyType extends todoBody {
   dueDate: string;
-  myDay?: boolean;
-  steps: Array<stepType>;
 }
 
-export interface MydayTodoBodyType {
-  id: string;
-  userId: string;
-  todoTitle: string;
-  normalTask: string;
-  done: boolean;
-  createdAt: string;
-  important: boolean;
-  updatedAt: string;
-  dueDate?: string;
+export interface MydayTodoBodyType extends todoBody {
   myDay: boolean;
-  steps: Array<stepType>;
 }
 
-export interface myDayTodoType {
-  id: string;
-  userId: string;
-  todoTitle: string;
-  normalTask: string;
-  done: boolean;
-  createdAt: Date;
-  important: boolean;
-  updatedAt: string;
-  dueDate?: Date;
+export interface myDayTodoType extends todoType {
   myDay: boolean;
-  steps: Array<stepType>;
 }
 
 export type editDoneStatus = {

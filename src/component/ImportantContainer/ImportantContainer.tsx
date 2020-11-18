@@ -9,15 +9,24 @@ import TaskList from './TaskList/TaskList';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
 import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
+import { useRecoilValue } from 'recoil';
+import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import Todo from '../Todo/Todo';
+
 function Important() {
   const setNormalTodoList = useSetTasks(normalTasksState);
   const setImpTodoList = useSetTasks(ImpTasksState);
+  const todoStatus = useRecoilValue(selectedTodo);
 
   async function addTodoHandler(todoTitle: string) {
-    const res = await axios.post<todoBody>('/api/todo/new', {
-      todoTitle,
-      important: true,
-    });
+    const res = await axios.post<todoBody>(
+      '/api/todo/new',
+      {
+        todoTitle,
+        important: true,
+      },
+      {},
+    );
     const newTodo = {
       ...res.data,
       createdAt: new Date(res.data.createdAt),
@@ -28,12 +37,15 @@ function Important() {
   }
 
   return (
-    <div className={Styles.container}>
-      <Header title='Important' />
-      <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
-      <TaskList />
-      <CompletedTaskList />
-    </div>
+    <>
+      <div className={Styles.container}>
+        <Header title='Important' />
+        <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
+        <TaskList />
+        <CompletedTaskList />
+      </div>
+      {todoStatus ? <Todo /> : null}
+    </>
   );
 }
 
