@@ -9,5 +9,9 @@
 }
 
 .overDue {
-  color: #da4358;
+  color: $dangerColor;
+}
+
+.dueToday {
+  color: $tertiaryColor;
 }

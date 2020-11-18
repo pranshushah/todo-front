@@ -9,6 +9,7 @@ import {
   isTomorrow,
   isThisYear,
   isPast,
+  isYesterday,
 } from 'date-fns';
 type dateProps = {
   date: Date;
@@ -30,7 +31,9 @@ function Daydisplay({ date, completed }: dateProps) {
       }
     }
   } else {
-    if (isThisYear(date)) {
+    if (isYesterday(date)) {
+      text = 'Overdue, Yesterday';
+    } else if (isThisYear(date)) {
       text = `Overdue ${format(date, 'iii, MMMM d')}`;
     } else {
       text = `Overdue ${format(date, 'iii, MMMM d, yyyy')}`;
@@ -41,6 +44,8 @@ function Daydisplay({ date, completed }: dateProps) {
       className={
         !completed && isPast(date)
           ? [Styles.due, Styles.overDue].join(' ')
+          : !completed && isToday(date)
+          ? [Styles.due, Styles.dueToday].join(' ')
           : Styles.due
       }>
       <FontAwesomeIcon icon={faCalendar} style={{ paddingRight: '4px' }} />
