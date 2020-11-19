@@ -12,24 +12,39 @@ import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
-
+import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
 function MydayContainer() {
+  const { addNotification } = useSetNotification();
   const setNormalTodoList = useSetTasks(normalTasksState);
   const setMydayTodoList = useSetTasks(myDayState);
   const todoStatus = useRecoilValue(selectedTodo);
 
   async function addTodoHandler(todoTitle: string) {
-    const res = await axios.post<MydayTodoBodyType>('/api/todo/new', {
-      todoTitle,
-      myDay: true,
-    });
-    const newTodo = {
-      ...res.data,
-      createdAt: new Date(res.data.createdAt),
-      dueDate: undefined,
-    };
-    setMydayTodoList(newTodo, op.ADD);
-    setNormalTodoList(newTodo, op.ADD);
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.post<MydayTodoBodyType>(
+          '/api/todo/new',
+          {
+            todoTitle,
+            myDay: true,
+          },
+          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+        );
+        if (res.status === 200) {
+          const newTodo = {
+            ...res.data,
+            createdAt: new Date(res.data.createdAt),
+            dueDate: undefined,
+          };
+          setMydayTodoList(newTodo, op.ADD);
+          setNormalTodoList(newTodo, op.ADD);
+        }
+      } else {
+        throw new Error('No internet connection');
+      }
+    } catch (e) {
+      addNotification(e.message, 'NetWork Error');
+    }
   }
 
   return (

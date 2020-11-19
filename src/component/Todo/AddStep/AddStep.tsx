@@ -7,12 +7,14 @@ import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import { todoBody } from '../../../utils/types';
 import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
+import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
 
 function AddTodo() {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
   const todo = useRecoilValue(selectedTodo);
   const updateTaskFromDetails = useSetTaskFromTaskDetails();
+  const { addNotification } = useSetNotification();
 
   function inputFocusHandler() {
     setTextFocus(true);
@@ -34,12 +36,27 @@ function AddTodo() {
   }
 
   async function addTodoHandler() {
-    const res = await axios.post<todoBody>('/api/step/new', {
-      todoId: todo?.id,
-      stepTitle: inputText.trim(),
-    });
-    if (res.status === 200 && todo) {
-      updateTaskFromDetails(todo, res.data);
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.post<todoBody>(
+          '/api/step/new',
+          {
+            todoId: todo?.id,
+            stepTitle: inputText.trim(),
+          },
+          {
+            timeout: 9000,
+            timeoutErrorMessage: 'Unable to add step todo',
+          },
+        );
+        if (res.status === 200 && todo) {
+          updateTaskFromDetails(todo, res.data);
+        }
+      } else {
+        throw new Error('No internet connection');
+      }
+    } catch (e) {
+      addNotification(e.message, 'Network Error');
     }
   }
 
@@ -49,7 +66,8 @@ function AddTodo() {
         textFocus
           ? [Styles.container, Styles.containerFocused].join(' ')
           : Styles.container
-      }>
+      }
+    >
       <div className={Styles.plusContainer}>
         <img
           src={textFocus ? circle : plus}

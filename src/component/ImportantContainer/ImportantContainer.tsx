@@ -12,28 +12,39 @@ import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
-
+import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
 function Important() {
+  const { addNotification } = useSetNotification();
   const setNormalTodoList = useSetTasks(normalTasksState);
   const setImpTodoList = useSetTasks(ImpTasksState);
   const todoStatus = useRecoilValue(selectedTodo);
 
   async function addTodoHandler(todoTitle: string) {
-    const res = await axios.post<todoBody>(
-      '/api/todo/new',
-      {
-        todoTitle,
-        important: true,
-      },
-      {},
-    );
-    const newTodo = {
-      ...res.data,
-      createdAt: new Date(res.data.createdAt),
-      dueDate: undefined,
-    };
-    setNormalTodoList(newTodo, op.ADD);
-    setImpTodoList(newTodo, op.ADD);
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.post<todoBody>(
+          '/api/todo/new',
+          {
+            todoTitle,
+            important: true,
+          },
+          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+        );
+        if (res.status === 200) {
+          const newTodo = {
+            ...res.data,
+            createdAt: new Date(res.data.createdAt),
+            dueDate: undefined,
+          };
+          setNormalTodoList(newTodo, op.ADD);
+          setImpTodoList(newTodo, op.ADD);
+        }
+      } else {
+        throw new Error('No internet connection');
+      }
+    } catch (e) {
+      addNotification(e.message, 'NetWork Error');
+    }
   }
 
   return (

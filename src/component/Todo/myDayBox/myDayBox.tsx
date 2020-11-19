@@ -8,30 +8,62 @@ import axios from 'axios';
 import { MydayTodoBodyType } from '../../../utils/types';
 import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
+import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
 
 function MyDayBox() {
   const todo = useRecoilValue(selectedTodo);
   const updateTaskFromDetails = useSetTaskFromTaskDetails();
+  const { addNotification } = useSetNotification();
   async function AddToMyDayHandler() {
     if (!todo?.myDay && todo) {
-      const res = await axios.patch<MydayTodoBodyType>('/api/todo/edit/myday', {
-        todoId: todo.id,
-        myDay: true,
-      });
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<MydayTodoBodyType>(
+            '/api/todo/edit/myday',
+            {
+              todoId: todo.id,
+              myDay: true,
+            },
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
 
   async function removeMyDayHandler() {
     if (todo) {
-      const res = await axios.patch<MydayTodoBodyType>('/api/todo/edit/myday', {
-        todoId: todo.id,
-        myDay: false,
-      });
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<MydayTodoBodyType>(
+            '/api/todo/edit/myday',
+            {
+              todoId: todo.id,
+              myDay: false,
+            },
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
@@ -45,7 +77,8 @@ function MyDayBox() {
             todo?.myDay
               ? [Styles.mydayText, Styles.activeText].join(' ')
               : Styles.mydayText
-          }>
+          }
+        >
           {todo?.myDay ? 'Added to My Day' : 'Add to My Day'}
         </span>
       </div>

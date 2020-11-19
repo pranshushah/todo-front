@@ -17,11 +17,14 @@ import Checkbox from '../../UI/CheckBox/CheckBox';
 import AddStep from '../AddStep/AddStep';
 import StepItem from '../StepItem/StepItem';
 import Tooltip from '../../UI/Tooltip/Tooltip';
+import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+
 function TodoBox() {
   const todo = useRecoilValue(selectedTodo);
   const [todoInputValue, setTodoInputValue] = useState(todo?.todoTitle);
   const updateTaskFromDetails = useSetTaskFromTaskDetails();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { addNotification } = useSetNotification();
   const todoId = todo?.id;
 
   //whenever new todo is selected change the todoInputValue;
@@ -36,33 +39,72 @@ function TodoBox() {
 
   async function todoImpStatusChangeHandler(newStauts: editImpStatus) {
     if (todo) {
-      const res = await axios.patch<todoBody>(
-        '/api/todo/edit/important',
-        newStauts,
-      );
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/todo/edit/important',
+            newStauts,
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     if (todo) {
-      const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/todo/edit/done',
+            newStauts,
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
 
   async function todoTitleChangeHandler(newStatus: editTitleStatus) {
     if (todo) {
-      const res = await axios.patch<todoBody>(
-        '/api/todo/edit/title',
-        newStatus,
-      );
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/todo/edit/title',
+            newStatus,
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
@@ -115,7 +157,8 @@ function TodoBox() {
       <div className={Styles.textContainer}>
         <div className={Styles.checkboxContainer}>
           <Tooltip
-            render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+            render={todo.done ? 'Mark as not completed' : 'Mark as completed'}
+          >
             <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
           </Tooltip>
         </div>

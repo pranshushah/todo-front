@@ -11,25 +11,36 @@ import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
 import Todo from '../Todo/Todo';
 import { selctedTodo } from '../../selector/selectedTodoStatus';
 import { useRecoilValue } from 'recoil';
+import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+
 function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);
   const setTodoList = useSetTasks(normalTasksState);
-
-  async function addTodoHandler(
-    todoTitle: string,
-    todoId: string | null = null,
-  ) {
-    const res = await axios.post<todoBody>('/api/todo/new', {
-      todoTitle,
-    });
-    setTodoList(
-      {
-        ...res.data,
-        createdAt: new Date(res.data.createdAt),
-        dueDate: undefined,
-      },
-      op.ADD,
-    );
+  const { addNotification } = useSetNotification();
+  async function addTodoHandler(todoTitle: string) {
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.post<todoBody>(
+          '/api/todo/new',
+          {
+            todoTitle,
+          },
+          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+        );
+        if (res.status === 200) {
+          const newTodo = {
+            ...res.data,
+            createdAt: new Date(res.data.createdAt),
+            dueDate: undefined,
+          };
+          setTodoList(newTodo, op.ADD);
+        }
+      } else {
+        throw new Error('No internet connection');
+      }
+    } catch (e) {
+      addNotification(e.message, 'NetWork Error');
+    }
   }
   return (
     <>

@@ -12,25 +12,42 @@ import { endOfToday } from 'date-fns';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
+import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
 
 function PlannedContainer() {
+  const { addNotification } = useSetNotification();
   const setTodoList = useSetTasks(planbedTasksState);
   const todoStatus = useRecoilValue(selectedTodo);
   const setNormalTodoList = useSetTasks(normalTasksState);
 
   async function addTodoHandler(todoTitle: string) {
-    const res = await axios.post<plannedTodoBodyType>('/api/todo/new', {
-      todoTitle,
-      dueDate: endOfToday(),
-    });
-    const newData = {
-      ...res.data,
-      createdAt: new Date(res.data.createdAt),
-      dueDate: new Date(res.data.dueDate),
-    };
-    setTodoList(newData, op.ADD);
-    setNormalTodoList(newData, op.ADD);
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.post<plannedTodoBodyType>(
+          '/api/todo/new',
+          {
+            todoTitle,
+            dueDate: endOfToday(),
+          },
+          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+        );
+        if (res.status === 200) {
+          const newData = {
+            ...res.data,
+            createdAt: new Date(res.data.createdAt),
+            dueDate: new Date(res.data.dueDate),
+          };
+          setTodoList(newData, op.ADD);
+          setNormalTodoList(newData, op.ADD);
+        }
+      } else {
+        throw new Error('No internet connection');
+      }
+    } catch (e) {
+      addNotification(e.message, 'NetWork Error');
+    }
   }
+
   return (
     <>
       <div className={Styles.container}>

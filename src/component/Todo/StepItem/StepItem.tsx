@@ -8,6 +8,7 @@ import Styles from './StepItem.module.scss';
 import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
 import Tooltip from '../../UI/Tooltip/Tooltip';
+import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
 
 type stepProps = {
   step: stepType;
@@ -21,6 +22,7 @@ type editStepTitle = {
 };
 
 function StepItem({ step }: stepProps) {
+  const { addNotification } = useSetNotification();
   const todo = useRecoilValue(selectedTodo);
   const updateTaskFromDetails = useSetTaskFromTaskDetails();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -28,9 +30,24 @@ function StepItem({ step }: stepProps) {
 
   async function stepDoneStatusChangeHandler(newStauts: editStepDoneStatus) {
     if (todo) {
-      const res = await axios.patch<todoBody>('/api/edit/step/done', newStauts);
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/edit/step/done',
+            newStauts,
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update step tod',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
@@ -47,12 +64,27 @@ function StepItem({ step }: stepProps) {
 
   async function stepDeleteHandler() {
     if (todo) {
-      const res = await axios.patch<todoBody>('/api/edit/step/delete', {
-        todoId: todo.id,
-        stepId: step.id,
-      });
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/edit/step/delete',
+            {
+              todoId: todo.id,
+              stepId: step.id,
+            },
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update step todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
@@ -63,18 +95,29 @@ function StepItem({ step }: stepProps) {
 
   async function todoTitleChangeHandler(newStatus: editStepTitle) {
     if (todo) {
-      const res = await axios.patch<todoBody>(
-        '/api/edit/step/title',
-        newStatus,
-      );
-      if (res.status === 200) {
-        updateTaskFromDetails(todo, res.data);
+      try {
+        if (window.navigator.onLine) {
+          const res = await axios.patch<todoBody>(
+            '/api/edit/step/title',
+            newStatus,
+            {
+              timeout: 9000,
+              timeoutErrorMessage: 'Unable to update step todo',
+            },
+          );
+          if (res.status === 200) {
+            updateTaskFromDetails(todo, res.data);
+          }
+        } else {
+          throw new Error('No internet connection');
+        }
+      } catch (e) {
+        addNotification(e.message, 'Network Error');
       }
     }
   }
 
   function updateNewStepTitle() {
-    console.log('zoom');
     if (todo && stepInput) {
       if (stepInput?.trim() !== step.taskTitle) {
         todoTitleChangeHandler({
@@ -100,7 +143,8 @@ function StepItem({ step }: stepProps) {
     <div className={Styles.container}>
       <div className={Styles.checkboxContainer}>
         <Tooltip
-          render={step.done ? 'Mark as not completed' : 'Mark as completed'}>
+          render={step.done ? 'Mark as not completed' : 'Mark as completed'}
+        >
           <CheckBox
             checked={step.done}
             onChange={checkBoxChangeHandler}

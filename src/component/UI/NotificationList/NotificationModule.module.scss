@@ -5,11 +5,7 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
   list-style: none;
-  justify-content: flex-end;
   color: $secondaryColor;
 }
 
@@ -17,8 +13,7 @@
   width: 400px;
   border-left: 4px solid $dangerColor;
   background: wheat;
-  margin: 10px;
-  flex: 0 0 100px;
+  margin: 16px;
   position: relative;
   border-radius: 5px;
 }
@@ -28,7 +23,7 @@
 }
 
 .type {
-  margin: getSpace(1) * 1px;
+  padding: getSpace(1) * 1px;
   margin-top: getSpace(3) * 1px;
 }
 
