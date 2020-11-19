@@ -20,6 +20,8 @@ import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import StepDetails from '../StepDetails/StepDetails';
 import Tooltip from '../UI/Tooltip/Tooltip';
+import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
   from?: todoFrom;
@@ -27,46 +29,74 @@ type taskItemProps = {
 
 function TaskItem({ todo, from }: taskItemProps) {
   const setSelctedTodo = useSetRecoilState(selectedTodo);
+  const { addNotification } = useSetNotification();
   const updateAllTasks = useSetAllTask();
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
-    const res = await axios.patch<todoBody>('/api/todo/edit/done', newStauts);
-    if (res.status === 200) {
-      if (res.data.dueDate) {
-        updateAllTasks(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: new Date(res.data.dueDate),
-        });
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.patch<todoBody>(
+          '/api/todo/edit/done',
+          newStauts,
+          {
+            timeout: 9000,
+            timeoutErrorMessage: 'We were unable to update todo',
+          },
+        );
+        if (res.status === 200) {
+          if (res.data.dueDate) {
+            updateAllTasks(todo, {
+              ...res.data,
+              createdAt: new Date(res.data.createdAt),
+              dueDate: new Date(res.data.dueDate),
+            });
+          } else {
+            updateAllTasks(todo, {
+              ...res.data,
+              createdAt: new Date(res.data.createdAt),
+              dueDate: undefined,
+            });
+          }
+        }
       } else {
-        updateAllTasks(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: undefined,
-        });
+        throw new Error('there is no internet connection');
       }
+    } catch (e) {
+      addNotification(e.message, 'Newtowork Error');
     }
   }
 
   async function todoImpStatusChangeHandler(newStauts: editImpStatus) {
-    const res = await axios.patch<todoBody>(
-      '/api/todo/edit/important',
-      newStauts,
-    );
-    if (res.status === 200) {
-      if (res.data.dueDate) {
-        updateAllTasks(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: new Date(res.data.dueDate),
-        });
+    try {
+      if (window.navigator.onLine) {
+        const res = await axios.patch<todoBody>(
+          '/api/todo/edit/important',
+          newStauts,
+          {
+            timeout: 9000,
+            timeoutErrorMessage: 'We were unable to update todo',
+          },
+        );
+        if (res.status === 200) {
+          if (res.data.dueDate) {
+            updateAllTasks(todo, {
+              ...res.data,
+              createdAt: new Date(res.data.createdAt),
+              dueDate: new Date(res.data.dueDate),
+            });
+          } else {
+            updateAllTasks(todo, {
+              ...res.data,
+              createdAt: new Date(res.data.createdAt),
+              dueDate: undefined,
+            });
+          }
+        }
       } else {
-        updateAllTasks(todo, {
-          ...res.data,
-          createdAt: new Date(res.data.createdAt),
-          dueDate: undefined,
-        });
+        throw new Error('there is no internet connection');
       }
+    } catch (e) {
+      addNotification(e.message, 'Newtowork Error');
     }
   }
 
@@ -80,13 +110,12 @@ function TaskItem({ todo, from }: taskItemProps) {
   function taskSelectedHandler() {
     setSelctedTodo(todo);
   }
-  console.log(todo.todoTitle);
-  console.log(todo.dueDate);
   return (
     <div className={Styles.container}>
       <div className={Styles.checkboxContainer}>
         <Tooltip
-          render={todo.done ? 'Mark as not completed' : 'Mark as completed'}>
+          render={todo.done ? 'Mark as not completed' : 'Mark as completed'}
+        >
           <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
         </Tooltip>
       </div>
@@ -98,7 +127,8 @@ function TaskItem({ todo, from }: taskItemProps) {
             (todo.dueDate && from !== todoFrom.PLANNED)
               ? { lineHeight: '18px' }
               : undefined
-          }>
+          }
+        >
           {todo.todoTitle}
         </div>
         <div>

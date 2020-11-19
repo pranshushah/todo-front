@@ -3,6 +3,13 @@ export enum op {
   ADD = 'add',
   Del = 'delete',
 }
+
+export interface notification {
+  message: string;
+  type: string;
+  id: string;
+}
+
 export interface userInfo {
   googleId?: string;
   name: string;

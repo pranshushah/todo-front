@@ -1,0 +1,40 @@
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/spaces';
+
+.ulContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  justify-content: flex-end;
+  color: $secondaryColor;
+}
+
+.notifcation {
+  width: 400px;
+  border-left: 4px solid $dangerColor;
+  background: wheat;
+  margin: 10px;
+  flex: 0 0 100px;
+  position: relative;
+  border-radius: 5px;
+}
+.message {
+  margin: getSpace(1) * 1px;
+  margin-top: getSpace(1.5) * 1px;
+}
+
+.type {
+  margin: getSpace(1) * 1px;
+  margin-top: getSpace(3) * 1px;
+}
+
+.closeContainer {
+  color: white;
+  position: absolute;
+  top: 0px;
+  right: 12px;
+}

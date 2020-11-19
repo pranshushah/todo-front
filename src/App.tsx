@@ -13,6 +13,7 @@ import MydayContainer from './component/MydayContainer/MydayContainer';
 import PlannedContainer from './component/PlannedContainer/PlannedContainer';
 import Important from './component/ImportantContainer/ImportantContainer';
 import LeftSidebar from './component/LeftSidebar/LeftSidebar';
+import NotificationList from './component/UI/NotificationList/NotificationList';
 enum status {
   SUCCESS = 'success',
   LOADING = 'loading',
@@ -66,6 +67,7 @@ function App() {
     <div className='app'>
       {loggedIn ? <LeftSidebar /> : null}
       {routes}
+      <NotificationList />
     </div>
   );
 }
