@@ -2,6 +2,7 @@ import plus from '../../utils/svg/plus.svg';
 import circle from '../../utils/svg/circle.svg';
 import React, { useState } from 'react';
 import Styles from './AddTodo.module.scss';
+import Input from '../UI/Input/Input';
 
 type AddTodoProps = {
   onAddTodo: (title: string, todoId?: null | string) => Promise<void>;
@@ -42,7 +43,8 @@ function AddTodo({ onAddTodo, placeholder }: AddTodoProps) {
         textFocus
           ? [Styles.container, Styles.containerFocused].join(' ')
           : Styles.container
-      }>
+      }
+    >
       <div className={Styles.plusContainer}>
         <img
           src={textFocus ? circle : plus}
@@ -50,7 +52,8 @@ function AddTodo({ onAddTodo, placeholder }: AddTodoProps) {
           className={Styles.plus}
         />
       </div>
-      <input
+      <Input
+        addTodo
         type='text'
         placeholder={placeholder}
         className={Styles.input}

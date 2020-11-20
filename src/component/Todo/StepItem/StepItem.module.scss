@@ -20,30 +20,6 @@
   padding-right: 15px;
 }
 
-.inputDoneText {
-  border: none;
-  opacity: 0.8;
-  width: 100%;
-  text-decoration: line-through;
-  padding: 0 getSpace(1) * 1px;
-  padding-left: getSpace(1) * 1px;
-  background: none;
-  font-size: getFontSize(2) * 1px;
-  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
-  min-width: 0; // for weird firefox error in flexbox.
-}
-
-.inputText {
-  border: none;
-  width: 100%;
-  padding: 0 getSpace(1) * 1px;
-  padding-left: getSpace(1) * 1px;
-  background: none;
-  font-size: getFontSize(2) * 1px;
-  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
-  min-width: 0; // for weird firefox error in flexbox.
-}
-
 .buttonContainer {
   margin-right: 11px;
 }

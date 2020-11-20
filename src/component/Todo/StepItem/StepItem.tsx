@@ -9,6 +9,7 @@ import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
 import Tooltip from '../../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import Input from '../../UI/Input/Input';
 
 type stepProps = {
   step: stepType;
@@ -152,14 +153,15 @@ function StepItem({ step }: stepProps) {
           />
         </Tooltip>
       </div>
-      <input
+      <Input
         type='text'
         ref={inputRef}
         onBlur={updateNewStepTitle}
         onKeyUp={doneOnEnter}
         value={stepInput}
+        doneStepInput={step.done}
+        stepInput={!step.done}
         onChange={stepInputChangeHandler}
-        className={step.done ? Styles.inputDoneText : Styles.inputText}
       />
       <div className={Styles.buttonContainer}>
         <CloseButton onClick={stepDeleteHandler} />

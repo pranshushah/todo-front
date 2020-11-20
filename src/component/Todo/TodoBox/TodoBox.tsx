@@ -18,6 +18,7 @@ import AddStep from '../AddStep/AddStep';
 import StepItem from '../StepItem/StepItem';
 import Tooltip from '../../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import Input from '../../UI/Input/Input';
 
 function TodoBox() {
   const todo = useRecoilValue(selectedTodo);
@@ -162,13 +163,13 @@ function TodoBox() {
             <Checkbox onChange={checkBoxChangeHandler} checked={todo.done} />
           </Tooltip>
         </div>
-        <input
-          className={Styles.input}
+        <Input
           value={todoInputValue}
           onChange={todoTitleInputChangeHandler}
           onBlur={updateNewTodoTitle}
           ref={inputRef}
           onKeyUp={doneOnEnter}
+          todoInDetails
         />
         {todo.important ? (
           <FontAwesomeIcon
