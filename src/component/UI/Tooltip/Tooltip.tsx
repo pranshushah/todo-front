@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import Styles from './Tooltip.module.scss';
 
 type TooltipProps = {
   children: React.ReactNode;
@@ -31,41 +33,37 @@ function Tooltip({ children, render }: TooltipProps) {
     setYcord(null);
   }
 
+  const varaints = {
+    initial: {
+      opacity: 0,
+      scale: 0.1,
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+    },
+  };
+
   function portalHandler() {
     if (showTooltip && el && xcord && ycord) {
       return createPortal(
-        <div
-          style={{
-            position: 'absolute',
-            left: xcord,
-            top: ycord - 50,
-          }}
-        >
-          <div
+        <AnimatePresence>
+          <motion.div
+            initial='initial'
+            animate='animate'
+            variants={varaints}
             style={{
-              position: 'relative',
-              left: '-50%',
-              background: 'white',
-              fontSize: '12px',
-              color: 'black',
-              borderRadius: '2px',
-              padding: '8px 12px',
-              boxShadow: '0px 1px 7px 0px rgba(50, 50, 50, 0.75)',
+              position: 'absolute',
+              left: xcord,
+              top: ycord - 50,
             }}
           >
-            {render}
-            <span
-              style={{
-                position: 'absolute',
-                bottom: -10,
-                left: 'calc(50% - 5px)',
-                borderWidth: 5,
-                borderStyle: 'solid',
-                borderColor: 'white transparent transparent transparent',
-              }}
-            />
-          </div>
-        </div>,
+            <div className={Styles.tooltipContainer}>
+              {render}
+              <span className={Styles.arrow} />
+            </div>
+          </motion.div>
+        </AnimatePresence>,
         el,
       );
     } else {
