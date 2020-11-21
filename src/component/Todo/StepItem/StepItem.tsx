@@ -10,6 +10,7 @@ import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpd
 import Tooltip from '../../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
 import Input from '../../UI/Input/Input';
+import Modal from '../../UI/Modal/Modal';
 
 type stepProps = {
   step: stepType;
@@ -28,6 +29,7 @@ function StepItem({ step }: stepProps) {
   const updateTaskFromDetails = useSetTaskFromTaskDetails();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [stepInput, setStepInput] = useState(step.taskTitle);
+  const [modalToggle, setModalToggle] = useState(false);
 
   async function stepDoneStatusChangeHandler(newStauts: editStepDoneStatus) {
     if (todo) {
@@ -51,6 +53,14 @@ function StepItem({ step }: stepProps) {
         addNotification(e.message, 'Network Error');
       }
     }
+  }
+
+  function modalCloseHandler() {
+    setModalToggle(false);
+  }
+
+  function modalOpenHandler() {
+    setModalToggle(true);
   }
 
   function checkBoxChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -88,6 +98,7 @@ function StepItem({ step }: stepProps) {
         addNotification(e.message, 'Network Error');
       }
     }
+    setModalToggle(false);
   }
 
   function stepInputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -141,32 +152,41 @@ function StepItem({ step }: stepProps) {
   }
 
   return (
-    <div className={Styles.container}>
-      <div className={Styles.checkboxContainer}>
-        <Tooltip
-          render={step.done ? 'Mark as not completed' : 'Mark as completed'}
-        >
-          <CheckBox
-            checked={step.done}
-            onChange={checkBoxChangeHandler}
-            small={true}
-          />
-        </Tooltip>
-      </div>
-      <Input
-        type='text'
-        ref={inputRef}
-        onBlur={updateNewStepTitle}
-        onKeyUp={doneOnEnter}
-        value={stepInput}
-        doneStepInput={step.done}
-        stepInput={!step.done}
-        onChange={stepInputChangeHandler}
+    <>
+      <Modal
+        modalClosed={modalCloseHandler}
+        modalConfirmed={stepDeleteHandler}
+        title={step.taskTitle}
+        show={modalToggle}
+        deleteButtonTitle='Delete Step'
       />
-      <div className={Styles.buttonContainer}>
-        <CloseButton onClick={stepDeleteHandler} />
+      <div className={Styles.container}>
+        <div className={Styles.checkboxContainer}>
+          <Tooltip
+            render={step.done ? 'Mark as not completed' : 'Mark as completed'}
+          >
+            <CheckBox
+              checked={step.done}
+              onChange={checkBoxChangeHandler}
+              small={true}
+            />
+          </Tooltip>
+        </div>
+        <Input
+          type='text'
+          ref={inputRef}
+          onBlur={updateNewStepTitle}
+          onKeyUp={doneOnEnter}
+          value={stepInput}
+          doneStepInput={step.done}
+          stepInput={!step.done}
+          onChange={stepInputChangeHandler}
+        />
+        <div className={Styles.buttonContainer}>
+          <CloseButton onClick={modalOpenHandler} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

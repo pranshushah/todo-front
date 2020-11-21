@@ -31,7 +31,6 @@ function AddTodo() {
   function enterHandler(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       addTodoHandler();
-      setInputText('');
     }
   }
 
@@ -51,6 +50,7 @@ function AddTodo() {
         );
         if (res.status === 200 && todo) {
           updateTaskFromDetails(todo, res.data);
+          setInputText('');
         }
       } else {
         throw new Error('No internet connection');

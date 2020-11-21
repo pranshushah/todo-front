@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type TooltipProps = {
@@ -10,7 +10,6 @@ function Tooltip({ children, render }: TooltipProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [xcord, setXcord] = useState<null | number>(null);
   const [ycord, setYcord] = useState<null | number>(null);
-  const tooltipRef = useRef(null);
   let el: Element | null;
   el = document.querySelector('.tooltip-rc');
   if (!el) {
@@ -40,7 +39,8 @@ function Tooltip({ children, render }: TooltipProps) {
             position: 'absolute',
             left: xcord,
             top: ycord - 50,
-          }}>
+          }}
+        >
           <div
             style={{
               position: 'relative',
@@ -51,7 +51,8 @@ function Tooltip({ children, render }: TooltipProps) {
               borderRadius: '2px',
               padding: '8px 12px',
               boxShadow: '0px 1px 7px 0px rgba(50, 50, 50, 0.75)',
-            }}>
+            }}
+          >
             {render}
             <span
               style={{
@@ -75,9 +76,9 @@ function Tooltip({ children, render }: TooltipProps) {
   const data = (
     <span
       key={0}
-      ref={tooltipRef}
       onMouseMove={showTooltipHandler}
-      onMouseLeave={hideTooltipHandler}>
+      onMouseLeave={hideTooltipHandler}
+    >
       {children}
     </span>
   );

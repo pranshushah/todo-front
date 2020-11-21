@@ -17,9 +17,14 @@ function Button({
   children,
   ...props
 }: buttonProps) {
-  const classes = danger
-    ? [Styles.button, Styles.danger]
-    : [Styles.button, Styles.primary];
+  let classes: string[];
+  if (secondary) {
+    classes = [Styles.button, Styles.secondary];
+  } else if (danger) {
+    classes = [Styles.button, Styles.danger];
+  } else {
+    classes = [Styles.button, Styles.primary];
+  }
 
   switch (dimension) {
     case 'huge': {
@@ -43,7 +48,8 @@ function Button({
     <motion.button
       {...props}
       whileTap={{ scale: 0.9 }}
-      className={classes.join(' ')}>
+      className={classes.join(' ')}
+    >
       {children}
     </motion.button>
   );
