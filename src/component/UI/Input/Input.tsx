@@ -5,6 +5,7 @@ interface inputProps
   extends React.InputHTMLAttributes<
     React.RefAttributes<HTMLInputElement> | HTMLInputElement
   > {
+  addProject?: boolean;
   addTodo?: boolean;
   addStep?: boolean;
   stepInput?: boolean;
@@ -14,6 +15,7 @@ interface inputProps
 
 function Input(
   {
+    addProject,
     addTodo,
     addStep,
     stepInput,
@@ -26,6 +28,8 @@ function Input(
   let classes: string = '';
   if (addStep) {
     classes = [Styles.addInput, Styles.addStepInput].join(' ');
+  } else if (addProject) {
+    classes = Styles.addProject;
   } else if (stepInput) {
     classes = Styles.stepInputText;
   } else if (doneStepInput) {

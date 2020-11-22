@@ -1,0 +1,22 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/variables';
+
+.container {
+  margin-top: getSpace(0.5) * 1px;
+  padding: getSpace(0.5) * 1px 0;
+  padding-left: getSpace(2.5) * 1px;
+  display: flex;
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+}
+
+.plusContainer {
+  margin-top: 6px;
+  cursor: pointer;
+}
+.plus {
+  width: 20px;
+  height: 24px;
+}

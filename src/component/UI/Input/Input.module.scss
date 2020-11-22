@@ -3,13 +3,33 @@
 @import '../../../utils/scss/variables';
 @import '../../../utils/scss/lineHeight';
 
+.addProject {
+  border: none;
+  padding: 0 getSpace(1.5) * 1px;
+  background: none;
+  border-radius: 0;
+  color: $secondaryColor;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  width: 100%;
+  color: $secondaryColor;
+  font-size: getFontSize(3) * 1px;
+  &::placeholder {
+    color: $tertiaryColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::placeholder {
+    color: #8c8a93;
+  }
+}
+
 .addInput {
   border: none;
   padding: 0 getSpace(1.5) * 1px;
   background: none;
   border-radius: 0;
   color: $secondaryColor;
-  font-size: getFontSize(3) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px;
   width: 100%;
   &::placeholder {

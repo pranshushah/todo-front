@@ -4,7 +4,7 @@
 @import '../../utils/scss/fontSize';
 @import '../../utils/scss/media';
 .container {
-  min-width: 200px;
+  min-width: 250px;
   height: 100vh;
   background-color: $whiteColor;
   @include mobile() {
@@ -40,8 +40,7 @@
 }
 
 .icon {
-  width: 16px;
-  margin-right: 8px;
+  margin-right: 12px;
 }
 
 .text {

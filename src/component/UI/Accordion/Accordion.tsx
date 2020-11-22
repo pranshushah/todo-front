@@ -15,9 +15,6 @@ function Accordion(props: AccordionProps) {
   function toggleAccordion() {
     setActiveState((active) => !active);
   }
-  const transition = {
-    duration: 0.1,
-  };
   const variant = {
     initial: {
       opacity: 0,
@@ -27,7 +24,6 @@ function Accordion(props: AccordionProps) {
     },
     exit: {
       opacity: 0,
-      transition,
     },
   };
 

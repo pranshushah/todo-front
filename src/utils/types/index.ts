@@ -94,3 +94,9 @@ export enum todoFrom {
   MYDAY = 'MY DAY',
   PLANNED = 'PLANNED',
 }
+
+export interface project {
+  projectName: string;
+  id: string;
+  userId: string;
+}

@@ -61,7 +61,7 @@ function AddTodo({ onAddTodo, placeholder }: AddTodoProps) {
         onBlur={inputBlurHandler}
         value={inputText}
         onChange={inputChangeHandler}
-        onKeyPress={enterHandler}
+        onKeyUp={enterHandler}
       />
       {inputText.length > 0 ? (
         <div className={Styles.addButton} onClick={addTodoHandler}>

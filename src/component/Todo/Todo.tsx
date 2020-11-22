@@ -6,21 +6,48 @@ import ButtonContainer from './ButtonContainer/ButtonContainer';
 import CloseButton from './CloseButton/CloseButton';
 import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Todo() {
   const setTodo = useSetRecoilState(selectedTodo);
   function closeHandler() {
     setTodo(null);
   }
+  const transition = {
+    duration: 0.2,
+  };
+  const variant = {
+    initial: {
+      opacity: 0,
+      x: 1000,
+    },
+    animate: {
+      opacity: 1,
+      x: 0,
+      transition,
+    },
+    exit: {
+      opacity: 0,
+      x: 1000,
+    },
+  };
   return (
-    <div className={Styles.container}>
-      <div className={Styles.close}>
-        <CloseButton bigger onClick={closeHandler} />
-      </div>
-      <TodoBox />
-      <MyDayBox />
-      <ButtonContainer />
-    </div>
+    <AnimatePresence>
+      <motion.div
+        variants={variant}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        className={Styles.container}
+      >
+        <div className={Styles.close}>
+          <CloseButton onClick={closeHandler} bigger />
+        </div>
+        <TodoBox />
+        <MyDayBox />
+        <ButtonContainer />
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

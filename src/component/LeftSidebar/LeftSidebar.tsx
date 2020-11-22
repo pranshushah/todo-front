@@ -10,6 +10,7 @@ import { faSun, faHome } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 import { useRecoilValue } from 'recoil';
+import AddProject from '../AddProject/AddProject';
 function LeftSidebar() {
   const inCompleteNormalTasksList = useRecoilValue(inCompleteNormalTasks);
   const inCompletePlannedTasksList = useRecoilValue(inCompletePlannedTasks);
@@ -23,7 +24,8 @@ function LeftSidebar() {
             className={Styles.item}
             to='/myday'
             activeClassName={Styles.active}
-            exact>
+            exact
+          >
             <div>
               <FontAwesomeIcon icon={faSun} className={Styles.icon} />
               <span className={Styles.text}>My Day</span>
@@ -40,7 +42,8 @@ function LeftSidebar() {
             className={Styles.item}
             to='/important'
             activeClassName={Styles.active}
-            exact>
+            exact
+          >
             <div>
               <FontAwesomeIcon icon={faStar} className={Styles.icon} />
               <span className={Styles.text}>Important</span>
@@ -57,7 +60,8 @@ function LeftSidebar() {
             to='/planned'
             className={Styles.item}
             activeClassName={Styles.active}
-            exact>
+            exact
+          >
             <div>
               <FontAwesomeIcon icon={faCalendar} className={Styles.icon} />
               <span className={Styles.text}>Planned</span>
@@ -74,7 +78,8 @@ function LeftSidebar() {
             to='/tasks'
             exact
             className={Styles.item}
-            activeClassName={Styles.active}>
+            activeClassName={Styles.active}
+          >
             <div>
               <FontAwesomeIcon icon={faHome} className={Styles.icon} />
               <span className={Styles.text}>Tasks</span>
@@ -87,6 +92,7 @@ function LeftSidebar() {
           </NavLink>
         </li>
       </ul>
+      <AddProject />
     </div>
   );
 }
