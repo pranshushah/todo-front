@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Styles from './Accordion.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 type AccordionProps = {
   title: string;
@@ -9,40 +10,63 @@ type AccordionProps = {
 };
 
 function Accordion(props: AccordionProps) {
-  const [active, setActiveState] = useState('');
-  const [height, setHeightState] = useState('0px');
-
-  const content = useRef<HTMLDivElement>(null);
+  const [active, setActiveState] = useState(false);
 
   function toggleAccordion() {
-    setActiveState(active === '' ? 'active' : '');
-    setHeightState(
-      active === 'active' ? '0px' : `${content.current?.scrollHeight}px`,
-    );
+    setActiveState((active) => !active);
   }
+  const transition = {
+    duration: 0.1,
+  };
+  const variant = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+    },
+    exit: {
+      opacity: 0,
+      transition,
+    },
+  };
 
   return (
-    <div className={Styles.accordionSection}>
-      <button
-        className={
-          active ? [Styles.accordion, active].join(' ') : Styles.accordion
-        }
-        onClick={toggleAccordion}>
-        <span className={Styles.icon}>
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className={active ? Styles.rotate : 'none'}
-          />
-        </span>
-        <p className={Styles.accordionTitle}>{props.title}</p>
-      </button>
-      <div
-        ref={content}
-        style={{ maxHeight: `${height}` }}
-        className={Styles.accordionContent}>
-        {props.content}
-      </div>
-    </div>
+    <AnimateSharedLayout>
+      <motion.section className={Styles.accordionSection} layout>
+        <motion.button
+          layout
+          className={
+            active ? [Styles.accordion, active].join(' ') : Styles.accordion
+          }
+          onClick={toggleAccordion}
+        >
+          <motion.span layout className={Styles.icon}>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className={active ? Styles.rotate : 'none'}
+            />
+          </motion.span>
+          <motion.p layout className={Styles.accordionTitle}>
+            {props.title}
+          </motion.p>
+        </motion.button>
+        <AnimatePresence>
+          {active && (
+            <motion.div
+              initial='initial'
+              animate='animate'
+              exit='exit'
+              variants={variant}
+              layout
+              className={Styles.accordionContent}
+            >
+              {props.content}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.section>
+    </AnimateSharedLayout>
   );
 }
 
