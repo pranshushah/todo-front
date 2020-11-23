@@ -11,13 +11,14 @@ import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 import { useRecoilValue } from 'recoil';
 import AddProject from '../AddProject/AddProject';
+import ProjectList from '../AddProject/ProjectList/ProjectList';
 function LeftSidebar() {
   const inCompleteNormalTasksList = useRecoilValue(inCompleteNormalTasks);
   const inCompletePlannedTasksList = useRecoilValue(inCompletePlannedTasks);
   const inCompleteImpTasksList = useRecoilValue(inCompleteImpTasks);
   const inCompleteMyDayTasksList = useRecoilValue(inCompleteMyDayTasks);
   return (
-    <div className={Styles.container}>
+    <section className={Styles.container}>
       <ul className={Styles.itemContainer}>
         <li>
           <NavLink
@@ -92,8 +93,9 @@ function LeftSidebar() {
           </NavLink>
         </li>
       </ul>
+      <ProjectList />
       <AddProject />
-    </div>
+    </section>
   );
 }
 

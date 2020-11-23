@@ -29,7 +29,7 @@ function Accordion(props: AccordionProps) {
 
   return (
     <AnimateSharedLayout>
-      <motion.section className={Styles.accordionSection} layout>
+      <motion.section className={Styles.accordionSection}>
         <motion.button
           layout
           className={
@@ -54,7 +54,6 @@ function Accordion(props: AccordionProps) {
               animate='animate'
               exit='exit'
               variants={variant}
-              layout
               className={Styles.accordionContent}
             >
               {props.content}

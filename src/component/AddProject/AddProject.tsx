@@ -25,7 +25,10 @@ function AddProject() {
           {
             projectName,
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          {
+            timeout: 9000,
+            timeoutErrorMessage: 'We were unable to add project',
+          },
         );
         if (res.status === 200) {
           console.log(res.data);
@@ -63,7 +66,7 @@ function AddProject() {
       <div className={Styles.plusContainer} onClick={imgClickHandler}>
         <img
           src={inputFocused ? focusedPlus : plus}
-          alt='add project'
+          alt=''
           className={Styles.plus}
         />
       </div>
