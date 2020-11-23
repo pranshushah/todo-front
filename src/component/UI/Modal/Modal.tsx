@@ -27,42 +27,39 @@ function Modal({
     el.className = 'modal';
     document.body.appendChild(el);
   }
-  return show
-    ? createPortal(
-        <BackDrop onClick={modalClosed}>
-          <motion.div
-            initial={{ y: '100vh' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100vh' }}
-            transition={{ duration: 0.1 }}
-            className={Styles.container}
+  return createPortal(
+    <BackDrop onClick={modalClosed} show={show}>
+      <motion.dialog
+        open={show}
+        initial={{ y: '100vh' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100vh' }}
+        transition={{ duration: 0.1 }}
+        className={Styles.container}
+      >
+        <div className={Styles.contentContainer}>
+          <p className={Styles.heading}>
+            "{title}" will be permanently deleted.
+          </p>
+          <p className={Styles.text}>You won't be able to undo this action.</p>
+        </div>
+        <div className={Styles.action}>
+          <Button
+            style={{ marginRight: '12px' }}
+            onClick={modalClosed}
+            secondary
+            dimension={'small'}
           >
-            <div className={Styles.contentContainer}>
-              <p className={Styles.heading}>
-                "{title}" will be permanently deleted.
-              </p>
-              <p className={Styles.text}>
-                You won't be able to undo this action.
-              </p>
-            </div>
-            <div className={Styles.action}>
-              <Button
-                style={{ marginRight: '12px' }}
-                onClick={modalClosed}
-                secondary
-                dimension={'small'}
-              >
-                Cancel
-              </Button>
-              <Button onClick={modalConfirmed} danger dimension={'small'}>
-                {deleteButtonTitle}
-              </Button>
-            </div>
-          </motion.div>
-        </BackDrop>,
-        el,
-      )
-    : null;
+            Cancel
+          </Button>
+          <Button onClick={modalConfirmed} danger dimension={'small'}>
+            {deleteButtonTitle}
+          </Button>
+        </div>
+      </motion.dialog>
+    </BackDrop>,
+    el,
+  );
 }
 
 export default Modal;

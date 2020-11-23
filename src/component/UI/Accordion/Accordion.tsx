@@ -43,9 +43,9 @@ function Accordion(props: AccordionProps) {
               className={active ? Styles.rotate : 'none'}
             />
           </motion.span>
-          <motion.p layout className={Styles.accordionTitle}>
+          <motion.h2 layout className={Styles.accordionTitle}>
             {props.title}
-          </motion.p>
+          </motion.h2>
         </motion.button>
         <AnimatePresence>
           {active && (

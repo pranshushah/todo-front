@@ -28,7 +28,11 @@ function LeftSidebar() {
             exact
           >
             <div>
-              <FontAwesomeIcon icon={faSun} className={Styles.icon} />
+              <FontAwesomeIcon
+                icon={faSun}
+                className={Styles.icon}
+                style={{ marginLeft: '2px' }}
+              />
               <span className={Styles.text}>My Day</span>
             </div>
             <span className={Styles.notification}>
@@ -64,8 +68,14 @@ function LeftSidebar() {
             exact
           >
             <div>
-              <FontAwesomeIcon icon={faCalendar} className={Styles.icon} />
-              <span className={Styles.text}>Planned</span>
+              <FontAwesomeIcon
+                icon={faCalendar}
+                className={Styles.icon}
+                style={{ marginLeft: '1px' }}
+              />
+              <span className={Styles.text} style={{ marginLeft: '3px' }}>
+                Planned
+              </span>
             </div>
             <span className={Styles.notification}>
               {inCompletePlannedTasksList.length > 0

@@ -49,12 +49,16 @@ function MydayContainer() {
 
   return (
     <>
-      <div className={Styles.container}>
-        <Header title='My Day' />
-        <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Myday Task' />
-        <TodoList />
-        <CompletedList />
-      </div>
+      <section className={Styles.container}>
+        <header>
+          <Header title='My Day' />
+          <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Myday Task' />
+        </header>
+        <main>
+          <TodoList />
+          <CompletedList />
+        </main>
+      </section>
       {todoStatus ? <Todo /> : null}
     </>
   );

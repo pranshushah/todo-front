@@ -44,12 +44,16 @@ function TaskContainer() {
   }
   return (
     <>
-      <div className={Styles.container}>
-        <Header title='Tasks' />
-        <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
-        <TodoList />
-        <CompletedTaskList />
-      </div>
+      <section className={Styles.container}>
+        <header>
+          <Header title='Tasks' />
+          <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
+        </header>
+        <main>
+          <TodoList />
+          <CompletedTaskList />
+        </main>
+      </section>
       {todoStatus ? <Todo /> : null}
     </>
   );

@@ -4,10 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 type backdropProps = {
   onClick: () => void;
+  show: boolean;
   children: React.ReactNode;
 };
 
-function BackDrop({ onClick, children }: backdropProps) {
+function BackDrop({ onClick, show, children }: backdropProps) {
   const backdropVariants = {
     visible: {
       opacity: 1,
@@ -26,7 +27,7 @@ function BackDrop({ onClick, children }: backdropProps) {
       },
     },
   };
-  return (
+  return show ? (
     <AnimatePresence>
       <motion.div
         initial='hidden'
@@ -39,7 +40,7 @@ function BackDrop({ onClick, children }: backdropProps) {
         {children}
       </motion.div>
     </AnimatePresence>
-  );
+  ) : null;
 }
 
 export default BackDrop;

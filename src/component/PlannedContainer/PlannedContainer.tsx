@@ -50,14 +50,18 @@ function PlannedContainer() {
 
   return (
     <>
-      <div className={Styles.container}>
-        <Header title='Planned' />
-        <AddTodo
-          onAddTodo={addTodoHandler}
-          placeholder='Add a task due today'
-        />
-        <TodoList />
-      </div>
+      <section className={Styles.container}>
+        <header>
+          <Header title='Planned' />
+          <AddTodo
+            onAddTodo={addTodoHandler}
+            placeholder='Add a task due today'
+          />
+        </header>
+        <main>
+          <TodoList />
+        </main>
+      </section>
       {todoStatus ? <Todo /> : null}
     </>
   );

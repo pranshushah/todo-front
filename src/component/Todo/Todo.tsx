@@ -33,7 +33,7 @@ function Todo() {
   };
   return (
     <AnimatePresence>
-      <motion.div
+      <motion.section
         variants={variant}
         initial='initial'
         animate='animate'
@@ -46,7 +46,7 @@ function Todo() {
         <TodoBox />
         <MyDayBox />
         <ButtonContainer />
-      </motion.div>
+      </motion.section>
     </AnimatePresence>
   );
 }

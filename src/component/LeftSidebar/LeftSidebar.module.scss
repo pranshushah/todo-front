@@ -35,6 +35,9 @@
   color: $secondaryColor;
   display: flex;
   justify-content: space-between;
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
   @include mobile() {
     padding-left: 32px;
   }

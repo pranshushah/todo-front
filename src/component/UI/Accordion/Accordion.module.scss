@@ -25,7 +25,7 @@
 /* Style the accordion content title */
 .accordionTitle {
   font-weight: 600;
-  font-size: getFontSize(3) * 1px;
+  font-size: getFontSize(4) * 1px;
   color: $secondaryColor;
   padding-left: getSpace(3) * 1px;
   line-height: map-get($map: $line-height, $key: 'medium') * 1px + +9px;

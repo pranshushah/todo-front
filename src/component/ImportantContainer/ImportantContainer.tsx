@@ -49,12 +49,16 @@ function Important() {
 
   return (
     <>
-      <div className={Styles.container}>
-        <Header title='Important' />
-        <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
-        <TaskList />
-        <CompletedTaskList />
-      </div>
+      <section className={Styles.container}>
+        <header>
+          <Header title='Important' />
+          <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
+        </header>
+        <main>
+          <TaskList />
+          <CompletedTaskList />
+        </main>
+      </section>
       {todoStatus ? <Todo /> : null}
     </>
   );
