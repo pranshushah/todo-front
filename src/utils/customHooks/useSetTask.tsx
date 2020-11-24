@@ -1,10 +1,8 @@
 import { useSetRecoilState, RecoilState } from 'recoil';
-import { op, todoType, plannedTodoType, myDayTodoType } from '../types';
+import { op, todoType } from '../types';
 import produce from 'immer';
 
-export function useSetTasks<
-  t extends todoType | plannedTodoType | myDayTodoType
->(recoilState: RecoilState<t[]>) {
+export function useSetTasks<t extends todoType>(recoilState: RecoilState<t[]>) {
   const setTodoList = useSetRecoilState<t[]>(recoilState);
   function updater(newTodo: t, operation: op) {
     if (operation === op.UPDATE) {

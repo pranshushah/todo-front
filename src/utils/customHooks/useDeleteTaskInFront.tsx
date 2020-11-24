@@ -3,16 +3,34 @@ import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { planbedTasksState } from '../../atoms/plannedTasksState';
-import { todoType, myDayTodoType, plannedTodoType, op } from '../types';
+import { projectTasksAtom } from '../../atoms/todoInProjects';
+import {
+  todoType,
+  myDayTodoType,
+  plannedTodoType,
+  op,
+  todoInProjectType,
+} from '../types';
 
 export function useDeleteTaskInFront() {
   const updateNormaTasks = useSetTasks(normalTasksState);
   const updatePlannedTasks = useSetTasks(planbedTasksState);
   const updateImpTasks = useSetTasks(ImpTasksState);
   const updateMydayTasks = useSetTasks(myDayState);
+  const updateTodoInProject = useSetTasks(projectTasksAtom);
 
-  function deleteHandler(todo: todoType | myDayTodoType | plannedTodoType) {
-    updateNormaTasks(todo, op.Del);
+  function deleteHandler(
+    todo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
+  ) {
+    if (todo.normalTask) {
+      updateNormaTasks(todo, op.Del);
+    } else {
+      if (todo.projectId) {
+        // already checked for undefined
+        //@ts-ignore
+        updateTodoInProject(todo, op.Del);
+      }
+    }
     if (todo.dueDate) {
       // already checked for undefined
       //@ts-ignore

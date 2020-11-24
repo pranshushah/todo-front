@@ -3,18 +3,34 @@ import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { planbedTasksState } from '../../atoms/plannedTasksState';
-import { todoType, myDayTodoType, plannedTodoType, op } from '../types';
+import { projectTasksAtom } from '../../atoms/todoInProjects';
+import {
+  todoType,
+  myDayTodoType,
+  plannedTodoType,
+  op,
+  todoInProjectType,
+} from '../types';
 
 export function useSetAllTask() {
-  const updateNormaTasks = useSetTasks(normalTasksState);
+  const updateNormalTasks = useSetTasks(normalTasksState);
   const updatePlannedTasks = useSetTasks(planbedTasksState);
   const updateImpTasks = useSetTasks(ImpTasksState);
   const updateMydayTasks = useSetTasks(myDayState);
+  const updateTodoInProject = useSetTasks(projectTasksAtom);
   function updateAllTasks(
-    todo: todoType | myDayTodoType | plannedTodoType,
-    newTodo: todoType | myDayTodoType | plannedTodoType,
+    todo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
+    newTodo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
   ) {
-    updateNormaTasks(newTodo, op.UPDATE);
+    if (newTodo.normalTask) {
+      updateNormalTasks(newTodo, op.UPDATE);
+    } else {
+      if (newTodo.projectId) {
+        // already checked for undefined
+        //@ts-ignore
+        updateTodoInProject(newTodo, op.UPDATE);
+      }
+    }
     if (newTodo.dueDate) {
       newTodo = { ...newTodo, dueDate: new Date(newTodo.dueDate) };
       // already checked for undefined

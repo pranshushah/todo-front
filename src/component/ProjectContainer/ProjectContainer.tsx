@@ -1,16 +1,18 @@
 import React from 'react';
 import Styles from './ProjectContainer.module.scss';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { projects } from '../../atoms/allProjectAtom';
 import Header from '../UI/Header/Header';
 import AddTodo from '../AddTodo/AddTodo';
 import axios from 'axios';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
-import { todoBodyInProjectType } from '../../utils/types';
+import { todoBodyInProjectType, op } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
 import CompletedTodoList from './CompletedTodoList/CompletedTodoList';
 import { projectTasksAtom } from '../../atoms/todoInProjects';
+
 type paramTypes = {
   projectId: string;
 };
@@ -19,7 +21,7 @@ function ProjectContainer() {
   const { projectId } = useParams<paramTypes>();
   const allProjects = useRecoilValue(projects);
   const { addNotification } = useSetNotification();
-  const setTasksInProject = useSetRecoilState(projectTasksAtom);
+  const setTasksInProject = useSetTasks(projectTasksAtom);
 
   const selectedProject = allProjects.find(
     (project) => project.id === projectId,
@@ -42,11 +44,7 @@ function ProjectContainer() {
             createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
           };
-          setTasksInProject((oldTasks) => {
-            const newTasks = [...oldTasks];
-            newTasks.push(newTodo);
-            return newTasks;
-          });
+          setTasksInProject(newTodo, op.ADD);
         }
       } else {
         throw new Error('No internet connection');

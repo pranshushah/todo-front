@@ -4,6 +4,12 @@ export enum op {
   Del = 'delete',
 }
 
+export enum todoFrom {
+  MYDAY = 'MY DAY',
+  PLANNED = 'PLANNED',
+  PROJECT = 'PROJECT',
+}
+
 export enum taskStatus {
   completed = 'COMPLETED',
   inCompleted = 'INCOMPLETED',
@@ -104,11 +110,6 @@ export type editTitleStatus = {
   todoId: string;
   newTodoTitle: string;
 };
-
-export enum todoFrom {
-  MYDAY = 'MY DAY',
-  PLANNED = 'PLANNED',
-}
 
 export interface project {
   projectName: string;
