@@ -4,7 +4,7 @@ import Header from '../UI/Header/Header';
 import axios from 'axios';
 import AddTodo from '../AddTodo/AddTodo';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { op, plannedTodoBodyType } from '../../utils/types';
 import { planbedTasksState } from '../../atoms/plannedTasksState';
 import TodoList from './TodoList/TododList';
@@ -12,7 +12,7 @@ import { endOfToday } from 'date-fns';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
-import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 
 function PlannedContainer() {
   const { addNotification } = useSetNotification();

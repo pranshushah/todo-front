@@ -11,4 +11,4 @@ function TodoList() {
   return <div>{inCompleteTaskList}</div>;
 }
 
-export default TodoList;
+export default React.memo(TodoList);

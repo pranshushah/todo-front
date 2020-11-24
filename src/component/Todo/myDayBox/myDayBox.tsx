@@ -7,8 +7,8 @@ import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import axios from 'axios';
 import { MydayTodoBodyType } from '../../../utils/types';
 import CloseButton from '../CloseButton/CloseButton';
-import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
-import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
+import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 
 function MyDayBox() {
   const todo = useRecoilValue(selectedTodo);

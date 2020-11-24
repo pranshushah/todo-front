@@ -6,9 +6,9 @@ import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import Styles from './StepItem.module.scss';
 import CloseButton from '../CloseButton/CloseButton';
-import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
+import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import Tooltip from '../../UI/Tooltip/Tooltip';
-import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import Input from '../../UI/Input/Input';
 import Modal from '../../UI/Modal/Modal';
 

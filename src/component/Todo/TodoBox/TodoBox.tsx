@@ -6,7 +6,7 @@ import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import axios from 'axios';
-import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
+import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import {
   todoBody,
   editImpStatus,
@@ -17,7 +17,7 @@ import Checkbox from '../../UI/CheckBox/CheckBox';
 import AddStep from '../AddStep/AddStep';
 import StepItem from '../StepItem/StepItem';
 import Tooltip from '../../UI/Tooltip/Tooltip';
-import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import Input from '../../UI/Input/Input';
 
 function TodoBox() {

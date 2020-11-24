@@ -14,7 +14,7 @@
 
 .itemContainer {
   padding-top: getSpace(10) * 1px;
-  padding-bottom: getSpace(1) * 1px;
+  padding-bottom: getSpace(2.5) * 1px;
   list-style: none;
   @include mobile() {
     display: flex;

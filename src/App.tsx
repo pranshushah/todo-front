@@ -4,7 +4,7 @@ import axios from 'axios';
 import Loading from './component/Loading/Loading';
 import { userInfo } from './utils/types';
 import { loginState } from './selector/loginStatus';
-import { useSetTaskOnLoad } from './utils/TaskListUpdater/useSetTaskOnload';
+import { useSetTaskOnLoad } from './utils/customHooks/useSetTaskOnload';
 import { loginDetailsState } from './atoms/loginDetailsAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -14,6 +14,7 @@ import PlannedContainer from './component/PlannedContainer/PlannedContainer';
 import Important from './component/ImportantContainer/ImportantContainer';
 import LeftSidebar from './component/LeftSidebar/LeftSidebar';
 import NotificationList from './component/UI/NotificationList/NotificationList';
+import ProjectContainer from './component/ProjectContainer/ProjectContainer';
 enum status {
   SUCCESS = 'success',
   LOADING = 'loading',
@@ -55,6 +56,9 @@ function App() {
         </Route>
         <Route path={'/important'}>
           <Important />
+        </Route>
+        <Route path={'/project/:projectId'}>
+          <ProjectContainer />
         </Route>
         <Redirect to='/tasks' />
       </Switch>

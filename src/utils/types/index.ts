@@ -4,6 +4,11 @@ export enum op {
   Del = 'delete',
 }
 
+export enum taskStatus {
+  completed = 'COMPLETED',
+  inCompleted = 'INCOMPLETED',
+}
+
 export interface notification {
   message: string;
   type: string;
@@ -27,8 +32,9 @@ export interface stepType {
 export interface todoBody {
   id: string;
   userId: string;
+  projectId?: string;
   todoTitle: string;
-  normalTask: string;
+  normalTask: boolean;
   done: boolean;
   createdAt: string;
   updatedAt: string;
@@ -41,8 +47,9 @@ export interface todoBody {
 export interface todoType {
   id: string;
   userId: string;
+  projectId?: string;
   todoTitle: string;
-  normalTask: string;
+  normalTask: boolean;
   done: boolean;
   createdAt: Date;
   important: boolean;
@@ -56,8 +63,16 @@ export interface plannedTodoType extends todoType {
   dueDate: Date;
 }
 
+export interface todoInProjectType extends todoType {
+  projectId: string;
+}
+
 export interface plannedTodoBodyType extends todoBody {
   dueDate: string;
+}
+
+export interface todoBodyInProjectType extends todoBody {
+  projectId: string;
 }
 
 export interface MydayTodoBodyType extends todoBody {

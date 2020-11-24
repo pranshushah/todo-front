@@ -7,10 +7,16 @@
   padding: getSpace(0.5) * 1px 0;
   padding-left: getSpace(2.5) * 1px;
   display: flex;
+  text-decoration: none;
+  color: $secondaryColor;
   cursor: pointer;
   &:hover {
     background-color: rgb(250, 250, 250);
   }
+}
+
+.active {
+  background-color: darken($color: $whiteColor, $amount: 10);
 }
 
 .imgContainer {

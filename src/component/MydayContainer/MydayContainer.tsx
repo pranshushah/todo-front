@@ -7,12 +7,12 @@ import { MydayTodoBodyType, op } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
 import CompletedList from './CompletedList/CompletedTask';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
-import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 function MydayContainer() {
   const { addNotification } = useSetNotification();
   const setNormalTodoList = useSetTasks(normalTasksState);

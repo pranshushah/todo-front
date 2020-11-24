@@ -4,8 +4,8 @@ import Styles from './ButtonContainer.module.scss';
 import axios from 'axios';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import { useRecoilState } from 'recoil';
-import { useDeleteTaskInFront } from '../../../utils/TaskListUpdater/useDeleteTaskInFront';
-import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import { useDeleteTaskInFront } from '../../../utils/customHooks/useDeleteTaskInFront';
+import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import Modal from '../../UI/Modal/Modal';
 function ButtonContainer() {
   const [todo, setTodo] = useRecoilState(selectedTodo);

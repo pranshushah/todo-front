@@ -3,6 +3,7 @@ import { planbedTasksState } from '../../atoms/plannedTasksState';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { projects } from '../../atoms/allProjectAtom';
+import { projectTasksAtom } from '../../atoms/todoInProjects';
 import { useSetRecoilState } from 'recoil';
 import {
   todoBody,
@@ -12,6 +13,8 @@ import {
   myDayTodoType,
   MydayTodoBodyType,
   project,
+  todoBodyInProjectType,
+  todoInProjectType,
 } from '../types';
 import axios from 'axios';
 import produce from 'immer';
@@ -25,6 +28,7 @@ export function useSetTaskOnLoad() {
   const setImpTasks = useSetRecoilState(ImpTasksState);
   const setMydayTasks = useSetRecoilState(myDayState);
   const setProjects = useSetRecoilState(projects);
+  const setTasksInProject = useSetRecoilState(projectTasksAtom);
   const { addNotification } = useSetNotification();
 
   useEffect(
@@ -32,7 +36,14 @@ export function useSetTaskOnLoad() {
       async function loadTasks() {
         try {
           if (window.navigator.onLine) {
-            const [res1, res2, res3, res4, res5] = await Promise.allSettled([
+            const [
+              res1,
+              res2,
+              res3,
+              res4,
+              res5,
+              res6,
+            ] = await Promise.allSettled([
               axios.get<todoBody[]>('/api/todo/getalltask', {
                 timeout: 9000,
                 timeoutErrorMessage: 'We were unable to get all todo',
@@ -56,13 +67,18 @@ export function useSetTaskOnLoad() {
                 timeout: 9000,
                 timeoutErrorMessage: 'We were unable to my Day todo',
               }),
+              axios.get<todoBodyInProjectType[]>('/api/project/getalltask', {
+                timeout: 9000,
+                timeoutErrorMessage: 'We were unable to my Day todo',
+              }),
             ]);
             if (
               res1.status === 'fulfilled' &&
               res2.status === 'fulfilled' &&
               res3.status === 'fulfilled' &&
               res4.status === 'fulfilled' &&
-              res5.status === 'fulfilled'
+              res5.status === 'fulfilled' &&
+              res6.status === 'fulfilled'
             ) {
               if (res1.value.status === 200) {
                 const newTodoList: todoType[] = produce(
@@ -160,8 +176,34 @@ export function useSetTaskOnLoad() {
                 );
                 setMydayTasks(newTodoList);
               }
-              if (res1.value.status === 200) {
+              if (res5.value.status === 200) {
                 setProjects(res5.value.data);
+              }
+              if (res6.value.status === 200) {
+                const newTodoList: todoInProjectType[] = produce(
+                  res6.value.data,
+                  (draft) => {
+                    const todoList: todoInProjectType[] = draft.map((todo) => {
+                      if (todo.dueDate) {
+                        return {
+                          ...todo,
+                          createdAt: new Date(todo.createdAt),
+                          dueDate: endOfDay(new Date(todo.dueDate)),
+                        };
+                      } else {
+                        return {
+                          ...todo,
+                          createdAt: new Date(todo.createdAt),
+                          dueDate: undefined,
+                        };
+                      }
+                    });
+                    return todoList.sort((a, b) => {
+                      return b.createdAt.getTime() - a.createdAt.getTime();
+                    });
+                  },
+                );
+                setTasksInProject(newTodoList);
               }
             }
           } else {

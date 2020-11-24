@@ -5,7 +5,7 @@ import plus from '../../utils/svg/plusPurple.svg';
 import focusedPlus from '../../utils/svg/plusGrey.svg';
 import axios from 'axios';
 import { project } from '../../utils/types/index';
-import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 
 function AddProject() {
   const [projectName, setProjectName] = useState('');

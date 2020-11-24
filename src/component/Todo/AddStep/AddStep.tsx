@@ -6,8 +6,8 @@ import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import { todoBody } from '../../../utils/types';
-import { useSetTaskFromTaskDetails } from '../../../utils/TaskListUpdater/useUpdateTaskFromTaskDetails';
-import { useSetNotification } from '../../../utils/TaskListUpdater/useAddNotification';
+import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
+import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 
 function AddTodo() {
   const [textFocus, setTextFocus] = useState(false);

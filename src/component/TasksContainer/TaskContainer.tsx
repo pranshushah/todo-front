@@ -7,11 +7,11 @@ import { todoBody, op } from '../../utils/types';
 import CompletedTaskList from './CompletedTaskList/CompletedTaskList';
 import axios from 'axios';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/TaskListUpdater/useSetTask';
+import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import Todo from '../Todo/Todo';
 import { selctedTodo } from '../../selector/selectedTodoStatus';
 import { useRecoilValue } from 'recoil';
-import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 
 function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useSetAllTask } from '../../utils/TaskListUpdater/useSetAllTask';
+import { useSetAllTask } from '../../utils/customHooks/useSetAllTask';
 import {
   todoType,
   todoBody,
@@ -20,7 +20,7 @@ import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import StepDetails from '../StepDetails/StepDetails';
 import Tooltip from '../UI/Tooltip/Tooltip';
-import { useSetNotification } from '../../utils/TaskListUpdater/useAddNotification';
+import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;

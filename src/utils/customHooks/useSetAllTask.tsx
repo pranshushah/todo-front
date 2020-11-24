@@ -1,4 +1,4 @@
-import { useSetTasks } from '../TaskListUpdater/useSetTask';
+import { useSetTasks } from './useSetTask';
 import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { myDayState } from '../../atoms/MyDayTaskAtom';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
