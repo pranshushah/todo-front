@@ -8,11 +8,20 @@ export enum todoFrom {
   MYDAY = 'MY DAY',
   PLANNED = 'PLANNED',
   PROJECT = 'PROJECT',
+  IMPORTANT = 'IMPORTANT',
+  TASK = 'TASK',
 }
 
 export enum taskStatus {
   completed = 'COMPLETED',
   inCompleted = 'INCOMPLETED',
+}
+
+export enum dayStatus {
+  today = 'Today',
+  tommorrow = 'tommorrow',
+  previous = 'previous',
+  later = 'later',
 }
 
 export interface notification {

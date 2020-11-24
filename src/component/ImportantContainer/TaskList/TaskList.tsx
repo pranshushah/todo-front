@@ -1,9 +1,12 @@
 import React from 'react';
-import { inCompleteImpTasks } from '../../../selector/inCompleteImpTasks';
+import { impTasksMapper } from '../../../selector/impTasksMapper';
 import { useRecoilValue } from 'recoil';
 import TaskItem from '../../TaskItem/TaskItem';
+import { taskStatus } from '../../../utils/types';
 function TaskList() {
-  const inCompleteTasks = useRecoilValue(inCompleteImpTasks);
+  const inCompleteTasks = useRecoilValue(
+    impTasksMapper(taskStatus.inCompleted),
+  );
   const inCompleteTaskList = inCompleteTasks.map((task, index) => (
     <TaskItem todo={task} key={index} />
   ));

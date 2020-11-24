@@ -1,11 +1,11 @@
 import React from 'react';
-import { completeMydayTasks } from '../../../selector/completedMyDayTasks';
+import { myDayTaskMapper } from '../../../selector/myDayTaskMapper';
 import { useRecoilValue } from 'recoil';
 import TaskItem from '../../TaskItem/TaskItem';
 import Accordion from '../../UI/Accordion/Accordion';
-import { todoFrom } from '../../../utils/types';
+import { taskStatus, todoFrom } from '../../../utils/types';
 export default function CompletedTask() {
-  const completedTask = useRecoilValue(completeMydayTasks);
+  const completedTask = useRecoilValue(myDayTaskMapper(taskStatus.completed));
   const completedTaskList = completedTask.map((task, index) => (
     <TaskItem todo={task} key={index} from={todoFrom.MYDAY} />
   ));

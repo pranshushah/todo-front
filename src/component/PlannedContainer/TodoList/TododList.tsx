@@ -1,14 +1,13 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { todayDuesTasks } from '../../../selector/todayDueTasks';
-import { previousDuesTasks } from '../../../selector/earlierDueTask';
+import { plannedTasksMApper } from '../../../selector/plannedTaskMapper';
 import TaskItem from '../../TaskItem/TaskItem';
 import Accordion from '../../UI/Accordion/Accordion';
-import { todoFrom } from '../../../utils/types';
+import { dayStatus, todoFrom } from '../../../utils/types';
 
 function TododList() {
-  const todayTasks = useRecoilValue(todayDuesTasks);
-  const previousTasks = useRecoilValue(previousDuesTasks);
+  const todayTasks = useRecoilValue(plannedTasksMApper(dayStatus.today));
+  const previousTasks = useRecoilValue(plannedTasksMApper(dayStatus.previous));
   const todayList = todayTasks.map((todo, index) => {
     return <TaskItem todo={todo} key={index} from={todoFrom.PLANNED} />;
   });

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { inCompleteMyDayTasks } from '../../../selector/InCompleteMydayTasks';
+import { myDayTaskMapper } from '../../../selector/myDayTaskMapper';
 import TaskItem from '../../TaskItem/TaskItem';
-import { todoFrom } from '../../../utils/types';
+import { taskStatus, todoFrom } from '../../../utils/types';
 function TodoList() {
-  const inCompleteTasks = useRecoilValue(inCompleteMyDayTasks);
+  const inCompleteTasks = useRecoilValue(
+    myDayTaskMapper(taskStatus.inCompleted),
+  );
   const inCompleteTaskList = inCompleteTasks.map((task, index) => (
     <TaskItem todo={task} key={index} from={todoFrom.MYDAY} />
   ));
