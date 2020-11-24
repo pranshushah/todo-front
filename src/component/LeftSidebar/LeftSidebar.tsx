@@ -1,10 +1,9 @@
 import React from 'react';
 import Styles from './LeftSidebar.module.scss';
 import { NavLink } from 'react-router-dom';
-import { inCompleteNormalTasks } from '../../selector/inCompleteNormalTasks';
-import { inCompletePlannedTasks } from '../../selector/inCompletePlannedTasks';
-import { inCompleteImpTasks } from '../../selector/inCompleteImpTasks';
-import { inCompleteMyDayTasks } from '../../selector/InCompleteMydayTasks';
+import { normalTasksMapper } from '../../selector/normalTasksMapper';
+import { impTasksMapper } from '../../selector/impTasksMapper';
+import { myDayTaskMapper } from '../../selector/myDayTaskMapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faHome } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
@@ -12,11 +11,21 @@ import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { useRecoilValue } from 'recoil';
 import AddProject from '../AddProject/AddProject';
 import ProjectList from '../AddProject/ProjectList/ProjectList';
+import { taskStatus } from '../../utils/types';
+import { plannedTasksMapper } from '../../selector/plannedTaskMapper';
 function LeftSidebar() {
-  const inCompleteNormalTasksList = useRecoilValue(inCompleteNormalTasks);
-  const inCompletePlannedTasksList = useRecoilValue(inCompletePlannedTasks);
-  const inCompleteImpTasksList = useRecoilValue(inCompleteImpTasks);
-  const inCompleteMyDayTasksList = useRecoilValue(inCompleteMyDayTasks);
+  const inCompleteNormalTasksList = useRecoilValue(
+    normalTasksMapper(taskStatus.inCompleted),
+  );
+  const inCompletePlannedTasksList = useRecoilValue(
+    plannedTasksMapper(taskStatus.inCompleted),
+  );
+  const inCompleteImpTasksList = useRecoilValue(
+    impTasksMapper(taskStatus.inCompleted),
+  );
+  const inCompleteMyDayTasksList = useRecoilValue(
+    myDayTaskMapper(taskStatus.inCompleted),
+  );
   return (
     <section className={Styles.container}>
       <ul className={Styles.itemContainer}>

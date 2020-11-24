@@ -2,10 +2,8 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import axios from 'axios';
-import { todoBody, op } from '../../utils/types';
+import { todoBody, op, taskStatus } from '../../utils/types';
 import Styles from './ImportantContainer.module.scss';
-import CompletedTaskList from './CompletedTaskList/CompletedTaksList';
-import TaskList from './TaskList/TaskList';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
@@ -13,11 +11,28 @@ import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
+import { impTasksMapper } from '../../selector/impTasksMapper';
+import TaskItem from '../TaskItem/TaskItem';
+import Accordion from '../UI/Accordion/Accordion';
+
 function Important() {
   const { addNotification } = useSetNotification();
   const setNormalTodoList = useSetTasks(normalTasksState);
   const setImpTodoList = useSetTasks(ImpTasksState);
   const todoStatus = useRecoilValue(selectedTodo);
+  const completedTodoList = useRecoilValue(
+    impTasksMapper(taskStatus.completed),
+  );
+  const completedTaskList = completedTodoList.map((task) => (
+    <TaskItem todo={task} key={task.id} />
+  ));
+
+  const inCompleteTodoList = useRecoilValue(
+    impTasksMapper(taskStatus.inCompleted),
+  );
+  const inCompleteTaskList = inCompleteTodoList.map((task, index) => (
+    <TaskItem todo={task} key={index} />
+  ));
 
   async function addTodoHandler(todoTitle: string) {
     try {
@@ -55,8 +70,11 @@ function Important() {
           <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
         </header>
         <main>
-          <TaskList />
-          <CompletedTaskList />
+          <div>{inCompleteTaskList}</div>{' '}
+          <Accordion
+            title='Completed Important Tasks'
+            content={completedTaskList}
+          />
         </main>
       </section>
       {todoStatus ? <Todo /> : null}

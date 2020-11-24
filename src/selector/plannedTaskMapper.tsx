@@ -1,9 +1,12 @@
 import { selectorFamily } from 'recoil';
 import { planbedTasksState } from '../atoms/plannedTasksState';
-import { plannedTodoType, dayStatus } from '../utils/types';
+import { plannedTodoType, dayStatus, taskStatus } from '../utils/types';
 import { isTomorrow, isToday, isPast } from 'date-fns';
 
-export const plannedTasksMApper = selectorFamily<plannedTodoType[], dayStatus>({
+export const plannedTasksMapper = selectorFamily<
+  plannedTodoType[],
+  dayStatus | taskStatus
+>({
   key: 'plannedTasksMApper',
   get: (status) => ({ get }) => {
     const tasks = get(planbedTasksState);
@@ -17,6 +20,11 @@ export const plannedTasksMApper = selectorFamily<plannedTodoType[], dayStatus>({
         return isToday(task.dueDate);
       });
       return todaysTasks;
+    } else if (status === taskStatus.completed) {
+      const inCompleteTasks = tasks.filter((task) => {
+        return task.done === false;
+      });
+      return inCompleteTasks;
     } else {
       const previousTasks = tasks.filter((task) => {
         return isPast(task.dueDate) && !task.done;

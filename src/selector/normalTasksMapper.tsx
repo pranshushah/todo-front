@@ -4,14 +4,13 @@ import { taskStatus, todoType } from '../utils/types';
 export const normalTasksMapper = selectorFamily<todoType[], taskStatus>({
   key: 'normalTasksMapper',
   get: (status) => ({ get }) => {
+    const tasks = get(normalTasksState);
     if (status === taskStatus.completed) {
-      const tasks = get(normalTasksState);
       const completeTasks = tasks.filter((task) => {
         return task.done;
       });
       return completeTasks;
     } else {
-      const tasks = get(normalTasksState);
       const inCompleteTasks = tasks.filter((task) => {
         return task.done === false;
       });
