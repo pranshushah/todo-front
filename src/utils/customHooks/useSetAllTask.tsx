@@ -23,7 +23,7 @@ export function useSetAllTask() {
   const mydayTasks = useRecoilValue(myDayState);
   const todoInProject = useRecoilValue(projectTasksAtom);
   const setAllTasks = useSetRecoilState(allTodos);
-  const [todo, setTodo] = useRecoilState(selectedTodo);
+  const [selectedtodo, setTodo] = useRecoilState(selectedTodo);
 
   function updateAllTasks(
     todo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
@@ -94,7 +94,7 @@ export function useSetAllTask() {
         op.Del,
       );
     }
-    if (todo) {
+    if (selectedtodo) {
       setTodo(newTodo);
     }
     setAllTasks(updater);
