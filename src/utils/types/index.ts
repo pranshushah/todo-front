@@ -125,3 +125,11 @@ export interface project {
   id: string;
   userId: string;
 }
+
+export interface everyTodoType {
+  normalTodos?: todoType[];
+  projectTodos?: todoInProjectType[];
+  impTodos?: todoType[];
+  myDayTodos?: myDayTodoType[];
+  plannedTodos?: plannedTodoType[];
+}

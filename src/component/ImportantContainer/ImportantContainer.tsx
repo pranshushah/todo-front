@@ -70,7 +70,7 @@ function Important() {
           <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
         </header>
         <main>
-          <div>{inCompleteTaskList}</div>{' '}
+          <div>{inCompleteTaskList}</div>
           <Accordion
             title='Completed Important Tasks'
             content={completedTaskList}
