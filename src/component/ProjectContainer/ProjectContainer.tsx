@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Styles from './ProjectContainer.module.scss';
-import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useParams, useHistory } from 'react-router-dom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { projects } from '../../atoms/allProjectAtom';
 import Header from '../UI/Header/Header';
@@ -12,6 +12,9 @@ import { todoBodyInProjectType, op } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
 import CompletedTodoList from './CompletedTodoList/CompletedTodoList';
 import { projectTasksAtom } from '../../atoms/todoInProjects';
+import dots from '../../utils/svg/dots-horizontal.svg';
+import ProjectMenu from './ProjectMenu/ProjectMenu';
+import produce from 'immer';
 
 type paramTypes = {
   projectId: string;
@@ -19,13 +22,48 @@ type paramTypes = {
 
 function ProjectContainer() {
   const { projectId } = useParams<paramTypes>();
-  const allProjects = useRecoilValue(projects);
+  const history = useHistory();
+  const [allProjects, setAllProject] = useRecoilState(projects);
   const { addNotification } = useSetNotification();
   const setTasksInProject = useSetTasks(projectTasksAtom);
+  const setTasksAfterDeleteingProject = useSetRecoilState(projectTasksAtom);
+  const [showMenu, setShowMenu] = useState(false);
 
   const selectedProject = allProjects.find(
     (project) => project.id === projectId,
   );
+
+  async function ProjectDeleteHandler() {
+    try {
+      const res = await axios.request({
+        method: 'DELETE',
+        url: '/api/project',
+        data: { projectId },
+        timeout: 9000,
+        timeoutErrorMessage: 'We were unable to add todo',
+      });
+      if (res.status === 200) {
+        setAllProject((projectList) =>
+          produce(projectList, (draft) => {
+            const deleteIndex = draft.findIndex(
+              (project) => project.id === projectId,
+            );
+            if (deleteIndex > 0) {
+              draft.splice(deleteIndex, 1);
+            }
+          }),
+        );
+        setTasksAfterDeleteingProject((tasks) =>
+          produce(tasks, (draft) => {
+            return draft.filter((task) => task.projectId !== projectId);
+          }),
+        );
+        history.replace('/tasks');
+      }
+    } catch (e) {
+      addNotification(e.message, 'NetWork Error');
+    }
+  }
 
   async function AddTodoHandler(todoTitle: string) {
     try {
@@ -54,12 +92,26 @@ function ProjectContainer() {
     }
   }
 
+  function toggleMenu() {
+    setShowMenu((show) => !show);
+  }
+
+  const outSideClickHandler = useCallback(function clickOutSideHandler() {
+    setShowMenu(false);
+  }, []);
+
   return (
     <div className={Styles.container}>
       <header>
-        <Header
-          title={selectedProject ? selectedProject.projectName : ''}
-        ></Header>
+        <Header title={selectedProject ? selectedProject.projectName : ''} />
+        <span className={Styles.imgContainer} onClick={toggleMenu}>
+          <img src={dots} alt='' />
+          <ProjectMenu
+            show={showMenu}
+            onClickOutside={outSideClickHandler}
+            onClickDelete={ProjectDeleteHandler}
+          />
+        </span>
         <AddTodo placeholder='Add a Task' onAddTodo={AddTodoHandler} />
       </header>
       <main>
