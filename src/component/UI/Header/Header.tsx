@@ -1,11 +1,15 @@
 import React from 'react';
 import Styles from './Header.module.scss';
-type headerProps = {
-  title: string;
-};
+interface headerProps extends React.InputHTMLAttributes<HTMLHeadingElement> {
+  displayTitle: string;
+}
 
-function Header({ title }: headerProps) {
-  return <h1 className={Styles.headingHeader}>{title}</h1>;
+function Header({ displayTitle, ...props }: headerProps) {
+  return (
+    <h1 className={Styles.headingHeader} {...props}>
+      {displayTitle}
+    </h1>
+  );
 }
 
 export default Header;

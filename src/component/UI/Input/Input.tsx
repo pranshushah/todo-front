@@ -11,6 +11,7 @@ interface inputProps
   stepInput?: boolean;
   doneStepInput?: boolean;
   todoInDetails?: boolean;
+  projectTitle?: boolean;
 }
 
 function Input(
@@ -21,6 +22,7 @@ function Input(
     stepInput,
     doneStepInput,
     todoInDetails,
+    projectTitle,
     ...props
   }: inputProps,
   ref: React.Ref<HTMLInputElement>,
@@ -36,6 +38,8 @@ function Input(
     classes = [Styles.stepInputText, Styles.inputDoneText].join(' ');
   } else if (todoInDetails) {
     classes = Styles.todoDetailInput;
+  } else if (projectTitle) {
+    classes = Styles.projectTitle;
   } else {
     classes = [Styles.addInput, Styles.addTodoInput].join(' ');
   }

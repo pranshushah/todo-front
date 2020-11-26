@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Styles from './ProjectContainer.module.scss';
 import { useParams, useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { projects } from '../../atoms/allProjectAtom';
-import Header from '../UI/Header/Header';
 import AddTodo from '../AddTodo/AddTodo';
 import axios from 'axios';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
@@ -15,6 +14,8 @@ import { projectTasksAtom } from '../../atoms/todoInProjects';
 import dots from '../../utils/svg/dots-horizontal.svg';
 import ProjectMenu from './ProjectMenu/ProjectMenu';
 import produce from 'immer';
+import ProjectTitle from './ProjectTitle';
+import Header from '../UI/Header/Header';
 
 type paramTypes = {
   projectId: string;
@@ -28,10 +29,16 @@ function ProjectContainer() {
   const setTasksInProject = useSetTasks(projectTasksAtom);
   const setTasksAfterDeleteingProject = useSetRecoilState(projectTasksAtom);
   const [showMenu, setShowMenu] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   const selectedProject = allProjects.find(
     (project) => project.id === projectId,
   );
+  const [projectName, setProjectName] = useState(selectedProject?.projectName);
+
+  useEffect(() => {
+    setProjectName(selectedProject?.projectName);
+  }, [selectedProject?.projectName]);
 
   async function ProjectDeleteHandler() {
     try {
@@ -48,7 +55,7 @@ function ProjectContainer() {
             const deleteIndex = draft.findIndex(
               (project) => project.id === projectId,
             );
-            if (deleteIndex > 0) {
+            if (deleteIndex > -1) {
               draft.splice(deleteIndex, 1);
             }
           }),
@@ -100,10 +107,35 @@ function ProjectContainer() {
     setShowMenu(false);
   }, []);
 
+  function inputChangeHandler(val: string) {
+    setProjectName(val);
+  }
+
+  function showInputHandler() {
+    setShowInput(true);
+  }
+
+  function hideInputHandler() {
+    setShowInput(false);
+  }
+
   return (
     <div className={Styles.container}>
       <header>
-        <Header title={selectedProject ? selectedProject.projectName : ''} />
+        {showInput ? (
+          <ProjectTitle
+            inputValue={projectName}
+            onChangeInput={inputChangeHandler}
+            initialInputValue={selectedProject?.projectName}
+            project={selectedProject}
+            onHideInput={hideInputHandler}
+          />
+        ) : (
+          <Header
+            displayTitle={selectedProject ? selectedProject.projectName : ''}
+            onClick={showInputHandler}
+          />
+        )}
         <span className={Styles.imgContainer} onClick={toggleMenu}>
           <img src={dots} alt='' />
           <ProjectMenu

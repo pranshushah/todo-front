@@ -5,10 +5,14 @@ import plus from '../../utils/svg/plusPurple.svg';
 import focusedPlus from '../../utils/svg/plusGrey.svg';
 import axios from 'axios';
 import { project } from '../../utils/types/index';
+import produce from 'immer';
+import { projects } from '../../atoms/allProjectAtom';
+import { useSetRecoilState } from 'recoil';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 
 function AddProject() {
   const [projectName, setProjectName] = useState('');
+  const setProject = useSetRecoilState(projects);
   const [inputFocused, setInputFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { addNotification } = useSetNotification();
@@ -31,7 +35,11 @@ function AddProject() {
           },
         );
         if (res.status === 200) {
-          console.log(res.data);
+          setProject((projectList) =>
+            produce(projectList, (draft) => {
+              draft.push(res.data);
+            }),
+          );
         }
       } else {
         throw new Error('No internet connection');

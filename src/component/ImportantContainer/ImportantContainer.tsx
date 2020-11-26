@@ -66,7 +66,7 @@ function Important() {
     <>
       <section className={Styles.container}>
         <header>
-          <Header title='Important' />
+          <Header displayTitle='Important' />
           <AddTodo placeholder='Add Task' onAddTodo={addTodoHandler} />
         </header>
         <main>

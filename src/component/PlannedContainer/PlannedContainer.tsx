@@ -52,7 +52,7 @@ function PlannedContainer() {
     <>
       <section className={Styles.container}>
         <header>
-          <Header title='Planned' />
+          <Header displayTitle='Planned' />
           <AddTodo
             onAddTodo={addTodoHandler}
             placeholder='Add a task due today'

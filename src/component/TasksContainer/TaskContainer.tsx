@@ -62,7 +62,7 @@ function TaskContainer() {
     <>
       <section className={Styles.container}>
         <header>
-          <Header title='Tasks' />
+          <Header displayTitle='Tasks' />
           <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Task' />
         </header>
         <main>

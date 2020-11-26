@@ -67,7 +67,7 @@ function MydayContainer() {
     <>
       <section className={Styles.container}>
         <header>
-          <Header title='My Day' />
+          <Header displayTitle='My Day' />
           <AddTodo onAddTodo={addTodoHandler} placeholder='Add a Myday Task' />
         </header>
         <main>
