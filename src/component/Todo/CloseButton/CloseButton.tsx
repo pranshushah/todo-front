@@ -12,7 +12,11 @@ function CloseButton({ onClick, bigger = false }: closeButtonProps) {
     <motion.button
       whileTap={{ scale: 0.9 }}
       className={bigger ? Styles.bigButton : Styles.closeButton}
-      onClick={onClick}>
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+    >
       &times;
     </motion.button>
   );

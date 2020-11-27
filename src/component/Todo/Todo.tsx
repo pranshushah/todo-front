@@ -6,6 +6,7 @@ import ButtonContainer from './ButtonContainer/ButtonContainer';
 import CloseButton from './CloseButton/CloseButton';
 import { useSetRecoilState } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import DueDate from './DueDate/DueDate';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Todo() {
@@ -45,6 +46,7 @@ function Todo() {
         </div>
         <TodoBox />
         <MyDayBox />
+        <DueDate />
         <ButtonContainer />
       </motion.section>
     </AnimatePresence>
