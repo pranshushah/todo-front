@@ -146,8 +146,10 @@ function ProjectContainer() {
         <AddTodo placeholder='Add a Task' onAddTodo={AddTodoHandler} />
       </header>
       <main>
-        <TodoList projectId={projectId} />
-        <CompletedTodoList projectId={projectId} />
+        {selectedProject ? <TodoList project={selectedProject} /> : null}
+        {selectedProject ? (
+          <CompletedTodoList project={selectedProject} />
+        ) : null}
       </main>
     </div>
   );

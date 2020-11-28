@@ -2,7 +2,7 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
-import { todoBody, op, taskStatus } from '../../utils/types';
+import { todoBody, op, taskStatus, todoFrom } from '../../utils/types';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import Todo from '../Todo/Todo';
@@ -26,11 +26,11 @@ function TaskContainer() {
   );
 
   const completedTaskList = completedTodoList.map((task) => (
-    <TaskItem todo={task} key={task.id} />
+    <TaskItem todo={task} key={task.id} from={todoFrom.TASK} />
   ));
 
   const inCompletedTaskList = inCompletedTodoList.map((todo) => {
-    return <TaskItem todo={todo} key={todo.id} />;
+    return <TaskItem todo={todo} key={todo.id} from={todoFrom.TASK} />;
   });
 
   async function addTodoHandler(todoTitle: string) {

@@ -21,6 +21,8 @@ import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import StepDetails from '../StepDetails/StepDetails';
 import Tooltip from '../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
+import { useRecoilValue } from 'recoil';
+import { projects } from '../../atoms/allProjectAtom';
 
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
@@ -31,6 +33,9 @@ function TaskItem({ todo, from }: taskItemProps) {
   const setSelctedTodo = useSetRecoilState(selectedTodo);
   const { addNotification } = useSetNotification();
   const updateAllTasks = useSetAllTask();
+  const givenProject = useRecoilValue(projects).find(
+    (project) => project.id === todo.projectId,
+  );
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     try {
@@ -130,9 +135,16 @@ function TaskItem({ todo, from }: taskItemProps) {
           {todo.todoTitle}
         </div>
         <div>
+          {from === todoFrom.PROJECT || from === todoFrom.TASK ? (
+            ''
+          ) : (
+            <span className={Styles.fromTaskOrProject}>
+              {todo.normalTask ? 'Tasks' : givenProject?.projectName}
+            </span>
+          )}
           {todo.myDay && from !== todoFrom.MYDAY ? (
             <span className={Styles.myday}>
-              <FontAwesomeIcon icon={faSun} style={{ paddingRight: '5px' }} />
+              <FontAwesomeIcon icon={faSun} style={{ marginRight: '4px' }} />
               My Day
             </span>
           ) : (

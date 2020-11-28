@@ -30,7 +30,16 @@
 .myday {
   font-size: 13px;
   line-height: 12px;
-  padding: 0 getSpace(1) * 1px;
+  margin-right: getSpace(1.5) * 1px;
+  padding-left: getSpace(1) * 1px;
+  opacity: 0.8;
+}
+
+.fromTaskOrProject {
+  font-size: 13px;
+  line-height: 12px;
+  margin-right: getSpace(1) * 1px;
+  padding-left: getSpace(1) * 1px;
   opacity: 0.8;
 }
 

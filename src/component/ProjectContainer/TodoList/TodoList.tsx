@@ -2,18 +2,21 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { tasksInGivenProject } from '../../../selector/getTaskByProject';
 import TaskItem from '../../TaskItem/TaskItem';
-import { taskStatus } from '../../../utils/types';
+import { taskStatus, todoFrom, project } from '../../../utils/types';
 
 type todoListProps = {
-  projectId: string;
+  project: project;
 };
 
-function TodoList({ projectId }: todoListProps) {
+function TodoList({ project }: todoListProps) {
   const inCompleteTasks = useRecoilValue(
-    tasksInGivenProject({ projectId, taskdone: taskStatus.inCompleted }),
+    tasksInGivenProject({
+      projectId: project.id,
+      taskdone: taskStatus.inCompleted,
+    }),
   );
   const inCompleteTaskList = inCompleteTasks.map((task) => (
-    <TaskItem todo={task} key={task.id} />
+    <TaskItem todo={task} key={task.id} from={todoFrom.PROJECT} />
   ));
   return <div>{inCompleteTaskList}</div>;
 }
