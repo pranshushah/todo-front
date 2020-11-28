@@ -8,16 +8,25 @@ import { dayStatus, todoFrom } from '../../../utils/types';
 function TododList() {
   const todayTasks = useRecoilValue(plannedTasksMapper(dayStatus.today));
   const previousTasks = useRecoilValue(plannedTasksMapper(dayStatus.previous));
-  const todayList = todayTasks.map((todo, index) => {
-    return <TaskItem todo={todo} key={index} from={todoFrom.PLANNED} />;
+  const tommorrowTasks = useRecoilValue(
+    plannedTasksMapper(dayStatus.tommorrow),
+  );
+  const todayList = todayTasks.map((todo) => {
+    return <TaskItem todo={todo} key={todo.id} from={todoFrom.PLANNED} />;
   });
-  const previousTaskList = previousTasks.map((todo, index) => {
-    return <TaskItem key={index} todo={todo} />;
+  const previousTaskList = previousTasks.map((todo) => {
+    return <TaskItem key={todo.id} todo={todo} from={todoFrom.PLANNED} />;
+  });
+  const tommorrowTasksList = tommorrowTasks.map((todo) => {
+    return <TaskItem key={todo.id} todo={todo} from={todoFrom.PLANNED} />;
   });
   return (
     <div>
       {todayList.length > 0 ? (
         <Accordion content={todayList} title='Today' />
+      ) : null}
+      {tommorrowTasksList.length > 0 ? (
+        <Accordion content={tommorrowTasksList} title='Tommorrow' />
       ) : null}
       {previousTaskList.length > 0 ? (
         <Accordion content={previousTaskList} title='Earlier' />

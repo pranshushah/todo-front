@@ -46,7 +46,24 @@ export function useSetAllTask() {
         );
       }
     }
-    if (newTodo.dueDate) {
+    if (newTodo.dueDate && !todo.dueDate) {
+      updater.plannedTodos = updatLists<plannedTodoType>(
+        plannedTasks,
+        //@ts-ignore
+        newTodo,
+        op.ADD,
+      );
+    }
+    if (!newTodo.dueDate && todo.dueDate) {
+      // already checked for undefined
+      updater.plannedTodos = updatLists<plannedTodoType>(
+        plannedTasks,
+        //@ts-ignore
+        newTodo,
+        op.Del,
+      );
+    }
+    if (newTodo.dueDate && todo.dueDate) {
       // already checked for undefined
       updater.plannedTodos = updatLists<plannedTodoType>(
         plannedTasks,
@@ -56,15 +73,12 @@ export function useSetAllTask() {
       );
     }
     if (!todo.important && newTodo.important) {
-      console.log(op.ADD);
       updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.ADD);
     }
     if (todo.important && !newTodo.important) {
-      console.log(op.Del);
       updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.Del);
     }
     if (todo.important && newTodo.important) {
-      console.log(op.UPDATE);
       updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.UPDATE);
     }
     if (todo.myDay && todo.myDay) {
