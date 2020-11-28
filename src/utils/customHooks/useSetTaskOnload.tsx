@@ -22,6 +22,9 @@ import { useEffect } from 'react';
 import { endOfDay } from 'date-fns';
 import { useSetNotification } from './useAddNotification';
 
+/**
+ * custom hooks that will fetch all the todos concurrently when you are logged in.
+ */
 export function useSetTaskOnLoad() {
   const setNormalTasks = useSetRecoilState(normalTasksState);
   const setPlannedTasks = useSetRecoilState(planbedTasksState);

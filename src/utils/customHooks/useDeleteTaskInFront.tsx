@@ -12,6 +12,10 @@ import {
   todoInProjectType,
 } from '../types';
 
+/**
+ * custom hook for deleting tasks in front-end. this will delete todo in front-end after deleting in backend.
+ */
+
 export function useDeleteTaskInFront() {
   const updateNormaTasks = useSetTasks(normalTasksState);
   const updatePlannedTasks = useSetTasks(planbedTasksState);

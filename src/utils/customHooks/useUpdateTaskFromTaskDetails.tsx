@@ -4,6 +4,9 @@ import { useSetAllTask } from './useSetAllTask';
 import { todoBody, todoType } from '../types';
 import { endOfDay } from 'date-fns';
 
+/**
+ * sync your changes from details to all todo container
+ */
 export function useSetTaskFromTaskDetails() {
   const setTodo = useSetRecoilState(selectedTodo);
   const updateAllTasks = useSetAllTask();

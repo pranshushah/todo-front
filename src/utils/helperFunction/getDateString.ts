@@ -6,6 +6,13 @@ import {
   isThisYear,
   isYesterday,
 } from 'date-fns';
+/**
+ * Returns formatted string for given date
+ *
+ * @param date Date you want to format
+ *
+ * @returns string from `date`.
+ */
 export function getDateString(date: Date) {
   let text: string;
   if (isFuture(date)) {

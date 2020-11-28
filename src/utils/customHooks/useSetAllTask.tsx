@@ -16,6 +16,9 @@ import {
   everyTodoType,
 } from '../types';
 
+/**
+ * custom hook for syncing all todos in frontend after updating todo in backend
+ */
 export function useSetAllTask() {
   const normalTasks = useRecoilValue(normalTasksState);
   const plannedTasks = useRecoilValue(planbedTasksState);

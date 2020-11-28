@@ -1,6 +1,15 @@
 import { op, todoType } from '../types';
 import produce from 'immer';
 
+/**
+ *
+ * @param todoList list of any type extending `todoType`
+ * @param newTodo todo object extending `todoType`
+ * @param ops tuple element of `op`
+ *
+ * @returns updated todo list of type `t`
+ */
+
 export function updatLists<t extends todoType>(
   todoList: t[],
   newTodo: t,

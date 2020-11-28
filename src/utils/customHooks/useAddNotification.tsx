@@ -2,6 +2,10 @@ import { notificationAtom } from '../../atoms/NotificationAtom';
 import produce from 'immer';
 import { v4 } from 'uuid';
 import { useSetRecoilState } from 'recoil';
+/**
+ * custom hook for adding or removing notification.
+ * @returns object containing function that will remove or add notification
+ */
 export function useSetNotification() {
   const setNotificationList = useSetRecoilState(notificationAtom);
 
