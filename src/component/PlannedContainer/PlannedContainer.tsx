@@ -29,7 +29,7 @@ function PlannedContainer() {
             todoTitle,
             dueDate: endOfToday(),
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          { timeoutErrorMessage: 'We were unable to add todo' },
         );
         if (res.status === 200) {
           const newData = {

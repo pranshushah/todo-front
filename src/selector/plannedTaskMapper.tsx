@@ -20,7 +20,7 @@ export const plannedTasksMapper = selectorFamily<
         return isToday(task.dueDate);
       });
       return todaysTasks;
-    } else if (status === taskStatus.completed) {
+    } else if (status === taskStatus.inCompleted) {
       const inCompleteTasks = tasks.filter((task) => {
         return task.done === false;
       });

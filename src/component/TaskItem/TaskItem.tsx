@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import { useSetAllTask } from '../../utils/customHooks/useSetAllTask';
 import {
   todoType,
@@ -39,7 +39,6 @@ function TaskItem({ todo, from }: taskItemProps) {
           '/api/todo/edit/done',
           newStauts,
           {
-            timeout: 9000,
             timeoutErrorMessage: 'We were unable to update todo',
           },
         );
@@ -73,7 +72,6 @@ function TaskItem({ todo, from }: taskItemProps) {
           '/api/todo/edit/important',
           newStauts,
           {
-            timeout: 9000,
             timeoutErrorMessage: 'We were unable to update todo',
           },
         );

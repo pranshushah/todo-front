@@ -16,7 +16,7 @@ import {
   todoBodyInProjectType,
   todoInProjectType,
 } from '../types';
-import axios from 'axios';
+import axios from '../../axios';
 import produce from 'immer';
 import { useEffect } from 'react';
 import { endOfDay } from 'date-fns';
@@ -45,30 +45,24 @@ export function useSetTaskOnLoad() {
               res6,
             ] = await Promise.allSettled([
               axios.get<todoBody[]>('/api/todo/getalltask', {
-                timeout: 9000,
                 timeoutErrorMessage: 'We were unable to get all todo',
               }),
               axios.get<plannedTodoBodyType[]>(
                 '/api/todo/getalltaskwithduedate',
                 {
-                  timeout: 9000,
                   timeoutErrorMessage: 'We were unable to get all Planned todo',
                 },
               ),
               axios.get<todoBody[]>('/api/todo/getallimptask', {
-                timeout: 9000,
                 timeoutErrorMessage: 'We were unable to get all important todo',
               }),
               axios.get<MydayTodoBodyType[]>('/api/todo/getallmyday', {
-                timeout: 9000,
                 timeoutErrorMessage: 'We were unable to my Day todo',
               }),
               axios.get<project[]>('/api/project/getall', {
-                timeout: 9000,
                 timeoutErrorMessage: 'We were unable to my Day todo',
               }),
               axios.get<todoBodyInProjectType[]>('/api/project/getalltask', {
-                timeout: 9000,
                 timeoutErrorMessage: 'We were unable to my Day todo',
               }),
             ]);

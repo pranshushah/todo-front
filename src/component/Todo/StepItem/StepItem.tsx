@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import CheckBox from '../../UI/CheckBox/CheckBox';
 import { stepType, todoBody, editStepDoneStatus } from '../../../utils/types';
-import axios from 'axios';
+import axios from '../../../axios';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import Styles from './StepItem.module.scss';
@@ -39,7 +39,6 @@ function StepItem({ step }: stepProps) {
             '/api/edit/step/done',
             newStauts,
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update step tod',
             },
           );
@@ -84,7 +83,6 @@ function StepItem({ step }: stepProps) {
               stepId: step.id,
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update step todo',
             },
           );
@@ -113,7 +111,6 @@ function StepItem({ step }: stepProps) {
             '/api/edit/step/title',
             newStatus,
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update step todo',
             },
           );

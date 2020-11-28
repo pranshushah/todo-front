@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as SolidStar } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
-import axios from 'axios';
+import axios from '../../../axios';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import {
   todoBody,
@@ -46,7 +46,6 @@ function TodoBox() {
             '/api/todo/edit/important',
             newStauts,
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update todo',
             },
           );
@@ -70,7 +69,6 @@ function TodoBox() {
             '/api/todo/edit/done',
             newStauts,
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update todo',
             },
           );
@@ -94,7 +92,6 @@ function TodoBox() {
             '/api/todo/edit/title',
             newStatus,
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update todo',
             },
           );

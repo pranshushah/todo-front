@@ -3,7 +3,6 @@ import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
 import { todoBody, op, taskStatus } from '../../utils/types';
-import axios from 'axios';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import Todo from '../Todo/Todo';
@@ -13,6 +12,7 @@ import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { normalTasksMapper } from '../../selector/normalTasksMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
+import axios from '../../axios';
 
 function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);
@@ -41,7 +41,7 @@ function TaskContainer() {
           {
             todoTitle,
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          { timeoutErrorMessage: 'We were unable to add todo' },
         );
         if (res.status === 200) {
           const newTodo = {

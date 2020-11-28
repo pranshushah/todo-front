@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import CloseButton from '../CloseButton/CloseButton';
 import { getDateString } from '../../../utils/helperFunction/getDateString';
-import axios from 'axios';
+import axios from '../../../axios';
 import { todoBody } from '../../../utils/types';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
@@ -37,7 +37,6 @@ function DueDate() {
               todoId: todo?.id,
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'We were unable to update todo',
             },
           );
@@ -63,7 +62,6 @@ function DueDate() {
               dueDate: endOfToday().toString(),
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'We were unable to update todo',
             },
           );
@@ -89,7 +87,6 @@ function DueDate() {
               dueDate: endOfTomorrow().toString(),
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'We were unable to update todo',
             },
           );

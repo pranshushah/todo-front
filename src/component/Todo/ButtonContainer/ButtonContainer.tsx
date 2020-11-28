@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../UI/Button/Button';
 import Styles from './ButtonContainer.module.scss';
-import axios from 'axios';
+import axios from '../../../axios';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import { useRecoilState } from 'recoil';
 import { useDeleteTaskInFront } from '../../../utils/customHooks/useDeleteTaskInFront';
@@ -30,7 +30,6 @@ function ButtonContainer() {
               todoId: todo.id,
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to delete todo',
             },
           );

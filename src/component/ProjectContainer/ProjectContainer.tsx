@@ -5,7 +5,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useSetTasks } from '../../utils/customHooks/useSetTask';
 import { projects } from '../../atoms/allProjectAtom';
 import AddTodo from '../AddTodo/AddTodo';
-import axios from 'axios';
+import axios from '../../axios';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { todoBodyInProjectType, op } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
@@ -46,7 +46,6 @@ function ProjectContainer() {
         method: 'DELETE',
         url: '/api/project',
         data: { projectId },
-        timeout: 9000,
         timeoutErrorMessage: 'We were unable to add todo',
       });
       if (res.status === 200) {
@@ -81,7 +80,7 @@ function ProjectContainer() {
             todoTitle,
             projectId: projectId,
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          { timeoutErrorMessage: 'We were unable to add todo' },
         );
         if (res.status === 200) {
           const newTodo = {

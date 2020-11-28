@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
-import axios from 'axios';
+import axios from '../../../axios';
 import { MydayTodoBodyType } from '../../../utils/types';
 import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
@@ -25,7 +25,6 @@ function MyDayBox() {
               myDay: true,
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update todo',
             },
           );
@@ -52,7 +51,6 @@ function MyDayBox() {
               myDay: false,
             },
             {
-              timeout: 9000,
               timeoutErrorMessage: 'Unable to update todo',
             },
           );

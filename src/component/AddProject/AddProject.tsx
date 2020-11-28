@@ -3,7 +3,7 @@ import Input from '../UI/Input/Input';
 import Styles from './AddProject.module.scss';
 import plus from '../../utils/svg/plusPurple.svg';
 import focusedPlus from '../../utils/svg/plusGrey.svg';
-import axios from 'axios';
+import axios from '../../axios';
 import { project } from '../../utils/types/index';
 import produce from 'immer';
 import { projects } from '../../atoms/allProjectAtom';
@@ -30,7 +30,6 @@ function AddProject() {
             projectName,
           },
           {
-            timeout: 9000,
             timeoutErrorMessage: 'We were unable to add project',
           },
         );

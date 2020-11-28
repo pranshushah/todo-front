@@ -1,7 +1,7 @@
 import React from 'react';
 import Styles from './MyDayContainer.module.scss';
 import Header from '../UI/Header/Header';
-import axios from 'axios';
+import axios from '../../axios';
 import AddTodo from '../AddTodo/AddTodo';
 import { MydayTodoBodyType, op, todoFrom, taskStatus } from '../../utils/types';
 import { normalTasksState } from '../../atoms/NormalTaskAtom';
@@ -44,7 +44,7 @@ function MydayContainer() {
             todoTitle,
             myDay: true,
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          { timeoutErrorMessage: 'We were unable to add todo' },
         );
         if (res.status === 200) {
           const newTodo = {

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Styles from './AddStep.module.scss';
 import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import { useRecoilValue } from 'recoil';
-import axios from 'axios';
+import axios from '../../../axios';
 import { todoBody } from '../../../utils/types';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
@@ -44,7 +44,6 @@ function AddTodo() {
             stepTitle: inputText.trim(),
           },
           {
-            timeout: 9000,
             timeoutErrorMessage: 'Unable to add step todo',
           },
         );
