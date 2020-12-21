@@ -6,7 +6,9 @@ type getParams = {
   projectId: string;
   taskdone: taskStatus;
 };
-
+/**
+ * you can get tasks in given project by their status
+ */
 export const tasksInGivenProject = selectorFamily<
   todoInProjectType[],
   getParams

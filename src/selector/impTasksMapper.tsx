@@ -1,6 +1,9 @@
 import { selectorFamily } from 'recoil';
 import { ImpTasksState } from '../atoms/ImportantTaskAtom';
 import { todoType, taskStatus } from '../utils/types';
+/**
+ * get important tasks by their status
+ */
 export const impTasksMapper = selectorFamily<todoType[], taskStatus>({
   key: 'impTasksMapper',
   get: (status) => ({ get }) => {

@@ -3,6 +3,9 @@ import { planbedTasksState } from '../atoms/plannedTasksState';
 import { plannedTodoType, dayStatus, taskStatus } from '../utils/types';
 import { isTomorrow, isToday, isPast } from 'date-fns';
 
+/**
+ * get tasks with duedates by their status
+ */
 export const plannedTasksMapper = selectorFamily<
   plannedTodoType[],
   dayStatus | taskStatus

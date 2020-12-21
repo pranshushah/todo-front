@@ -5,7 +5,9 @@ import { planbedTasksState } from '../atoms/plannedTasksState';
 import { normalTasksState } from '../atoms/NormalTaskAtom';
 import { projectTasksAtom } from '../atoms/todoInProjects';
 import { everyTodoType } from '../utils/types';
-
+/**
+ * you can get or set All the todos
+ */
 export const allTodos = selector<everyTodoType>({
   key: 'allTodos',
   get: ({ get }) => {

@@ -1,6 +1,9 @@
 import { selectorFamily } from 'recoil';
 import { normalTasksState } from '../atoms/NormalTaskAtom';
 import { taskStatus, todoType } from '../utils/types';
+/**
+ * get normal tasks by their status
+ */
 export const normalTasksMapper = selectorFamily<todoType[], taskStatus>({
   key: 'normalTasksMapper',
   get: (status) => ({ get }) => {

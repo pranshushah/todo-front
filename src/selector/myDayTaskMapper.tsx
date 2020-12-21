@@ -1,6 +1,9 @@
 import { selectorFamily } from 'recoil';
 import { myDayState } from '../atoms/MyDayTaskAtom';
 import { myDayTodoType, taskStatus } from '../utils/types';
+/**
+ * get myday tasks tasks by their status
+ */
 export const myDayTaskMapper = selectorFamily<myDayTodoType[], taskStatus>({
   key: 'myDayTaskMapper',
   get: (status) => ({ get }) => {
