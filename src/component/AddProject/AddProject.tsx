@@ -9,6 +9,7 @@ import produce from 'immer';
 import { projects } from '../../atoms/allProjectAtom';
 import { useSetRecoilState } from 'recoil';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
+import { useHistory } from 'react-router-dom';
 
 function AddProject() {
   const [projectName, setProjectName] = useState('');
@@ -16,6 +17,7 @@ function AddProject() {
   const [inputFocused, setInputFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { addNotification } = useSetNotification();
+  const history = useHistory();
 
   function projectNameChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     setProjectName(e.target.value);
@@ -39,6 +41,7 @@ function AddProject() {
               draft.push(res.data);
             }),
           );
+          history.push(`/project/${res.data.id}`);
         }
       } else {
         throw new Error('No internet connection');

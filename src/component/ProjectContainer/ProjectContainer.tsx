@@ -34,6 +34,9 @@ function ProjectContainer() {
   const selectedProject = allProjects.find(
     (project) => project.id === projectId,
   );
+  if (!selectedProject) {
+    history.replace('/tasks');
+  }
   const [projectName, setProjectName] = useState(selectedProject?.projectName);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ function ProjectContainer() {
         method: 'DELETE',
         url: '/api/project',
         data: { projectId },
-        timeoutErrorMessage: 'We were unable to add todo',
+        timeoutErrorMessage: 'We were unable to delete todo',
       });
       if (res.status === 200) {
         setAllProject((projectList) =>
