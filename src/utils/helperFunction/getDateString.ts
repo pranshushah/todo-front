@@ -24,7 +24,7 @@ export function getDateString(date: Date) {
       if (isThisYear(date)) {
         text = `due ${format(date, 'iii, MMMM d')}`;
       } else {
-        text = `Overdue ${format(date, 'iii, MMMM d, yyyy')}`;
+        text = `due ${format(date, 'iii, MMMM d, yyyy')}`;
       }
     }
   } else {
