@@ -17,6 +17,8 @@ function MyDayBox() {
   const { addNotification } = useSetNotification();
   async function AddToMyDayHandler() {
     if (!todo?.myDay && todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, myDay: true });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<MydayTodoBodyType>(
@@ -27,8 +29,8 @@ function MyDayBox() {
             },
             timeMessageObjCreate('Unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -41,6 +43,8 @@ function MyDayBox() {
 
   async function removeMyDayHandler() {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, myDay: false });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<MydayTodoBodyType>(
@@ -52,7 +56,7 @@ function MyDayBox() {
             timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');

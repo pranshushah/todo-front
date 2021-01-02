@@ -87,7 +87,7 @@ function TaskItem({ todo, from }: taskItemProps) {
           newStauts,
           timeMessageObjCreate('We were unable to update todo'),
         );
-        if (res.status === 200) {
+        if (res.status !== 200) {
           updateAllTasks(todo, oldTodo);
         }
       } else {

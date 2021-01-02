@@ -41,6 +41,8 @@ function TodoBox() {
 
   async function todoImpStatusChangeHandler(newStauts: editImpStatus) {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, important: newStauts.important });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -48,8 +50,8 @@ function TodoBox() {
             newStauts,
             timeMessageObjCreate('Unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -62,6 +64,8 @@ function TodoBox() {
 
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, done: newStauts.done });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -69,8 +73,8 @@ function TodoBox() {
             newStauts,
             timeMessageObjCreate('Unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -83,6 +87,11 @@ function TodoBox() {
 
   async function todoTitleChangeHandler(newStatus: editTitleStatus) {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, {
+        ...todo,
+        todoTitle: newStatus.newTodoTitle,
+      });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -90,8 +99,8 @@ function TodoBox() {
             newStatus,
             timeMessageObjCreate('Unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');

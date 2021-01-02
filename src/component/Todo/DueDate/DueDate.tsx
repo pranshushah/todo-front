@@ -19,6 +19,8 @@ function DueDate() {
 
   async function removeDueDayHandler() {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, dueDate: undefined });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -28,8 +30,8 @@ function DueDate() {
             },
             timeMessageObjCreate('We were unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -41,6 +43,8 @@ function DueDate() {
   }
   async function dateChangeHandler(date: Date) {
     if (todo) {
+      const oldTodo = { ...todo };
+      updateTaskFromDetails(todo, { ...todo, dueDate: endOfDay(date) });
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -51,8 +55,8 @@ function DueDate() {
             },
             timeMessageObjCreate('We were unable to update todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
