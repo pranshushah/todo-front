@@ -14,6 +14,7 @@ import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { myDayTaskMapper } from '../../selector/myDayTaskMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
+import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
 
 function MydayContainer() {
   const { addNotification } = useSetNotification();
@@ -44,7 +45,7 @@ function MydayContainer() {
             todoTitle,
             myDay: true,
           },
-          { timeoutErrorMessage: 'We were unable to add todo' },
+          timeMessageObjCreate('We were unable to add todo'),
         );
         if (res.status === 200) {
           const newTodo = {

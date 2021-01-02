@@ -11,6 +11,7 @@ import Tooltip from '../../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import Input from '../../UI/Input/Input';
 import Modal from '../../UI/Modal/Modal';
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
 
 type stepProps = {
   step: stepType;
@@ -38,9 +39,7 @@ function StepItem({ step }: stepProps) {
           const res = await axios.patch<todoBody>(
             '/api/edit/step/done',
             newStauts,
-            {
-              timeoutErrorMessage: 'Unable to update step tod',
-            },
+            timeMessageObjCreate('Unable to update step todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
@@ -110,9 +109,7 @@ function StepItem({ step }: stepProps) {
           const res = await axios.patch<todoBody>(
             '/api/edit/step/title',
             newStatus,
-            {
-              timeoutErrorMessage: 'Unable to update step todo',
-            },
+            timeMessageObjCreate('Unable to update step todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);

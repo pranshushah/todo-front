@@ -8,7 +8,7 @@ import axios from '../../../axios';
 import { todoBody } from '../../../utils/types';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
-
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
 function AddTodo() {
   const [textFocus, setTextFocus] = useState(false);
   const [inputText, setInputText] = useState('');
@@ -43,9 +43,7 @@ function AddTodo() {
             todoId: todo?.id,
             stepTitle: inputText.trim(),
           },
-          {
-            timeoutErrorMessage: 'Unable to add step todo',
-          },
+          timeMessageObjCreate('Unable to add step todo'),
         );
         if (res.status === 200 && todo) {
           updateTaskFromDetails(todo, res.data);

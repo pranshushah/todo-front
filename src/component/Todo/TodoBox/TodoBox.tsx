@@ -19,6 +19,7 @@ import StepItem from '../StepItem/StepItem';
 import Tooltip from '../../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import Input from '../../UI/Input/Input';
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
 
 function TodoBox() {
   const todo = useRecoilValue(selectedTodo);
@@ -45,9 +46,7 @@ function TodoBox() {
           const res = await axios.patch<todoBody>(
             '/api/todo/edit/important',
             newStauts,
-            {
-              timeoutErrorMessage: 'Unable to update todo',
-            },
+            timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
@@ -68,9 +67,7 @@ function TodoBox() {
           const res = await axios.patch<todoBody>(
             '/api/todo/edit/done',
             newStauts,
-            {
-              timeoutErrorMessage: 'Unable to update todo',
-            },
+            timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
@@ -91,9 +88,7 @@ function TodoBox() {
           const res = await axios.patch<todoBody>(
             '/api/todo/edit/title',
             newStatus,
-            {
-              timeoutErrorMessage: 'Unable to update todo',
-            },
+            timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);

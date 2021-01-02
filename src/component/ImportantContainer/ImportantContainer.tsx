@@ -14,6 +14,7 @@ import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { impTasksMapper } from '../../selector/impTasksMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
+import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
 
 function Important() {
   const { addNotification } = useSetNotification();
@@ -43,7 +44,7 @@ function Important() {
             todoTitle,
             important: true,
           },
-          { timeout: 9000, timeoutErrorMessage: 'We were unable to add todo' },
+          timeMessageObjCreate('We were unable to add todo'),
         );
         if (res.status === 200) {
           const newTodo = {

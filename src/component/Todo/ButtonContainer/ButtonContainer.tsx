@@ -6,6 +6,8 @@ import { selectedTodo } from '../../../atoms/selectedTodoAtom';
 import { useRecoilState } from 'recoil';
 import { useDeleteTaskInFront } from '../../../utils/customHooks/useDeleteTaskInFront';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
+
 import Modal from '../../UI/Modal/Modal';
 function ButtonContainer() {
   const [todo, setTodo] = useRecoilState(selectedTodo);
@@ -29,9 +31,7 @@ function ButtonContainer() {
             {
               todoId: todo.id,
             },
-            {
-              timeoutErrorMessage: 'Unable to delete todo',
-            },
+            timeMessageObjCreate('Unable to delete todo'),
           );
           if (res.status === 200) {
             setTodo(null);

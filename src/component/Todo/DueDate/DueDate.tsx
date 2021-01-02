@@ -10,6 +10,7 @@ import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateT
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
 import { endOfDay } from 'date-fns';
 import DueDatePicker from '../AddDueDate/AddDueDate';
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
 
 function DueDate() {
   const todo = useRecoilValue(selectedTodo);
@@ -25,9 +26,7 @@ function DueDate() {
             {
               todoId: todo?.id,
             },
-            {
-              timeoutErrorMessage: 'We were unable to update todo',
-            },
+            timeMessageObjCreate('We were unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
@@ -50,9 +49,7 @@ function DueDate() {
               todoId: todo?.id,
               dueDate: endOfDay(date).toString(),
             },
-            {
-              timeoutErrorMessage: 'We were unable to update todo',
-            },
+            timeMessageObjCreate('We were unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);

@@ -23,6 +23,7 @@ import Tooltip from '../UI/Tooltip/Tooltip';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { useRecoilValue } from 'recoil';
 import { projects } from '../../atoms/allProjectAtom';
+import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
 
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
@@ -37,30 +38,36 @@ function TaskItem({ todo, from }: taskItemProps) {
     (project) => project.id === todo.projectId,
   );
 
+  function updateTodoDoneStatusBeforeSendingToDatabase(
+    newStauts: editDoneStatus,
+  ) {
+    updateAllTasks(todo, {
+      ...todo,
+      done: newStauts.done,
+    });
+  }
+
+  function updateTodoImpStatusBeforeSendingToDatabase(
+    newStauts: editImpStatus,
+  ) {
+    updateAllTasks(todo, {
+      ...todo,
+      important: newStauts.important,
+    });
+  }
+
   async function todoDoneStatusChangeHandler(newStauts: editDoneStatus) {
+    const oldTodo = { ...todo };
+    updateTodoDoneStatusBeforeSendingToDatabase(newStauts);
     try {
       if (window.navigator.onLine) {
         const res = await axios.patch<todoBody>(
           '/api/todo/edit/done',
           newStauts,
-          {
-            timeoutErrorMessage: 'We were unable to update todo',
-          },
+          timeMessageObjCreate('We were unable to update todo'),
         );
-        if (res.status === 200) {
-          if (res.data.dueDate) {
-            updateAllTasks(todo, {
-              ...res.data,
-              createdAt: new Date(res.data.createdAt),
-              dueDate: new Date(res.data.dueDate),
-            });
-          } else {
-            updateAllTasks(todo, {
-              ...res.data,
-              createdAt: new Date(res.data.createdAt),
-              dueDate: undefined,
-            });
-          }
+        if (res.status !== 200) {
+          updateAllTasks(todo, oldTodo);
         }
       } else {
         throw new Error('there is no internet connection');
@@ -71,29 +78,17 @@ function TaskItem({ todo, from }: taskItemProps) {
   }
 
   async function todoImpStatusChangeHandler(newStauts: editImpStatus) {
+    const oldTodo = { ...todo };
+    updateTodoImpStatusBeforeSendingToDatabase(newStauts);
     try {
       if (window.navigator.onLine) {
         const res = await axios.patch<todoBody>(
           '/api/todo/edit/important',
           newStauts,
-          {
-            timeoutErrorMessage: 'We were unable to update todo',
-          },
+          timeMessageObjCreate('We were unable to update todo'),
         );
         if (res.status === 200) {
-          if (res.data.dueDate) {
-            updateAllTasks(todo, {
-              ...res.data,
-              createdAt: new Date(res.data.createdAt),
-              dueDate: new Date(res.data.dueDate),
-            });
-          } else {
-            updateAllTasks(todo, {
-              ...res.data,
-              createdAt: new Date(res.data.createdAt),
-              dueDate: undefined,
-            });
-          }
+          updateAllTasks(todo, oldTodo);
         }
       } else {
         throw new Error('there is no internet connection');

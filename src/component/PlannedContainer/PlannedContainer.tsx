@@ -13,6 +13,7 @@ import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
+import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
 
 function PlannedContainer() {
   const { addNotification } = useSetNotification();
@@ -29,7 +30,7 @@ function PlannedContainer() {
             todoTitle,
             dueDate: endOfToday(),
           },
-          { timeoutErrorMessage: 'We were unable to add todo' },
+          timeMessageObjCreate('We were unable to add todo'),
         );
         if (res.status === 200) {
           const newData = {

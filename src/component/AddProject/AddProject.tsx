@@ -10,6 +10,7 @@ import { projects } from '../../atoms/allProjectAtom';
 import { useSetRecoilState } from 'recoil';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
 import { useHistory } from 'react-router-dom';
+import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
 
 function AddProject() {
   const [projectName, setProjectName] = useState('');
@@ -31,9 +32,7 @@ function AddProject() {
           {
             projectName,
           },
-          {
-            timeoutErrorMessage: 'We were unable to add project',
-          },
+          timeMessageObjCreate('We were unable to add project'),
         );
         if (res.status === 200) {
           setProject((projectList) =>

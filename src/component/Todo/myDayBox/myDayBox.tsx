@@ -9,6 +9,7 @@ import { MydayTodoBodyType } from '../../../utils/types';
 import CloseButton from '../CloseButton/CloseButton';
 import { useSetTaskFromTaskDetails } from '../../../utils/customHooks/useUpdateTaskFromTaskDetails';
 import { useSetNotification } from '../../../utils/customHooks/useAddNotification';
+import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
 
 function MyDayBox() {
   const todo = useRecoilValue(selectedTodo);
@@ -24,9 +25,7 @@ function MyDayBox() {
               todoId: todo.id,
               myDay: true,
             },
-            {
-              timeoutErrorMessage: 'Unable to update todo',
-            },
+            timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
@@ -50,9 +49,7 @@ function MyDayBox() {
               todoId: todo.id,
               myDay: false,
             },
-            {
-              timeoutErrorMessage: 'Unable to update todo',
-            },
+            timeMessageObjCreate('Unable to update todo'),
           );
           if (res.status === 200) {
             updateTaskFromDetails(todo, res.data);
