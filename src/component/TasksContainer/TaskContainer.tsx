@@ -2,9 +2,7 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
-import { todoBody, op, taskStatus, todoFrom } from '../../utils/types';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/customHooks/useSetTask';
+import { todoBody, taskStatus, todoFrom } from '../../utils/types';
 import Todo from '../Todo/Todo';
 import { selctedTodo } from '../../selector/selectedTodoStatus';
 import { useRecoilValue } from 'recoil';
@@ -13,10 +11,11 @@ import { normalTasksMapper } from '../../selector/normalTasksMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
 import axios from '../../axios';
+import { useSetAddTaskInFront } from '../../utils/customHooks/useSetAddTasksInFront';
 
 function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);
-  const setTodoList = useSetTasks(normalTasksState);
+  const addTaskInFront = useSetAddTaskInFront();
   const { addNotification } = useSetNotification();
   const inCompletedTodoList = useRecoilValue(
     normalTasksMapper(taskStatus.inCompleted),
@@ -38,9 +37,7 @@ function TaskContainer() {
       if (window.navigator.onLine) {
         const res = await axios.post<todoBody>(
           '/api/todo/new',
-          {
-            todoTitle,
-          },
+          { todoTitle },
           { timeoutErrorMessage: 'We were unable to add todo' },
         );
         if (res.status === 200) {
@@ -49,7 +46,7 @@ function TaskContainer() {
             createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
           };
-          setTodoList(newTodo, op.ADD);
+          addTaskInFront(newTodo);
         }
       } else {
         throw new Error('No internet connection');

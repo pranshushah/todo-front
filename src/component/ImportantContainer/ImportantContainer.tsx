@@ -2,11 +2,8 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import axios from 'axios';
-import { todoBody, op, taskStatus } from '../../utils/types';
+import { todoBody, taskStatus } from '../../utils/types';
 import Styles from './ImportantContainer.module.scss';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/customHooks/useSetTask';
-import { ImpTasksState } from '../../atoms/ImportantTaskAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
@@ -15,11 +12,11 @@ import { impTasksMapper } from '../../selector/impTasksMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
 import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
+import { useSetAddTaskInFront } from '../../utils/customHooks/useSetAddTasksInFront';
 
 function Important() {
   const { addNotification } = useSetNotification();
-  const setNormalTodoList = useSetTasks(normalTasksState);
-  const setImpTodoList = useSetTasks(ImpTasksState);
+  const addTaskInFront = useSetAddTaskInFront();
   const todoStatus = useRecoilValue(selectedTodo);
   const completedTodoList = useRecoilValue(
     impTasksMapper(taskStatus.completed),
@@ -52,8 +49,7 @@ function Important() {
             createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
           };
-          setNormalTodoList(newTodo, op.ADD);
-          setImpTodoList(newTodo, op.ADD);
+          addTaskInFront(newTodo);
         }
       } else {
         throw new Error('No internet connection');

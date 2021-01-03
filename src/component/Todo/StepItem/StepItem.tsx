@@ -12,6 +12,7 @@ import { useSetNotification } from '../../../utils/customHooks/useAddNotificatio
 import Input from '../../UI/Input/Input';
 import Modal from '../../UI/Modal/Modal';
 import { timeMessageObjCreate } from '../../../utils/helperFunction/timeoutMessage';
+import produce from 'immer';
 
 type stepProps = {
   step: stepType;
@@ -34,6 +35,19 @@ function StepItem({ step }: stepProps) {
 
   async function stepDoneStatusChangeHandler(newStauts: editStepDoneStatus) {
     if (todo) {
+      const oldTodo = { ...todo };
+
+      const newTodo = produce(todo, (draft) => {
+        const stepIndex = draft.steps.findIndex(
+          (step) => step.id === newStauts.stepId,
+        );
+        if (stepIndex !== -1) {
+          draft.steps[stepIndex].done = newStauts.done;
+        }
+        return draft;
+      });
+
+      updateTaskFromDetails(todo, newTodo);
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -41,8 +55,8 @@ function StepItem({ step }: stepProps) {
             newStauts,
             timeMessageObjCreate('Unable to update step todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -73,6 +87,19 @@ function StepItem({ step }: stepProps) {
 
   async function stepDeleteHandler() {
     if (todo) {
+      const oldTodo = { ...todo };
+
+      const newTodo = produce(todo, (draft) => {
+        const stepIndex = draft.steps.findIndex(
+          (currentStep) => currentStep.id === step.id,
+        );
+        if (stepIndex !== -1) {
+          draft.steps.splice(stepIndex, 1);
+        }
+        return draft;
+      });
+
+      updateTaskFromDetails(todo, newTodo);
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -82,11 +109,11 @@ function StepItem({ step }: stepProps) {
               stepId: step.id,
             },
             {
-              timeoutErrorMessage: 'Unable to update step todo',
+              timeoutErrorMessage: 'Unable to delete step',
             },
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');
@@ -104,6 +131,19 @@ function StepItem({ step }: stepProps) {
 
   async function todoTitleChangeHandler(newStatus: editStepTitle) {
     if (todo) {
+      const oldTodo = { ...todo };
+
+      const newTodo = produce(todo, (draft) => {
+        const stepIndex = draft.steps.findIndex(
+          (currentStep) => currentStep.id === newStatus.stepId,
+        );
+        if (stepIndex !== -1) {
+          draft.steps[stepIndex].taskTitle = newStatus.newStepTitle;
+        }
+        return draft;
+      });
+
+      updateTaskFromDetails(todo, newTodo);
       try {
         if (window.navigator.onLine) {
           const res = await axios.patch<todoBody>(
@@ -111,8 +151,8 @@ function StepItem({ step }: stepProps) {
             newStatus,
             timeMessageObjCreate('Unable to update step todo'),
           );
-          if (res.status === 200) {
-            updateTaskFromDetails(todo, res.data);
+          if (res.status !== 200) {
+            updateTaskFromDetails(todo, oldTodo);
           }
         } else {
           throw new Error('No internet connection');

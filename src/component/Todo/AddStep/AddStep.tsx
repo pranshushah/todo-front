@@ -46,7 +46,7 @@ function AddTodo() {
           timeMessageObjCreate('Unable to add step todo'),
         );
         if (res.status === 200 && todo) {
-          updateTaskFromDetails(todo, res.data);
+          updateTaskFromDetails(todo, res.data, 'todoBody');
           setInputText('');
         }
       } else {

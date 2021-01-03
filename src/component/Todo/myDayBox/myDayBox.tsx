@@ -55,7 +55,7 @@ function MyDayBox() {
             },
             timeMessageObjCreate('Unable to update todo'),
           );
-          if (res.status === 200) {
+          if (res.status !== 200) {
             updateTaskFromDetails(todo, oldTodo);
           }
         } else {

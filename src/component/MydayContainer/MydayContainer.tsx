@@ -3,10 +3,7 @@ import Styles from './MyDayContainer.module.scss';
 import Header from '../UI/Header/Header';
 import axios from '../../axios';
 import AddTodo from '../AddTodo/AddTodo';
-import { MydayTodoBodyType, op, todoFrom, taskStatus } from '../../utils/types';
-import { normalTasksState } from '../../atoms/NormalTaskAtom';
-import { useSetTasks } from '../../utils/customHooks/useSetTask';
-import { myDayState } from '../../atoms/MyDayTaskAtom';
+import { MydayTodoBodyType, todoFrom, taskStatus } from '../../utils/types';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
@@ -15,11 +12,11 @@ import { myDayTaskMapper } from '../../selector/myDayTaskMapper';
 import TaskItem from '../TaskItem/TaskItem';
 import Accordion from '../UI/Accordion/Accordion';
 import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage';
+import { useSetAddTaskInFront } from '../../utils/customHooks/useSetAddTasksInFront';
 
 function MydayContainer() {
   const { addNotification } = useSetNotification();
-  const setNormalTodoList = useSetTasks(normalTasksState);
-  const setMydayTodoList = useSetTasks(myDayState);
+  const addTaskInFront = useSetAddTaskInFront();
   const todoStatus = useRecoilValue(selectedTodo);
 
   const completedTodoList = useRecoilValue(
@@ -53,8 +50,7 @@ function MydayContainer() {
             createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
           };
-          setMydayTodoList(newTodo, op.ADD);
-          setNormalTodoList(newTodo, op.ADD);
+          addTaskInFront(newTodo);
         }
       } else {
         throw new Error('No internet connection');
