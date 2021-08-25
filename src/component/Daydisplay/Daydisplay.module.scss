@@ -1,0 +1,17 @@
+@import '../../utils/scss/variables';
+@import '../../utils/scss/spaces';
+.due {
+  font-size: 13px;
+  color: $secondaryColor;
+  line-height: 12px;
+  padding: 0 getSpace(1) * 1px;
+  opacity: 0.8;
+}
+
+.overDue {
+  color: $dangerColor;
+}
+
+.dueToday {
+  color: $tertiaryColor;
+}

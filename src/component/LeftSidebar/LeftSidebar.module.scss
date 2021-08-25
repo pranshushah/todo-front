@@ -1,0 +1,64 @@
+@import '../../utils/scss/variables';
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/media';
+.container {
+  min-width: 250px;
+  height: 100vh;
+  background-color: $whiteColor;
+  @include mobile() {
+    width: 100px;
+  }
+}
+
+.itemContainer {
+  padding-top: getSpace(10) * 1px;
+  padding-bottom: getSpace(2.5) * 1px;
+  list-style: none;
+  @include mobile() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.active {
+  background-color: darken($color: $whiteColor, $amount: 10);
+}
+
+.item {
+  padding: getSpace(1) * 1px 0;
+  padding-left: getSpace(3) * 1px;
+  font-size: getFontSize(3) * 1px;
+  text-decoration: none;
+  color: $secondaryColor;
+  display: flex;
+  justify-content: space-between;
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+  @include mobile() {
+    padding-left: 32px;
+  }
+}
+
+.icon {
+  margin-right: 12px;
+}
+
+.text {
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  @include mobile() {
+    display: none;
+  }
+}
+
+.notification {
+  margin-right: getSpace(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  color: $tertiaryColor;
+  @include mobile() {
+    display: none;
+  }
+}

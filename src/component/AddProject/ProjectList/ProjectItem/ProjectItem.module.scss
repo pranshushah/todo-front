@@ -1,0 +1,42 @@
+@import '../../../../utils/scss/spaces';
+@import '../../../../utils/scss/lineHeight';
+@import '../../../../utils/scss/variables';
+@import '../../../../utils/scss/fontSize';
+
+.container {
+  padding: getSpace(1) * 1px 0;
+  padding-left: getSpace(2.5) * 1px;
+  display: flex;
+  text-decoration: none;
+  justify-content: space-between;
+  color: $secondaryColor;
+  display: flex;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+}
+
+.active {
+  background-color: darken($color: $whiteColor, $amount: 10);
+}
+
+.img {
+  cursor: pointer;
+  width: 20px;
+  height: 26px;
+  margin-bottom: -7px;
+}
+
+.text {
+  margin-left: 11px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  font-size: getFontSize(3) * 1px;
+  color: $secondaryColor;
+}
+
+.notification {
+  margin-right: getSpace(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  color: $tertiaryColor;
+}

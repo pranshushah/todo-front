@@ -1,0 +1,42 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/lineHeight';
+
+.container {
+  padding: getSpace(0.5) * 1px;
+  margin-top: getSpace(1) * 1px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.plus {
+  width: 25px;
+  height: 20px;
+}
+
+.input {
+  border: none;
+  padding: 0 getSpace(1.5) * 1px;
+  background: none;
+  border-radius: 0;
+  font-size: getFontSize(2) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  width: 100%;
+  &::placeholder {
+    color: $primaryColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::placeholder {
+    color: #8c8a93;
+  }
+}
+
+.addButton {
+  color: $primaryColor;
+  font-size: getFontSize(2) * 1px;
+  cursor: pointer;
+}

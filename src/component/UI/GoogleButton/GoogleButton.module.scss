@@ -1,0 +1,52 @@
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/media';
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/lineHeight';
+.btn {
+  width: 60%;
+  padding: getSpace(1.5) * 1px;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  margin: getSpace(1) * 1px auto;
+  display: inline-block;
+  font-size: getFontSize(5) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  @include small-laptop() {
+    width: 40%;
+  }
+  @include ipad-pro() {
+    width: 40%;
+  }
+  @include tablet() {
+    width: 50%;
+  }
+  @include ipad() {
+    width: 50%;
+  }
+  @include mobile() {
+    width: 70%;
+  }
+  @include se() {
+    width: 80%;
+  }
+}
+
+.google {
+  background-color: #cf220b;
+  color: white;
+  &:hover {
+    background-color: lighten($color: #cf220b, $amount: 3);
+    border: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    background-color: darken($color: #cf220b, $amount: 4);
+    border: none;
+  }
+}

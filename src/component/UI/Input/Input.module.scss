@@ -1,0 +1,101 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.addProject {
+  border: none;
+  padding: 0 getSpace(1.5) * 1px;
+  background: none;
+  border-radius: 0;
+  color: $secondaryColor;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  width: 100%;
+  color: $secondaryColor;
+  font-size: getFontSize(3) * 1px;
+  &::placeholder {
+    color: $tertiaryColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::placeholder {
+    color: #8c8a93;
+  }
+}
+
+.addInput {
+  border: none;
+  padding: 0 getSpace(1.5) * 1px;
+  background: none;
+  border-radius: 0;
+  color: $secondaryColor;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  width: 100%;
+  &::placeholder {
+    color: $primaryColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::placeholder {
+    color: #8c8a93;
+  }
+}
+.addTodoInput {
+  font-size: getFontSize(3) * 1px;
+}
+
+.addStepInput {
+  font-size: getFontSize(2) * 1px;
+}
+
+.stepInputText {
+  border: none;
+  width: 100%;
+  padding: 0 getSpace(1) * 1px;
+  padding-left: getSpace(1) * 1px;
+  background: none;
+  font-size: getFontSize(2) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  min-width: 0; // for weird firefox error in flexbox.
+}
+
+.inputDoneText {
+  opacity: 0.8;
+  text-decoration: line-through;
+}
+
+.todoDetailInput {
+  border: none;
+  padding: 0 getSpace(1) * 1px;
+  padding-left: 2px;
+  background: none;
+  font-weight: 600;
+  font-size: getFontSize(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  flex-grow: 1;
+  min-width: 0; // for weird firefox error in flexbox.
+  margin-right: getSpace(1) * 1px;
+  &:focus {
+    outline: 1px solid $secondaryColor;
+  }
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.projectTitle {
+  border: none;
+  background: none;
+  margin: getSpace(2) * 1px 0;
+  padding: getSpace(1) * 1px getSpace(1) * 1px;
+  font-size: getFontSize(7) * 1px;
+  color: $primaryColor;
+  font-weight: 400;
+  display: inline-block;
+  &:focus {
+    outline: 1px solid $secondaryColor;
+    background-color: $whiteColor;
+  }
+}

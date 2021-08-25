@@ -1,0 +1,20 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.textContainer {
+  font-size: 14px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.text {
+  margin-left: 14px;
+  display: block;
+}
+
+.date {
+  background: $primaryColor;
+}

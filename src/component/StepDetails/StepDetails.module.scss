@@ -1,0 +1,11 @@
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/variables';
+
+.container {
+  line-height: map-get($map: $line-height, $key: 'small') * 1px;
+  font-size: 13px;
+  color: darken($color: $secondaryColor, $amount: 5);
+  margin: 0 getSpace(1) * 1px;
+}

@@ -1,0 +1,48 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+@import '../../../utils/scss/fontSize';
+/* Style the accordion section */
+.accordionSection {
+  margin-top: 1px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 17px 0 -16px $whiteColor;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  color: $secondaryColor;
+  cursor: pointer;
+  padding: getSpace(1) * 1px getSpace(2) * 1px;
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: white;
+}
+
+/* Style the accordion content title */
+.accordionTitle {
+  font-weight: 600;
+  font-size: getFontSize(4) * 1px;
+  color: $secondaryColor;
+  padding-left: getSpace(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px + +9px;
+}
+
+.icon {
+  padding-left: getSpace(1.5) * 1px;
+  transition: transform 0.2s ease;
+}
+
+/* Style to rotate icon when state is active */
+.rotate {
+  transition: transform 0.2s ease;
+  transform: rotate(90deg);
+}
+
+/* Style the accordion content panel. Note: hidden by default */
+.accordionContent {
+  overflow: hidden;
+}

@@ -1,0 +1,25 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 2px;
+  padding: getSpace(0.5) * 1px 0;
+  box-shadow: 0 1px 0 0 $whiteColor;
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.checkboxContainer {
+  padding: 8px;
+  padding-right: 15px;
+}
+
+.buttonContainer {
+  margin-right: 11px;
+}

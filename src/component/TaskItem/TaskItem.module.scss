@@ -1,0 +1,72 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/variables';
+@import '../../utils/scss/lineHeight';
+@import '../../utils/scss/fontSize';
+
+.container {
+  padding: getSpace(1) * 1px getSpace(2) * 1px;
+  padding-right: getSpace(4) * 1px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  color: $secondaryColor;
+  box-shadow: 0 17px 0 -16px $whiteColor;
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+.checkboxContainer {
+  padding: 8px;
+  padding-right: 15px;
+}
+
+.textContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.myday {
+  font-size: 13px;
+  line-height: 12px;
+  margin-right: getSpace(1.5) * 1px;
+  padding-left: getSpace(1) * 1px;
+  opacity: 0.8;
+}
+
+.fromTaskOrProject {
+  font-size: 13px;
+  line-height: 12px;
+  margin-right: getSpace(1) * 1px;
+  padding-left: getSpace(1) * 1px;
+  opacity: 0.8;
+}
+
+.text {
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  font-size: getFontSize(3) * 1px;
+  padding: 0 getSpace(1) * 1px;
+}
+
+.doneText {
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  font-size: getFontSize(3) * 1px;
+  padding: 0 getSpace(1) * 1px;
+  opacity: 0.8;
+  text-decoration: line-through;
+}
+
+.imp {
+  height: 24px;
+  width: 24px;
+  &:hover {
+    color: $primaryColor;
+  }
+}
+
+.impFilled {
+  height: 24px;
+  width: 24px;
+  color: $primaryColor;
+}

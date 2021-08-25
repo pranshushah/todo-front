@@ -1,0 +1,35 @@
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/spaces';
+
+.ulContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  list-style: none;
+  color: $secondaryColor;
+}
+
+.notifcation {
+  width: 400px;
+  border-left: 4px solid $dangerColor;
+  background: wheat;
+  margin: 16px;
+  position: relative;
+  border-radius: 5px;
+}
+.message {
+  margin: getSpace(1) * 1px;
+  margin-top: getSpace(1.5) * 1px;
+}
+
+.type {
+  padding: getSpace(1) * 1px;
+  margin-top: getSpace(3) * 1px;
+}
+
+.closeContainer {
+  color: white;
+  position: absolute;
+  top: 0px;
+  right: 12px;
+}

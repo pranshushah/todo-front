@@ -1,0 +1,18 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/variables';
+@import '../../utils/scss/lineHeight';
+
+.container {
+  padding: getSpace(3) * 1px;
+  padding-right: getSpace(4) * 1px;
+  padding-top: getSpace(7) * 1px;
+  min-width: 350px;
+  background-color: $whiteColor;
+  position: relative;
+  .close {
+    position: absolute;
+    right: 24px;
+    top: 5px;
+  }
+}

@@ -1,0 +1,8 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/variables';
+
+.container {
+  padding: getSpace(2) * 1px;
+  width: 100%;
+}

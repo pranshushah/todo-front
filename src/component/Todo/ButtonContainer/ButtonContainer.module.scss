@@ -1,0 +1,9 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+}

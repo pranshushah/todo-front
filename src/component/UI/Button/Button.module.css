@@ -1,0 +1,164 @@
+.button {
+  border: 1px solid rgba(0, 0, 0, 0);
+  cursor: pointer;
+  outline-style: none;
+  border-radius: 0.1rem;
+  -webkit-transition: 0.1s background-color ease-in-out;
+  transition: 0.1s background-color ease-in-out;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.primary {
+  color: #ebebeb;
+  background-color: #1ca1f2;
+}
+
+.primary:hover {
+  background: #0e9bf1 radial-gradient(circle, transparent 1%, #0e9bf1 1%) center/15000%;
+}
+
+.primary:active {
+  background-color: #2aa7f3;
+  background-size: 100%;
+  -webkit-transition: background-color 0s;
+  transition: background-color 0s;
+}
+
+.invertedPrimary {
+  background-color: transparent;
+  color: #1ca1f2;
+  border: 1px solid #1ca1f2;
+}
+
+.invertedPrimary:hover {
+  color: #ebebeb;
+  background-color: rgba(28, 161, 242, 0.2);
+}
+
+.invertedPrimary:active {
+  color: #0c85cf;
+  border: 1px solid #0c85cf;
+}
+
+.darkPrimary {
+  color: #ebebeb;
+  background-color: #0468aa;
+}
+
+.darkPrimary:hover {
+  background: #045f9b radial-gradient(circle, transparent 1%, #045f9b 1%) center/15000%;
+}
+
+.darkPrimary:active {
+  background-color: #0471b9;
+  background-size: 100%;
+  -webkit-transition: background-color 0s;
+  transition: background-color 0s;
+}
+
+.invertedDarkPrimary {
+  background-color: transparent;
+  color: #0468aa;
+  border: 1px solid #0468aa;
+}
+
+.invertedDarkPrimary:hover {
+  color: #ebebeb;
+  background-color: rgba(4, 104, 170, 0.2);
+}
+
+.invertedDarkPrimary:active {
+  color: #034a78;
+  border: 1px solid #034a78;
+}
+
+.secondary {
+  color: #ebebeb;
+  background-color: #1d2126;
+}
+
+.secondary:hover {
+  background: #121417 radial-gradient(circle, transparent 1%, #121417 1%) center/15000%;
+}
+
+.secondary:active {
+  background-color: #262b31;
+  background-size: 100%;
+}
+
+.invertedSecondary {
+  background-color: transparent;
+  color: #191c20;
+  border: 1px solid #191c20;
+}
+
+.invertedSecondary:hover {
+  color: #ebebeb;
+  background-color: #1d2126;
+}
+
+.invertedSecondary:active {
+  color: #030303;
+  border: 1px solid #030303;
+}
+
+.danger {
+  color: #ebebeb;
+  background-color: #c13448;
+}
+
+.danger:hover {
+  background: #b53144 radial-gradient(circle, transparent 1%, #b53144 1%) center/15000%;
+}
+
+.danger:active {
+  background-color: #cb3e52;
+  background-size: 100%;
+  -webkit-transition: background-color 0s;
+  transition: background-color 0s;
+}
+
+.invertedDanger {
+  background-color: transparent;
+  color: #da4358;
+  border: 1px solid #da4358;
+}
+
+.invertedDanger:hover {
+  color: #ebebeb;
+  background-color: rgba(218, 67, 88, 0.2);
+}
+
+.invertedDanger:active {
+  color: #c4263c;
+  border: 1px solid #c4263c;
+}
+
+.medium {
+  line-height: 24px;
+  font-size: 20px;
+  padding: 12px 16px;
+}
+
+.small {
+  line-height: 24px;
+  font-size: 18px;
+  padding: 8px 10px;
+}
+
+.large {
+  line-height: 24px;
+  font-size: 25px;
+  padding: 16px 24px;
+}
+
+.huge {
+  line-height: 24px;
+  font-size: 28px;
+  padding: 24px 40px;
+}
+/*# sourceMappingURL=Button.module.css.map */

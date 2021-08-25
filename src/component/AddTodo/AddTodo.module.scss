@@ -1,0 +1,31 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/variables';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/lineHeight';
+
+.container {
+  padding: getSpace(1.5) * 1px getSpace(2) * 1px;
+  padding-right: getSpace(4) * 1px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-shadow: 0 17px 0 -16px $whiteColor;
+}
+
+.containerFocused {
+  box-shadow: 0 17px 0 -16px $primaryColor;
+}
+
+.plusContainer {
+  padding: 0 getSpace(0.5) * 1px;
+}
+.plus {
+  width: 25px;
+  height: 20px;
+}
+
+.addButton {
+  padding: 2px getSpace(1) * 1px;
+  color: $primaryColor;
+  cursor: pointer;
+}

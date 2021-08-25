@@ -1,0 +1,77 @@
+@import '../../utils/scss/media';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/lineHeight';
+.container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
+.logo {
+  margin: getSpace(8) * 1px auto;
+  margin-bottom: getSpace(5) * 1px;
+  width: 110px;
+  @include ipad() {
+    width: 150px;
+  }
+  @include ipad-pro() {
+    width: 140px;
+    margin: getSpace(10) * 1px auto;
+    margin-bottom: getSpace(6) * 1px;
+  }
+  @include mobile() {
+    width: 120px;
+    margin: getSpace(7) * 1px auto;
+    margin-bottom: getSpace(3) * 1px;
+  }
+  @include se() {
+    width: 100px;
+    margin: getSpace(2) * 1px auto;
+    margin-bottom: getSpace(1) * 1px;
+  }
+}
+
+.heading {
+  text-align: center;
+  font-weight: 400;
+  font-size: getFontSize(10) * 1px;
+  line-height: map-get($map: $line-height, $key: 'large') * 1px;
+  @include ipad-pro() {
+    font-size: getFontSize(12) * 1px;
+    margin: getSpace(4) * 1px;
+  }
+  @include mobile() {
+    margin: 0 auto;
+    width: 90%;
+    font-size: getFontSize(10) * 1px;
+  }
+}
+
+.banner {
+  margin: getSpace(6) * 1px auto;
+  margin-bottom: getSpace(3) * 1px;
+  width: 250px;
+  @include ipad-pro() {
+    margin: getSpace(9) * 1px auto;
+    margin-bottom: getSpace(5) * 1px;
+    width: 350px;
+  }
+  @include ipad() {
+    margin: getSpace(9) * 1px auto;
+    margin-bottom: getSpace(5) * 1px;
+    width: 300px;
+  }
+  @include mobile() {
+    width: 230px;
+    margin: getSpace(6) * 1px auto;
+    margin-bottom: getSpace(3) * 1px;
+  }
+
+  @include se() {
+    width: 210px;
+    margin: getSpace(6) * 1px auto;
+    margin-bottom: getSpace(3) * 1px;
+  }
+}

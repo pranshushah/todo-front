@@ -1,0 +1,10 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/fontSize';
+.headingHeader {
+  padding: getSpace(3) * 1px getSpace(1) * 1px;
+  font-size: getFontSize(7) * 1px;
+  color: $primaryColor;
+  font-weight: 400;
+  display: inline-block;
+}

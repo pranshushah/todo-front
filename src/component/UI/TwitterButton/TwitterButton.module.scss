@@ -1,0 +1,53 @@
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/media';
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/lineHeight';
+.btn {
+  text-align: center;
+  text-decoration: none;
+  width: 60%;
+  padding: getSpace(1.5) * 1px;
+  border: none;
+  border-radius: 4px;
+  margin: getSpace(1) * 1px auto;
+  display: inline-block;
+  font-size: getFontSize(5) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  @include small-laptop() {
+    width: 40%;
+  }
+  @include ipad-pro() {
+    width: 40%;
+  }
+  @include tablet() {
+    width: 50%;
+  }
+  @include ipad() {
+    width: 50%;
+  }
+  @include mobile() {
+    width: 70%;
+  }
+  @include se() {
+    width: 80%;
+  }
+}
+
+.twitter {
+  background-color: rgb(15, 155, 241);
+  color: white;
+
+  &:hover {
+    background-color: lighten($color: rgb(15, 155, 241), $amount: 3);
+    border: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    background-color: darken($color: rgb(15, 155, 241), $amount: 4);
+    border: none;
+  }
+}

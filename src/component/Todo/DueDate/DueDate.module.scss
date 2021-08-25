@@ -1,0 +1,52 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.activeText {
+  color: $tertiaryColor;
+}
+
+.container {
+  padding: getSpace(1.5) * 1px;
+  margin: getSpace(1) * 1px 0;
+  border: 2px solid #eaeaea;
+  background-color: white;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  color: lighten($color: $secondaryColor, $amount: 20);
+  position: relative;
+  &:hover {
+    background-color: darken($color: white, $amount: 10);
+    border: 1px solid lighten($color: $secondaryColor, $amount: 35);
+  }
+}
+
+.textContainer {
+  font-size: 14px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  margin-left: 6px;
+}
+
+.buttonContainer {
+  margin-right: 8px;
+}
+
+.text {
+  margin-left: 14px;
+  display: block;
+}
+
+.dateContainer {
+  padding: getSpace(1.5) * 1px;
+  margin: getSpace(1) * 1px 0;
+  border: 2px solid #eaeaea;
+  background-color: white;
+  border-radius: 3px;
+  color: lighten($color: $secondaryColor, $amount: 20);
+  &:hover {
+    background-color: darken($color: white, $amount: 10);
+    border: 1px solid lighten($color: $secondaryColor, $amount: 35);
+  }
+}

@@ -1,0 +1,30 @@
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/lineHeight';
+
+.dropdownMenu {
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  left: 5px;
+  top: 27px;
+  z-index: 1;
+  list-style: none;
+}
+
+.content {
+  color: $secondaryColor;
+  padding: getSpace(1.5) * 1px getSpace(2) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  text-decoration: none;
+  display: block;
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.contentDanger {
+  color: $dangerColor;
+}

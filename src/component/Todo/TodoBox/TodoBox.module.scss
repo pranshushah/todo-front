@@ -1,0 +1,58 @@
+@import '../../../utils/scss/spaces';
+@import '../../../utils/scss/fontSize';
+@import '../../../utils/scss/variables';
+@import '../../../utils/scss/lineHeight';
+
+.container {
+  padding: getSpace(1) * 1px;
+  border: 2px solid #eaeaea;
+  background-color: white;
+  border-radius: 3px;
+  color: $secondaryColor;
+}
+
+.checkboxContainer {
+  padding: 8px;
+  padding-right: 15px;
+}
+
+.textContainer {
+  margin-bottom: getSpace(1) * 1px;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  border: none;
+  padding: 0 getSpace(1) * 1px;
+  padding-left: 2px;
+  background: none;
+  font-weight: 600;
+  font-size: getFontSize(3) * 1px;
+  line-height: map-get($map: $line-height, $key: 'medium') * 1px;
+  flex-grow: 1;
+  min-width: 0; // for weird firefox error in flexbox.
+  margin-right: getSpace(1) * 1px;
+  &:focus {
+    outline: 1px solid $secondaryColor;
+  }
+  &:hover {
+    background-color: $whiteColor;
+  }
+}
+
+.imp {
+  height: 24px;
+  width: 24px;
+  margin-right: getSpace(1) * 1px;
+  &:hover {
+    color: $primaryColor;
+  }
+}
+
+.impFilled {
+  height: 24px;
+  width: 24px;
+  margin-right: getSpace(1) * 1px;
+  color: $primaryColor;
+}

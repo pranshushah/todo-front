@@ -1,0 +1,30 @@
+@import '../../utils/scss/spaces';
+@import '../../utils/scss/fontSize';
+@import '../../utils/scss/variables';
+
+.container {
+  padding: getSpace(2) * 1px;
+  width: 100%;
+}
+
+.imgContainer {
+  cursor: pointer;
+  position: relative;
+}
+
+.projectTitle {
+  border: none;
+  background: none;
+  margin: getSpace(2) * 1px 0;
+  padding: getSpace(1) * 1px getSpace(1) * 1px;
+  padding-right: 0px;
+  font-size: getFontSize(7) * 1px;
+  color: $primaryColor;
+  font-weight: 400;
+  display: inline-block;
+  &:focus {
+    outline: 1px solid $secondaryColor;
+    background-color: $whiteColor;
+    font-size: getFontSize(7) * 1px;
+  }
+}
