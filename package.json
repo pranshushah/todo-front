@@ -41,7 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "push": "git push origin main && yarn build && cp build /home/pranshu/projects/todo-back -r && echo done"
   },
   "eslintConfig": {
     "extends": [
