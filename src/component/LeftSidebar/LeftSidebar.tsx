@@ -11,20 +11,17 @@ import { faStar, faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { useRecoilValue } from 'recoil';
 import AddProject from '../AddProject/AddProject';
 import ProjectList from '../AddProject/ProjectList/ProjectList';
-import { taskStatus } from '../../utils/types';
 import { plannedTasksMapper } from '../../selector/plannedTaskMapper';
 function LeftSidebar() {
   const inCompleteNormalTasksList = useRecoilValue(
-    normalTasksMapper(taskStatus.inCompleted),
+    normalTasksMapper('INCOMPLETED'),
   );
   const inCompletePlannedTasksList = useRecoilValue(
-    plannedTasksMapper(taskStatus.inCompleted),
+    plannedTasksMapper('INCOMPLETED'),
   );
-  const inCompleteImpTasksList = useRecoilValue(
-    impTasksMapper(taskStatus.inCompleted),
-  );
+  const inCompleteImpTasksList = useRecoilValue(impTasksMapper('INCOMPLETED'));
   const inCompleteMyDayTasksList = useRecoilValue(
-    myDayTaskMapper(taskStatus.inCompleted),
+    myDayTaskMapper('INCOMPLETED'),
   );
   return (
     <section className={Styles.container}>

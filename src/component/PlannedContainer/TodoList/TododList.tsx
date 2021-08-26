@@ -3,26 +3,23 @@ import { useRecoilValue } from 'recoil';
 import { plannedTasksMapper } from '../../../selector/plannedTaskMapper';
 import TaskItem from '../../TaskItem/TaskItem';
 import Accordion from '../../UI/Accordion/Accordion';
-import { dayStatus, todoFrom } from '../../../utils/types';
 
 function TododList() {
-  const todayTasks = useRecoilValue(plannedTasksMapper(dayStatus.today));
-  const previousTasks = useRecoilValue(plannedTasksMapper(dayStatus.previous));
-  const laterTasks = useRecoilValue(plannedTasksMapper(dayStatus.later));
-  const tommorrowTasks = useRecoilValue(
-    plannedTasksMapper(dayStatus.tommorrow),
-  );
+  const todayTasks = useRecoilValue(plannedTasksMapper('today'));
+  const previousTasks = useRecoilValue(plannedTasksMapper('previous'));
+  const laterTasks = useRecoilValue(plannedTasksMapper('later'));
+  const tommorrowTasks = useRecoilValue(plannedTasksMapper('tommorrow'));
   const todayList = todayTasks.map((todo) => {
-    return <TaskItem todo={todo} key={todo.id} from={todoFrom.PLANNED} />;
+    return <TaskItem todo={todo} key={todo.id} from='PLANNED' />;
   });
   const previousTaskList = previousTasks.map((todo) => {
-    return <TaskItem key={todo.id} todo={todo} from={todoFrom.PLANNED} />;
+    return <TaskItem key={todo.id} todo={todo} from='PLANNED' />;
   });
   const tommorrowTasksList = tommorrowTasks.map((todo) => {
-    return <TaskItem key={todo.id} todo={todo} from={todoFrom.PLANNED} />;
+    return <TaskItem key={todo.id} todo={todo} from='PLANNED' />;
   });
   const laterTasksList = laterTasks.map((todo) => {
-    return <TaskItem key={todo.id} todo={todo} from={todoFrom.TASK} />;
+    return <TaskItem key={todo.id} todo={todo} from='TASK' />;
   });
   return (
     <div>

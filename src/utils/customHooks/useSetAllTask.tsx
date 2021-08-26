@@ -11,7 +11,6 @@ import {
   todoType,
   myDayTodoType,
   plannedTodoType,
-  op,
   todoInProjectType,
   everyTodoType,
 } from '../types';
@@ -37,7 +36,7 @@ export function useSetAllTask() {
       updater.normalTodos = updatLists<todoType>(
         normalTasks,
         newTodo,
-        op.UPDATE,
+        'update',
       );
     } else {
       if (newTodo.projectId) {
@@ -45,7 +44,7 @@ export function useSetAllTask() {
         updater.projectTodos = updatLists<todoInProjectType>(
           todoInProject, //@ts-ignore
           newTodo,
-          op.UPDATE,
+          'update',
         );
       }
     }
@@ -54,7 +53,7 @@ export function useSetAllTask() {
         plannedTasks,
         //@ts-ignore
         newTodo,
-        op.ADD,
+        'add',
       );
     }
     if (!newTodo.dueDate && todo.dueDate) {
@@ -63,7 +62,7 @@ export function useSetAllTask() {
         plannedTasks,
         //@ts-ignore
         newTodo,
-        op.Del,
+        'delete',
       );
     }
     if (newTodo.dueDate && todo.dueDate) {
@@ -72,17 +71,17 @@ export function useSetAllTask() {
         plannedTasks,
         //@ts-ignore
         newTodo,
-        op.UPDATE,
+        'update',
       );
     }
     if (!todo.important && newTodo.important) {
-      updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.ADD);
+      updater.impTodos = updatLists<todoType>(impTasks, newTodo, 'add');
     }
     if (todo.important && !newTodo.important) {
-      updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.Del);
+      updater.impTodos = updatLists<todoType>(impTasks, newTodo, 'delete');
     }
     if (todo.important && newTodo.important) {
-      updater.impTodos = updatLists<todoType>(impTasks, newTodo, op.UPDATE);
+      updater.impTodos = updatLists<todoType>(impTasks, newTodo, 'update');
     }
     if (todo.myDay && todo.myDay) {
       // already checked for undefined
@@ -90,7 +89,7 @@ export function useSetAllTask() {
         mydayTasks,
         //@ts-ignore
         newTodo,
-        op.UPDATE,
+        'update',
       );
     }
     if (!todo.myDay && newTodo.myDay) {
@@ -99,7 +98,7 @@ export function useSetAllTask() {
         mydayTasks,
         //@ts-ignore
         newTodo,
-        op.ADD,
+        'add',
       );
     }
     if (todo.myDay && !newTodo.myDay) {
@@ -108,7 +107,7 @@ export function useSetAllTask() {
         mydayTasks,
         //@ts-ignore
         newTodo,
-        op.Del,
+        'delete',
       );
     }
     if (selectedtodo) {

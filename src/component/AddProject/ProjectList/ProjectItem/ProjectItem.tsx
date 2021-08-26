@@ -1,5 +1,5 @@
 import React from 'react';
-import { project, taskStatus } from '../../../../utils/types';
+import { project } from '../../../../utils/types';
 import projectImage from '../../../../utils/svg/list-bullet.svg';
 import Styles from './ProjectItem.module.scss';
 import { NavLink } from 'react-router-dom';
@@ -11,7 +11,7 @@ type projectItemProps = {
 
 function ProjectItem({ project: { id, projectName } }: projectItemProps) {
   const notification = useRecoilValue(
-    tasksInGivenProject({ projectId: id, taskdone: taskStatus.inCompleted }),
+    tasksInGivenProject({ projectId: id, taskdone: 'INCOMPLETED' }),
   ).length;
   return (
     <li>

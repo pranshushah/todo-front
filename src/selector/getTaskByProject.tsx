@@ -1,10 +1,10 @@
 import { selectorFamily } from 'recoil';
 import { projectTasksAtom } from '../atoms/todoInProjects';
-import { todoInProjectType, taskStatus } from '../utils/types';
+import { TaskStatus, todoInProjectType } from '../utils/types';
 
 type getParams = {
   projectId: string;
-  taskdone: taskStatus;
+  taskdone: TaskStatus;
 };
 /**
  * you can get tasks in given project by their status
@@ -14,18 +14,20 @@ export const tasksInGivenProject = selectorFamily<
   getParams
 >({
   key: 'tasksInGivenProject',
-  get: ({ projectId, taskdone }) => ({ get }) => {
-    const tasks = get(projectTasksAtom);
-    if (taskdone === taskStatus.completed) {
-      const projectTasks = tasks.filter((task) => {
-        return task.projectId === projectId && task.done;
-      });
-      return projectTasks;
-    } else {
-      const projectTasks = tasks.filter((task) => {
-        return task.projectId === projectId && !task.done;
-      });
-      return projectTasks;
-    }
-  },
+  get:
+    ({ projectId, taskdone }) =>
+    ({ get }) => {
+      const tasks = get(projectTasksAtom);
+      if (taskdone === 'COMPLETED') {
+        const projectTasks = tasks.filter((task) => {
+          return task.projectId === projectId && task.done;
+        });
+        return projectTasks;
+      } else {
+        const projectTasks = tasks.filter((task) => {
+          return task.projectId === projectId && !task.done;
+        });
+        return projectTasks;
+      }
+    },
 });

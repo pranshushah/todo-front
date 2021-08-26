@@ -8,7 +8,7 @@ import {
   plannedTodoType,
   editDoneStatus,
   editImpStatus,
-  todoFrom,
+  TodoFrom,
 } from '../../utils/types';
 import Styles from './TaskItem.module.scss';
 import Checkbox from '../UI/CheckBox/CheckBox';
@@ -27,7 +27,7 @@ import { timeMessageObjCreate } from '../../utils/helperFunction/timeoutMessage'
 
 type taskItemProps = {
   todo: todoType | myDayTodoType | plannedTodoType;
-  from?: todoFrom;
+  from?: TodoFrom;
 };
 
 function TaskItem({ todo, from }: taskItemProps) {
@@ -121,8 +121,8 @@ function TaskItem({ todo, from }: taskItemProps) {
         <div
           className={todo.done ? Styles.doneText : Styles.text}
           style={
-            (todo.myDay && from !== todoFrom.MYDAY) ||
-            (todo.dueDate && from !== todoFrom.PLANNED)
+            (todo.myDay && from !== 'MY_DAY') ||
+            (todo.dueDate && from !== 'PLANNED')
               ? { lineHeight: '18px' }
               : undefined
           }
@@ -130,14 +130,14 @@ function TaskItem({ todo, from }: taskItemProps) {
           {todo.todoTitle}
         </div>
         <div>
-          {from === todoFrom.PROJECT || from === todoFrom.TASK ? (
+          {from === 'PROJECT' || from === 'TASK' ? (
             ''
           ) : (
             <span className={Styles.fromTaskOrProject}>
               {todo.normalTask ? 'Tasks' : givenProject?.projectName}
             </span>
           )}
-          {todo.myDay && from !== todoFrom.MYDAY ? (
+          {todo.myDay && from !== 'MY_DAY' ? (
             <span className={Styles.myday}>
               <FontAwesomeIcon icon={faSun} style={{ marginRight: '4px' }} />
               My Day
@@ -146,7 +146,7 @@ function TaskItem({ todo, from }: taskItemProps) {
             ''
           )}
           <StepDetails steps={todo.steps} />
-          {todo.dueDate && from !== todoFrom.PLANNED ? (
+          {todo.dueDate && from !== 'PLANNED' ? (
             <Daydisplay date={todo.dueDate} completed={todo.done} />
           ) : (
             ''

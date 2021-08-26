@@ -8,7 +8,6 @@ import {
   todoType,
   myDayTodoType,
   plannedTodoType,
-  op,
   todoInProjectType,
 } from '../types';
 
@@ -27,26 +26,26 @@ export function useSetAddTaskInFront() {
     todo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
   ) {
     if (todo.normalTask) {
-      updateNormaTasks(todo, op.ADD);
+      updateNormaTasks(todo, 'add');
     } else {
-      if (todo.projectId) {
+      if (todo.projectId !== undefined) {
         // already checked for undefined
         //@ts-ignore
-        updateTodoInProject(todo, op.ADD);
+        updateTodoInProject(todo, 'add');
       }
     }
-    if (todo.dueDate) {
+    if (todo.dueDate !== undefined) {
       // already checked for undefined
       //@ts-ignore
-      updatePlannedTasks(todo, op.ADD);
+      updatePlannedTasks(todo, 'add');
     }
-    if (todo.important) {
-      updateImpTasks(todo, op.ADD);
+    if (todo.important !== undefined) {
+      updateImpTasks(todo, 'add');
     }
-    if (todo.myDay) {
+    if (todo.myDay !== undefined) {
       // already checked for undefined
       //@ts-ignore
-      updateMydayTasks(todo, op.ADD);
+      updateMydayTasks(todo, 'add');
     }
   }
 

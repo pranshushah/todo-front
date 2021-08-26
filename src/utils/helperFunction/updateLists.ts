@@ -1,4 +1,4 @@
-import { op, todoType } from '../types';
+import { Op, todoType } from '../types';
 import produce from 'immer';
 
 /**
@@ -13,13 +13,13 @@ import produce from 'immer';
 export function updatLists<t extends todoType>(
   todoList: t[],
   newTodo: t,
-  ops: op,
+  ops: Op,
 ) {
-  if (ops === op.ADD) {
+  if (ops === 'add') {
     return produce(todoList, (draft: t[]) => {
       draft.splice(0, 0, newTodo);
     });
-  } else if (ops === op.UPDATE) {
+  } else if (ops === 'update') {
     return produce(todoList, (draft: t[]) => {
       const replaceIndex = draft.findIndex((todo) => todo.id === newTodo.id);
       if (replaceIndex !== -1) {

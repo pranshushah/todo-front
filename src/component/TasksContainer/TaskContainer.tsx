@@ -2,7 +2,7 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import Styles from './TaskContainer.module.scss';
-import { todoBody, taskStatus, todoFrom } from '../../utils/types';
+import { todoBody } from '../../utils/types';
 import Todo from '../Todo/Todo';
 import { selctedTodo } from '../../selector/selectedTodoStatus';
 import { useRecoilValue } from 'recoil';
@@ -17,19 +17,15 @@ function TaskContainer() {
   const todoStatus = useRecoilValue(selctedTodo);
   const addTaskInFront = useSetAddTaskInFront();
   const { addNotification } = useSetNotification();
-  const inCompletedTodoList = useRecoilValue(
-    normalTasksMapper(taskStatus.inCompleted),
-  );
-  const completedTodoList = useRecoilValue(
-    normalTasksMapper(taskStatus.completed),
-  );
+  const inCompletedTodoList = useRecoilValue(normalTasksMapper('INCOMPLETED'));
+  const completedTodoList = useRecoilValue(normalTasksMapper('COMPLETED'));
 
   const completedTaskList = completedTodoList.map((task) => (
-    <TaskItem todo={task} key={task.id} from={todoFrom.TASK} />
+    <TaskItem todo={task} key={task.id} from='TASK' />
   ));
 
   const inCompletedTaskList = inCompletedTodoList.map((todo) => {
-    return <TaskItem todo={todo} key={todo.id} from={todoFrom.TASK} />;
+    return <TaskItem todo={todo} key={todo.id} from='TASK' />;
   });
 
   async function addTodoHandler(todoTitle: string) {

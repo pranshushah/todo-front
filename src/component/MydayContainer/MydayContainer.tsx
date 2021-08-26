@@ -3,7 +3,7 @@ import Styles from './MyDayContainer.module.scss';
 import Header from '../UI/Header/Header';
 import axios from '../../axios';
 import AddTodo from '../AddTodo/AddTodo';
-import { MydayTodoBodyType, todoFrom, taskStatus } from '../../utils/types';
+import { MydayTodoBodyType } from '../../utils/types';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
 import Todo from '../Todo/Todo';
@@ -19,18 +19,14 @@ function MydayContainer() {
   const addTaskInFront = useSetAddTaskInFront();
   const todoStatus = useRecoilValue(selectedTodo);
 
-  const completedTodoList = useRecoilValue(
-    myDayTaskMapper(taskStatus.completed),
-  );
+  const completedTodoList = useRecoilValue(myDayTaskMapper('COMPLETED'));
   const completedTaskList = completedTodoList.map((task) => (
-    <TaskItem todo={task} key={task.id} from={todoFrom.MYDAY} />
+    <TaskItem todo={task} key={task.id} from='MY_DAY' />
   ));
 
-  const inCompleteTodoList = useRecoilValue(
-    myDayTaskMapper(taskStatus.inCompleted),
-  );
+  const inCompleteTodoList = useRecoilValue(myDayTaskMapper('INCOMPLETED'));
   const inCompleteTaskList = inCompleteTodoList.map((task) => (
-    <TaskItem todo={task} key={task.id} from={todoFrom.MYDAY} />
+    <TaskItem todo={task} key={task.id} from='MY_DAY' />
   ));
 
   async function addTodoHandler(todoTitle: string) {

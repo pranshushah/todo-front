@@ -3,7 +3,7 @@ import { tasksInGivenProject } from '../../../selector/getTaskByProject';
 import { useRecoilValue } from 'recoil';
 import TaskItem from '../../TaskItem/TaskItem';
 import Accordion from '../../UI/Accordion/Accordion';
-import { taskStatus, todoFrom, project } from '../../../utils/types';
+import { project } from '../../../utils/types';
 
 type completedTasksProps = {
   project: project;
@@ -13,11 +13,11 @@ function CompletedTasks({ project }: completedTasksProps) {
   const completedTask = useRecoilValue(
     tasksInGivenProject({
       projectId: project.id,
-      taskdone: taskStatus.completed,
+      taskdone: 'COMPLETED',
     }),
   );
   const completedTaskList = completedTask.map((task) => (
-    <TaskItem todo={task} key={task.id} from={todoFrom.PROJECT} />
+    <TaskItem todo={task} key={task.id} from='PROJECT' />
   ));
   return (
     <div>

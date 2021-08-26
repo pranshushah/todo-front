@@ -1,28 +1,10 @@
-export enum op {
-  UPDATE = 'update',
-  ADD = 'add',
-  Del = 'delete',
-}
+export type Op = 'update' | 'add' | 'delete';
 
-export enum todoFrom {
-  MYDAY = 'MY DAY',
-  PLANNED = 'PLANNED',
-  PROJECT = 'PROJECT',
-  IMPORTANT = 'IMPORTANT',
-  TASK = 'TASK',
-}
+export type TodoFrom = 'MY_DAY' | 'PLANNED' | 'PROJECT' | 'IMPORTANT' | 'TASK';
 
-export enum taskStatus {
-  completed = 'COMPLETED',
-  inCompleted = 'INCOMPLETED',
-}
+export type TaskStatus = 'COMPLETED' | 'INCOMPLETED';
 
-export enum dayStatus {
-  today = 'Today',
-  tommorrow = 'tommorrow',
-  previous = 'previous',
-  later = 'later',
-}
+export type DayStatus = 'today' | 'tommorrow' | 'previous' | 'later';
 
 export interface notification {
   message: string;

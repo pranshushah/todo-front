@@ -8,7 +8,6 @@ import {
   todoType,
   myDayTodoType,
   plannedTodoType,
-  op,
   todoInProjectType,
 } from '../types';
 
@@ -27,26 +26,26 @@ export function useDeleteTaskInFront() {
     todo: todoType | myDayTodoType | plannedTodoType | todoInProjectType,
   ) {
     if (todo.normalTask) {
-      updateNormaTasks(todo, op.Del);
+      updateNormaTasks(todo, 'delete');
     } else {
       if (todo.projectId) {
         // already checked for undefined
         //@ts-ignore
-        updateTodoInProject(todo, op.Del);
+        updateTodoInProject(todo, 'delete');
       }
     }
     if (todo.dueDate) {
       // already checked for undefined
       //@ts-ignore
-      updatePlannedTasks(todo, op.Del);
+      updatePlannedTasks(todo, 'delete');
     }
     if (todo.important) {
-      updateImpTasks(todo, op.Del);
+      updateImpTasks(todo, 'delete');
     }
     if (todo.myDay) {
       // already checked for undefined
       //@ts-ignore
-      updateMydayTasks(todo, op.Del);
+      updateMydayTasks(todo, 'delete');
     }
   }
 

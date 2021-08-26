@@ -2,7 +2,7 @@ import React from 'react';
 import AddTodo from '../AddTodo/AddTodo';
 import Header from '../UI/Header/Header';
 import axios from 'axios';
-import { todoBody, taskStatus } from '../../utils/types';
+import { todoBody } from '../../utils/types';
 import Styles from './ImportantContainer.module.scss';
 import { useRecoilValue } from 'recoil';
 import { selectedTodo } from '../../atoms/selectedTodoAtom';
@@ -18,16 +18,12 @@ function Important() {
   const { addNotification } = useSetNotification();
   const addTaskInFront = useSetAddTaskInFront();
   const todoStatus = useRecoilValue(selectedTodo);
-  const completedTodoList = useRecoilValue(
-    impTasksMapper(taskStatus.completed),
-  );
+  const completedTodoList = useRecoilValue(impTasksMapper('COMPLETED'));
   const completedTaskList = completedTodoList.map((task) => (
     <TaskItem todo={task} key={task.id} />
   ));
 
-  const inCompleteTodoList = useRecoilValue(
-    impTasksMapper(taskStatus.inCompleted),
-  );
+  const inCompleteTodoList = useRecoilValue(impTasksMapper('INCOMPLETED'));
   const inCompleteTaskList = inCompleteTodoList.map((task, index) => (
     <TaskItem todo={task} key={index} />
   ));

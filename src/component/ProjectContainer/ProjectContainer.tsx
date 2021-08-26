@@ -7,7 +7,7 @@ import { projects } from '../../atoms/allProjectAtom';
 import AddTodo from '../AddTodo/AddTodo';
 import axios from '../../axios';
 import { useSetNotification } from '../../utils/customHooks/useAddNotification';
-import { todoBodyInProjectType, op } from '../../utils/types';
+import { todoBodyInProjectType } from '../../utils/types';
 import TodoList from './TodoList/TodoList';
 import CompletedTodoList from './CompletedTodoList/CompletedTodoList';
 import { projectTasksAtom } from '../../atoms/todoInProjects';
@@ -91,7 +91,7 @@ function ProjectContainer() {
             createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
           };
-          setTasksInProject(newTodo, op.ADD);
+          setTasksInProject(newTodo, 'add');
         }
       } else {
         throw new Error('No internet connection');

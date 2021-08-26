@@ -1,5 +1,5 @@
 import { useSetRecoilState, RecoilState } from 'recoil';
-import { op, todoType } from '../types';
+import { Op, todoType } from '../types';
 import { updatLists } from '../helperFunction/updateLists';
 /**
  * custom hook for updating todos.
@@ -13,13 +13,13 @@ export function useSetTasks<t extends todoType>(recoilState: RecoilState<t[]>) {
    * @param newTodo todo you want to update in todo list
    * @param operation what kind of operation you want to perform.
    */
-  function updater(newTodo: t, operation: op) {
-    if (operation === op.UPDATE) {
-      setTodoList((todoList) => updatLists<t>(todoList, newTodo, op.UPDATE));
-    } else if (operation === op.ADD) {
-      setTodoList((todoList) => updatLists<t>(todoList, newTodo, op.ADD));
+  function updater(newTodo: t, operation: Op) {
+    if (operation === 'update') {
+      setTodoList((todoList) => updatLists<t>(todoList, newTodo, 'update'));
+    } else if (operation === 'add') {
+      setTodoList((todoList) => updatLists<t>(todoList, newTodo, 'add'));
     } else {
-      setTodoList((todoList) => updatLists<t>(todoList, newTodo, op.Del));
+      setTodoList((todoList) => updatLists<t>(todoList, newTodo, 'delete'));
     }
   }
   return updater;
