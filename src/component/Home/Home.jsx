@@ -2,9 +2,9 @@ import React from 'react';
 import Styles from './Home.module.scss';
 import logo from '../../asset/logo.png';
 import Banner from '../../asset/welcome-center.png';
-import GoogleButton from '../UI/GoogleButton/GoogleButton';
-import TwitterButton from '../UI/TwitterButton/TwitterButton';
-export default function Home() {
+import GoogleButton from '../UI/GoogleButton/GoogleButton.jsx';
+import TwitterButton from '../UI/TwitterButton/TwitterButton.jsx';
+export function Home() {
   return (
     <div className={Styles.container}>
       <img className={Styles.logo} src={logo} alt='logo of company' />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Home from './component/Home/Home';
+import { Home } from './component/Home/Home.jsx';
 import axios from 'axios';
-import Loading from './component/Loading/Loading';
+import Loading from './component/UI/Loading/Loading.jsx';
 import { userInfo } from './utils/types';
 import { loginState } from './selector/loginStatus';
 import { useSetTaskOnLoad } from './utils/customHooks/useSetTaskOnload';

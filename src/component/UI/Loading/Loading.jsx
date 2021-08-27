@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../asset/logo.png';
+import Logo from '../../../asset/logo.png';
 import Styles from './Loading.module.scss';
 export default function Loading() {
   return (
