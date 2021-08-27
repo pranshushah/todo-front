@@ -8,5 +8,5 @@
 
 @function getFontSize($scale) {
   $base: 11;
-  @return round($base * pow(9/8, $scale));
+  @return round($base * pow(1.125, $scale));
 }
