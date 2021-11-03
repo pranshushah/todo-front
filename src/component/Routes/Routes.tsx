@@ -6,7 +6,6 @@ import { Home } from '../Home/Home';
 import Important from '../ImportantContainer/ImportantContainer';
 import LeftSidebar from '../LeftSidebar/LeftSidebar';
 import MydayContainer from '../MydayContainer/MydayContainer';
-import { Nav } from '../Nav/Nav';
 import PlannedContainer from '../PlannedContainer/PlannedContainer';
 import ProjectContainer from '../ProjectContainer/ProjectContainer';
 import TaskContainer from '../TasksContainer/TaskContainer';
@@ -49,7 +48,9 @@ export function Routes() {
           </LoggedInRoutesContainer>
         </Route>
         <Route path={'/important'}>
-          <Important />
+          <LoggedInRoutesContainer>
+            <Important />
+          </LoggedInRoutesContainer>
         </Route>
         <Route path={'/project/:projectId'}>
           <LoggedInRoutesContainer>

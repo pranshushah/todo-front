@@ -16,6 +16,8 @@ import ProjectMenu from './ProjectMenu/ProjectMenu';
 import produce from 'immer';
 import ProjectTitle from './ProjectTitle';
 import Header from '../UI/Header/Header';
+import { selectedTodo } from '../../atoms/selectedTodoAtom';
+import Todo from '../Todo/Todo';
 
 type paramTypes = {
   projectId: string;
@@ -30,6 +32,8 @@ function ProjectContainer() {
   const setTasksAfterDeleteingProject = useSetRecoilState(projectTasksAtom);
   const [showMenu, setShowMenu] = useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [selectedProjectTodo, setSelectedProjectTodo] =
+    useRecoilState(selectedTodo);
 
   const selectedProject = allProjects.find(
     (project) => project.id === projectId,
@@ -67,6 +71,7 @@ function ProjectContainer() {
             return draft.filter((task) => task.projectId !== projectId);
           }),
         );
+        setSelectedProjectTodo(null);
         history.replace('/tasks');
       }
     } catch (e) {
@@ -88,8 +93,8 @@ function ProjectContainer() {
         if (res.status === 200) {
           const newTodo = {
             ...res.data,
-            createdAt: new Date(res.data.createdAt),
             dueDate: undefined,
+            createdAt: new Date(res.data.createdAt),
           };
           setTasksInProject(newTodo, 'add');
         }
@@ -122,40 +127,44 @@ function ProjectContainer() {
   }
 
   return (
-    <div className={Styles.container}>
-      <header>
-        {showInput ? (
-          <ProjectTitle
-            inputValue={projectName}
-            onChangeInput={inputChangeHandler}
-            initialInputValue={selectedProject?.projectName}
-            project={selectedProject}
-            onHideInput={hideInputHandler}
-          />
-        ) : (
-          <Header
-            displayTitle={selectedProject ? selectedProject.projectName : ''}
-            onClick={showInputHandler}
-          />
-        )}
-        <span className={Styles.imgContainer} onClick={toggleMenu}>
-          <img src={dots} alt='' />
-          <ProjectMenu
-            show={showMenu}
-            onClickOutside={outSideClickHandler}
-            onClickDelete={ProjectDeleteHandler}
-          />
-        </span>
-        <AddTodo placeholder='Add a Task' onAddTodo={AddTodoHandler} />
-      </header>
-      <main>
-        {selectedProject ? <TodoList project={selectedProject} /> : null}
-        {selectedProject ? (
-          <CompletedTodoList project={selectedProject} />
-        ) : null}
-      </main>
-    </div>
+    <>
+      <div className={Styles.container}>
+        <header>
+          {showInput ? (
+            <ProjectTitle
+              inputValue={projectName}
+              onChangeInput={inputChangeHandler}
+              initialInputValue={selectedProject?.projectName}
+              project={selectedProject}
+              onHideInput={hideInputHandler}
+            />
+          ) : (
+            <Header
+              displayTitle={selectedProject ? selectedProject.projectName : ''}
+              onClick={showInputHandler}
+            />
+          )}
+          <span className={Styles.imgContainer} onClick={toggleMenu}>
+            <img src={dots} alt='' />
+            <ProjectMenu
+              show={showMenu}
+              onClickOutside={outSideClickHandler}
+              onClickDelete={ProjectDeleteHandler}
+            />
+          </span>
+          <AddTodo placeholder='Add a Task' onAddTodo={AddTodoHandler} />
+        </header>
+        <main>
+          {selectedProject ? <TodoList project={selectedProject} /> : null}
+          {selectedProject ? (
+            <CompletedTodoList project={selectedProject} />
+          ) : null}
+        </main>
+      </div>
+      {selectedProjectTodo ? <Todo /> : null}
+    </>
   );
 }
 
 export default ProjectContainer;
+selectedTodo;
