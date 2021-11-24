@@ -47,6 +47,7 @@ function ButtonContainer() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        addTaskToAll(oldTodo);
       }
     }
   }

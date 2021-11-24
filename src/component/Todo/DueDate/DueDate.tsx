@@ -38,6 +38,7 @@ function DueDate() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }
@@ -62,6 +63,7 @@ function DueDate() {
           throw new Error('No internet connection');
         }
       } catch (e) {
+        updateTaskFromDetails(todo, oldTodo);
         addNotification(e.message, 'Network Error');
       }
     }

@@ -37,6 +37,7 @@ function MyDayBox() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }
@@ -63,6 +64,7 @@ function MyDayBox() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }

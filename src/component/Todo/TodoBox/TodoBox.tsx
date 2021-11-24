@@ -58,6 +58,7 @@ function TodoBox() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }
@@ -81,6 +82,7 @@ function TodoBox() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }
@@ -107,6 +109,8 @@ function TodoBox() {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
+        setTodoInputValue(todo?.todoTitle);
       }
     }
   }

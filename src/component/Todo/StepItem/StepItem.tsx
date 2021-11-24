@@ -63,6 +63,7 @@ function StepItem({ step }: stepProps) {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }
@@ -119,6 +120,7 @@ function StepItem({ step }: stepProps) {
           throw new Error('No internet connection');
         }
       } catch (e) {
+        updateTaskFromDetails(todo, oldTodo);
         addNotification(e.message, 'Network Error');
       }
     }
@@ -159,6 +161,7 @@ function StepItem({ step }: stepProps) {
         }
       } catch (e) {
         addNotification(e.message, 'Network Error');
+        updateTaskFromDetails(todo, oldTodo);
       }
     }
   }

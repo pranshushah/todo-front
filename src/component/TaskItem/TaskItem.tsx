@@ -73,6 +73,7 @@ function TaskItem({ todo, from }: taskItemProps) {
         throw new Error('there is no internet connection');
       }
     } catch (e) {
+      updateAllTasks(todo, oldTodo);
       addNotification(e.message, 'Newtowork Error');
     }
   }
@@ -94,6 +95,7 @@ function TaskItem({ todo, from }: taskItemProps) {
         throw new Error('there is no internet connection');
       }
     } catch (e) {
+      updateAllTasks(todo, oldTodo);
       addNotification(e.message, 'Newtowork Error');
     }
   }

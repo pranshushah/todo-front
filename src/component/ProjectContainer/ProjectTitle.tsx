@@ -67,6 +67,9 @@ function ProjectTitle({
         }
       } catch (e) {
         addNotification(e.message, 'Newtowork Error');
+        if (initialInputValue) {
+          onChangeInput(initialInputValue);
+        }
       }
     } else {
       if (initialInputValue) {
